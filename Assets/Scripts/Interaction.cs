@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class Interaction : ScriptableObject 
 {
-	public abstract void RespondToInteraction (Tile targetTile);
+	public abstract void RespondToInteraction (MapCell targetTile);
 }

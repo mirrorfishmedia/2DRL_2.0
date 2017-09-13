@@ -58,13 +58,13 @@ public class RoomGenerator : MonoBehaviour {
 				switch (selectedChar) 
 				{
 				case '1':
-					WriteToBoardGrid (Tile.TileType.Wall, (int)spawnPos.x, (int)spawnPos.y);
+					WriteToBoardGrid (MapCell.CellType.Wall, (int)spawnPos.x, (int)spawnPos.y);
 					break;
 				case '0':
-					WriteToBoardGrid (Tile.TileType.BlackFloor, (int)spawnPos.x, (int)spawnPos.y);
+					WriteToBoardGrid (MapCell.CellType.BlackFloor, (int)spawnPos.x, (int)spawnPos.y);
 					break;
 				case '3':
-					WriteToBoardGrid (Tile.TileType.Exit, (int)spawnPos.x, (int)spawnPos.y);
+					WriteToBoardGrid (MapCell.CellType.Exit, (int)spawnPos.x, (int)spawnPos.y);
 					break;
 				case '4':
 					WriteToBoardGrid (WriteRandomTileToGrid(roomTemplate.enemyTiles), (int)spawnPos.x, (int)spawnPos.y);
@@ -83,9 +83,9 @@ public class RoomGenerator : MonoBehaviour {
 
 	}
 
-	private Tile.TileType WriteRandomTileToGrid(Tile.TileType[] possibleTypes)
+	private MapCell.CellType WriteRandomTileToGrid(MapCell.CellType[] possibleTypes)
 	{
-		Tile.TileType selectedType = possibleTypes [Random.Range (0, possibleTypes.Length)];
+		MapCell.CellType selectedType = possibleTypes [Random.Range (0, possibleTypes.Length)];
 		return selectedType;
 	}
 
@@ -124,26 +124,26 @@ public class RoomGenerator : MonoBehaviour {
 		return rotatedRoomChars;
 	}
 
-	void WriteToBoardGrid(Tile.TileType value, int gridX, int gridY)
+	void WriteToBoardGrid(MapCell.CellType value, int gridX, int gridY)
 	{
-		boardGenerator.tileData [gridX, gridY].tileType = value;
+		boardGenerator.tileData [gridX, gridY].cellType = value;
 		boardGenerator.tileData [gridX, gridY].interaction = AssignInteraction (value);
 		Debug.Log ("write to board grid, interaction: " + boardGenerator.tileData [gridX, gridY].interaction);
 	}
 
-	Interaction AssignInteraction(Tile.TileType value)
+	Interaction AssignInteraction(MapCell.CellType value)
 	{
 		switch (value) 
 		{
-		case Tile.TileType.Exit:
+		case MapCell.CellType.Exit:
 			return exitInteraction;
 			Debug.Log ("assigning interaction to exit");
 			break;
-		case Tile.TileType.Coin:
+		case MapCell.CellType.Coin:
 			return treasureInteraction;
 			Debug.Log ("assigning interaction to exit");
 			break;
-		case Tile.TileType.Mushroom:
+		case MapCell.CellType.Mushroom:
 			return foodInteraction;
 			Debug.Log ("assigning interaction to exit");
 			break;

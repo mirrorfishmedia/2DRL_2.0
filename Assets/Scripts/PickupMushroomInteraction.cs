@@ -5,10 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "2DRL/PickupMushroomInteraction")]
 public class PickupMushroomInteraction : Interaction 
 {
-	public override void RespondToInteraction (Tile targetTile)
+	public override void RespondToInteraction (MapCell targetTile)
 	{
 		GameManager.instance.ModifyFood (1);
-		targetTile.tileType = Tile.TileType.BlackFloor;
+		targetTile.cellType = MapCell.CellType.BlackFloor;
 		Debug.Log ("food interaction triggered");
 	}
 }

@@ -29,7 +29,7 @@ public class BoardGenerator : MonoBehaviour {
 	public bool buildOnStart;
 	public Transform player;
 
-	public Tile[,] tileData;
+	public MapCell[,] tileData;
 
 
 	private GameObject boardHolder;
@@ -51,10 +51,10 @@ public class BoardGenerator : MonoBehaviour {
 	void Start () 
 	{
 		//boardData = new int[boardHorizontalSize,boardVerticalSize];
-		tileData = new Tile[boardHorizontalSize, boardVerticalSize];
+		tileData = new MapCell[boardHorizontalSize, boardVerticalSize];
 		for (int x = 0; x < boardHorizontalSize; x++) {
 			for (int y = 0; y < boardVerticalSize; y++) {
-				tileData [x, y] = new Tile ();
+				tileData [x, y] = new MapCell ();
 			}
 		}
 		if (buildOnStart)
@@ -78,12 +78,12 @@ public class BoardGenerator : MonoBehaviour {
 		}
 	}
 
-	public void TrackMovingUnit(Vector2 unitCoordinates, Tile.TileType tileType)
+	public void TrackMovingUnit(Vector2 unitCoordinates, MapCell.CellType tileType)
 	{
 		int unitX = (int)unitCoordinates.x;
 		int unitY = (int)unitCoordinates.y;
 		//boardData [unitX, unitY] = unitID;
-		tileData [unitX, unitY].tileType = tileType;
+		tileData [unitX, unitY].cellType = tileType;
 		ClearInstantiated ();
 		BuildGridInFrustum (player.position);
 	}
@@ -92,9 +92,9 @@ public class BoardGenerator : MonoBehaviour {
 	{
 		if (TestIfInGrid(x,y)) 
 		{
-			Tile targetTile = tileData [x, y];
+			MapCell targetTile = tileData [x, y];
 
-			if (targetTile.tileType == Tile.TileType.BlackFloor) {
+			if (targetTile.cellType == MapCell.CellType.BlackFloor) {
 				return true;
 			} else 
 			{
@@ -294,26 +294,26 @@ public class BoardGenerator : MonoBehaviour {
 				//int boardDataValue = boardData [x, y];
 				if (TestIfInGrid (x,y)) 
 				{
-					Tile.TileType tileDataValue = tileData[x,y].tileType;
+					MapCell.CellType tileDataValue = tileData[x,y].cellType;
 					switch (tileDataValue) 
 					{
-					case Tile.TileType.BlackFloor:
+					case MapCell.CellType.BlackFloor:
 						InstantiateFromArray (blackFloor, x, y);
 						break;
-					case Tile.TileType.Wall:
+					case MapCell.CellType.Wall:
 						InstantiateFromArray (wall, x, y);
 						break;
-					case Tile.TileType.Exit:
+					case MapCell.CellType.Exit:
 						InstantiateFromArray (exit, x, y);
 						break;
-					case Tile.TileType.Coin:
+					case MapCell.CellType.Coin:
 						Debug.Log ("generating treasure");
 						InstantiateFromArray (coin, x, y);
 						break;
-					case Tile.TileType.Enemy1:
+					case MapCell.CellType.Enemy1:
 						InstantiateFromArray (enemy1, x, y);
 						break;
-					case Tile.TileType.Obstacle:
+					case MapCell.CellType.Obstacle:
 						InstantiateFromArray (wall, x, y);
 						break;
 

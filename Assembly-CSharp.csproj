@@ -51,11 +51,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\GameManager.cs" />
-     <Compile Include="Assets\InteractableObject.cs" />
      <Compile Include="Assets\Scripts\BoardGenerator.cs" />
      <Compile Include="Assets\Scripts\ExitLevelInteraction.cs" />
+     <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\InteractableObject.cs" />
      <Compile Include="Assets\Scripts\Interaction.cs" />
+     <Compile Include="Assets\Scripts\MapCell.cs" />
      <Compile Include="Assets\Scripts\PickupCoinsInteraction.cs" />
      <Compile Include="Assets\Scripts\PickupMushroomInteraction.cs" />
      <Compile Include="Assets\Scripts\PickupTreasure.cs" />
@@ -65,8 +66,8 @@
      <Compile Include="Assets\Scripts\RoomGenerator.cs" />
      <Compile Include="Assets\Scripts\RoomList.cs" />
      <Compile Include="Assets\Scripts\RoomTemplate.cs" />
-     <Compile Include="Assets\Scripts\Tile.cs" />
      <Compile Include="Assets\Scripts\UnitData.cs" />
+     <Compile Include="Assets\TilemapController.cs" />
  <Reference Include="UnityEngine.CoreModule">
  <HintPath>C:/Program Files/Unity 2017.2.0b11/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
  </Reference>

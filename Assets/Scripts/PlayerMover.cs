@@ -56,7 +56,7 @@ public class PlayerMover : MonoBehaviour {
 		if (SpaceOpen (targetSpace)) {
 			//set previous space back to floor
 			boardGenerator.TrackMovingUnit (transform.position, 0);
-			boardGenerator.TrackMovingUnit (transform.position, Tile.TileType.BlackFloor);
+			boardGenerator.TrackMovingUnit (transform.position, MapCell.CellType.BlackFloor);
 			this.transform.position = targetSpace;
 			boardGenerator.TrackMovingUnit (transform.position, unitData.tileType);
 		}

@@ -12,9 +12,9 @@ public class RoomTemplate : ScriptableObject
 	public RoomList eastList;
 	public RoomList westList;
 
-	public Tile.TileType[] enemyTiles;
-	public Tile.TileType[] pickUpTiles;
-	public Tile.TileType[] obstacleTiles;
+	public MapCell.CellType[] enemyTiles;
+	public MapCell.CellType[] pickUpTiles;
+	public MapCell.CellType[] obstacleTiles;
 
 
 	public RoomAndDirection ChooseNextRoom(BoardGenerator generator, Vector2 currentLocation, List<Vector2> usedSpaces)

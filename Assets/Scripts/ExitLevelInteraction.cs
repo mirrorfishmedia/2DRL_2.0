@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 [CreateAssetMenu(menuName = "2DRL/ExitLevelInteraction")]
 public class ExitLevelInteraction : Interaction {
 
-	public override void RespondToInteraction (Tile targetTile)
+	public override void RespondToInteraction (MapCell targetTile)
 	{
 		SceneManager.LoadScene ("Main");
 	}
