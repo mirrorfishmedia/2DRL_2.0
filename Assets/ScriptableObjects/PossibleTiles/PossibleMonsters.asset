@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ced43be9eba9c4592d557d3ac159e7, type: 3}
+  m_Name: PossibleMonsters
+  m_EditorClassIdentifier: 
+  possibleObjects:
+  - {fileID: 1877783239666240, guid: 138cff284d937ec49acb5e16122cff1d, type: 2}
+  - {fileID: 1039810714174570, guid: adf0484dff9245e419a8f6c225de6581, type: 2}
+  - {fileID: 1529554858047600, guid: 844d26fb0a46f2a4c8e7e3384fed913c, type: 2}

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcaf6a7a02540c14898118f2dfdabf2c, type: 3}
+  m_Name: West
+  m_EditorClassIdentifier: 
+  rooms:
+  - {fileID: 11400000, guid: 44004df7c9db7f74b92f458b5e0896ca, type: 2}
+  - {fileID: 11400000, guid: 0e419ad9d35932c439efc3727f35b4ca, type: 2}
+  - {fileID: 11400000, guid: 92e3911fbdf82594f82fbc08f4da7b6a, type: 2}
