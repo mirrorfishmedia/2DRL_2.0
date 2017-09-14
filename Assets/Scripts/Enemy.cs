@@ -9,13 +9,17 @@ public class Enemy
     public bool seekingPlayer;
     public MapCell.CellType cellType;
 
-    public void SetEnemyPos(Vector2 position)
+    private Transform enemyTransform;
+  
+    public void SetupEnemy(Vector2 position, Transform newTransform)
     {
         enemyPos = position;
+        enemyTransform = newTransform;
     }
 
     public void MoveToPlayer(Vector2 playerPosition, BoardGenerator boardGenerator)
     {
+        Debug.Log("Move to player: " + playerPosition);
         int xDir = 0;
         int yDir = 0;
 
@@ -32,10 +36,10 @@ public class Enemy
             xDir = playerPosition.x > enemyPos.x ? 1 : -1;
         }
 
-       Vector2 updatedPos = enemyPos + new Vector2(xDir, yDir);
-        enemyPos = updatedPos;
-        boardGenerator.TrackMovingUnit(updatedPos, cellType);
-
+        //Vector2 updatedPos = enemyPos + new Vector2(xDir, yDir);
+        //enemyPos = updatedPos;
+        //boardGenerator.TrackMovingUnit(updatedPos, cellType);
+        boardGenerator.TryMove(xDir, yDir, MapCell.CellType.Enemy1, enemyTransform);
         
     }
 

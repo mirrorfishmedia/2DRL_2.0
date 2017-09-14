@@ -102,7 +102,29 @@ public class BoardGenerator : MonoBehaviour {
 		return false;
 	}
 
-	bool SpaceValid(Vector2 spaceToTest)
+    public void TryMove(int horizontal, int vertical, MapCell.CellType cellType, Transform movingObject)
+    {
+        Vector2 targetSpace = new Vector2(horizontal, vertical) + (Vector2)movingObject.transform.position;
+        if (SpaceOpen(targetSpace))
+        {
+            //set previous space back to floor
+            TrackMovingUnit(movingObject.transform.position, 0);
+            TrackMovingUnit(movingObject.transform.position, MapCell.CellType.BlackFloor);
+            movingObject.transform.position = targetSpace;
+            TrackMovingUnit(movingObject.transform.position, cellType);
+        }
+
+    }
+
+    bool SpaceOpen(Vector2 targetSpace)
+    {
+        int x = (int)targetSpace.x;
+        int y = (int)targetSpace.y;
+        return CheckMapForObstruction(x, y);
+
+    }
+
+    bool SpaceValid(Vector2 spaceToTest)
 	{
 		if (usedSpaces.Contains(spaceToTest))
 		{
@@ -281,7 +303,6 @@ public class BoardGenerator : MonoBehaviour {
                             break;
 					case MapCell.CellType.Enemy2:
                             SetTileFromGrid(enemy2, x, y);
-                            enemyController.AddEnemy(MapCell.CellType.Enemy2, new Vector2(x, y));
                             break;
 
 					}

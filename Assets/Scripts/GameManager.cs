@@ -44,16 +44,19 @@ public class GameManager : MonoBehaviour {
             return;
         }
 
-        //StartCoroutine(MoveEnemies());
+        StartCoroutine(MoveEnemies());
     }
 
     private IEnumerator MoveEnemies()
     {
         enemiesMoving = true;
+        
         for (int i = 0; i < enemyController.enemies.Count; i++)
         {
+            Debug.Log("looping over enemies : " + i);
             enemyController.enemies[i].MoveToPlayer((Vector2)player.position, boardGenerator);
         }
+        
         yield return waitBetweenTurns;
         playersTurn = true;
         enemiesMoving = false;

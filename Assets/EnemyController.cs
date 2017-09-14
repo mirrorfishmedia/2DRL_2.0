@@ -9,8 +9,11 @@ public class EnemyController : MonoBehaviour
     public void AddEnemy(MapCell.CellType type, Vector2 position)
     {
         Enemy enemy = new Enemy();
+
+        Transform enemyTransform = new GameObject("Enemy").transform;
+        enemyTransform.position = position;
         enemy.cellType = type;
-        enemy.SetEnemyPos(position);
+        enemy.SetupEnemy(position, enemyTransform);
         enemies.Add(enemy);
     }
 }
