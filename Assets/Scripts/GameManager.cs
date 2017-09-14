@@ -6,12 +6,19 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
 	public bool playersTurn;
+    public bool enemiesMoving;
 	public int currentCoins = 0;
 	public int currentFood = 0;
 	public Text coinDisplay;
 	public Text foodDisplay;
+    public EnemyController enemyController;
+    public Transform player;
+    public BoardGenerator boardGenerator;
+    public float turnDelay = 0.1f;
 
 	public static GameManager instance;
+
+    private WaitForSeconds waitBetweenTurns;
 
 	// Use this for initialization
 	void Awake () 
@@ -24,7 +31,35 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	public void ModifyCoins(int value)
+    private void Start()
+    {
+        waitBetweenTurns = new WaitForSeconds(turnDelay);
+        playersTurn = true;
+    }
+
+    private void Update()
+    {
+        if (playersTurn || enemiesMoving)
+        {
+            return;
+        }
+
+        //StartCoroutine(MoveEnemies());
+    }
+
+    private IEnumerator MoveEnemies()
+    {
+        enemiesMoving = true;
+        for (int i = 0; i < enemyController.enemies.Count; i++)
+        {
+            enemyController.enemies[i].MoveToPlayer((Vector2)player.position, boardGenerator);
+        }
+        yield return waitBetweenTurns;
+        playersTurn = true;
+        enemiesMoving = false;
+    }
+
+    public void ModifyCoins(int value)
 	{
 		currentCoins += value;
 		coinDisplay.text = currentCoins.ToString ();
@@ -36,8 +71,9 @@ public class GameManager : MonoBehaviour {
 		foodDisplay.text = currentFood.ToString ();
 	}
 
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public void EndPlayerTurn()
+    {
+       
+        
+    }
 }

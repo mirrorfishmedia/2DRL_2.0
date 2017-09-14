@@ -16,10 +16,12 @@ public class RoomGenerator : MonoBehaviour {
 	public bool buildOnStart;
 
 	private BoardGenerator boardGenerator;
+    private EnemyController enemyController;
 
 	void Awake()
 	{
 		boardGenerator = GetComponent<BoardGenerator> ();
+        enemyController = GetComponent<EnemyController>();
 	}
 
 	void Start()
@@ -124,12 +126,42 @@ public class RoomGenerator : MonoBehaviour {
 		return rotatedRoomChars;
 	}
 
-	void WriteToBoardGrid(MapCell.CellType value, int gridX, int gridY)
+	void WriteToBoardGrid(MapCell.CellType value, int x, int y)
 	{
-		boardGenerator.tileData [gridX, gridY].cellType = value;
-		boardGenerator.tileData [gridX, gridY].interaction = AssignInteraction (value);
-		//Debug.Log ("write to board grid, interaction: " + boardGenerator.tileData [gridX, gridY].interaction);
-	}
+        switch (value)
+        {
+            case MapCell.CellType.BlackFloor:
+                break;
+            case MapCell.CellType.GrassFloor:
+                break;
+            case MapCell.CellType.Wall:
+                break;
+            case MapCell.CellType.Player:
+                break;
+            case MapCell.CellType.Coin:
+                break;
+            case MapCell.CellType.Mushroom:
+                break;
+            case MapCell.CellType.Enemy1:
+                enemyController.AddEnemy(MapCell.CellType.Enemy1, new Vector2(x, y));
+
+                break;
+            case MapCell.CellType.Enemy2:
+                enemyController.AddEnemy(MapCell.CellType.Enemy2, new Vector2(x, y));
+
+                break;
+            case MapCell.CellType.Obstacle:
+                break;
+            case MapCell.CellType.Exit:
+                boardGenerator.exitLocations.Add(new Vector2 (x,y));
+                break;
+            default:
+                break;
+        }
+        boardGenerator.tileData [x, y].cellType = value;
+		boardGenerator.tileData [x, y].interaction = AssignInteraction (value);
+
+    }
 
 	Interaction AssignInteraction(MapCell.CellType value)
 	{
@@ -137,15 +169,12 @@ public class RoomGenerator : MonoBehaviour {
 		{
 		case MapCell.CellType.Exit:
 			return exitInteraction;
-			Debug.Log ("assigning interaction to exit");
 			break;
 		case MapCell.CellType.Coin:
 			return treasureInteraction;
-			Debug.Log ("assigning interaction to coin");
 			break;
 		case MapCell.CellType.Mushroom:
 			return foodInteraction;
-			Debug.Log ("assigning interaction to mushroom");
 			break;
 
 		default:

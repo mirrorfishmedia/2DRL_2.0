@@ -6,10 +6,11 @@ public class EnemyController : MonoBehaviour
 {
     public List<Enemy> enemies = new List<Enemy>();
 
-    public void AddEnemy(MapCell.CellType type)
+    public void AddEnemy(MapCell.CellType type, Vector2 position)
     {
         Enemy enemy = new Enemy();
         enemy.cellType = type;
+        enemy.SetEnemyPos(position);
         enemies.Add(enemy);
     }
 }

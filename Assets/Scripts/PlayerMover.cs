@@ -41,11 +41,14 @@ public class PlayerMover : MonoBehaviour {
 		if(horizontal != 0 || vertical != 0)
 		{
 
-			if (Time.time > nextMoveTime) 
-			{
-				nextMoveTime = Time.time + moveRate;
-				TryMove (horizontal, vertical);
-			}
+
+            if (GameManager.instance.playersTurn)
+            {
+                TryMove(horizontal, vertical);
+                GameManager.instance.playersTurn = false;
+            }
+				
+			
 
 		}
 	}
@@ -53,7 +56,9 @@ public class PlayerMover : MonoBehaviour {
 	public void TryMove(int horizontal, int vertical)
 	{
 		Vector2 targetSpace = new Vector2 (horizontal, vertical) + (Vector2) transform.position;
-		if (SpaceOpen (targetSpace)) {
+        //MapCell currentCell = boardGenerator.tileData[(int)transform.position.x, (int)transform.position.y];
+		if (SpaceOpen (targetSpace))
+        {
 			//set previous space back to floor
 			boardGenerator.TrackMovingUnit (transform.position, 0);
 			boardGenerator.TrackMovingUnit (transform.position, MapCell.CellType.BlackFloor);

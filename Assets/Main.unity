@@ -136,7 +136,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 104273335}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -287, y: 191.5, z: 0}
+  m_LocalPosition: {x: -494, y: 246, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1294723420}
@@ -2660,7 +2660,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1283521259}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 367, y: 206.5, z: 0}
+  m_LocalPosition: {x: 574, y: 261, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 104273336}
@@ -2845,7 +2845,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1587458924}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -287, y: 161.67, z: 0}
+  m_LocalPosition: {x: -494, y: 216.17, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1555778065}
@@ -2924,10 +2924,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playersTurn: 0
+  enemiesMoving: 0
   currentCoins: 0
   currentFood: 0
   coinDisplay: {fileID: 1294723421}
   foodDisplay: {fileID: 1555778066}
+  enemyController: {fileID: 1694684953}
+  player: {fileID: 1675902408}
+  boardGenerator: {fileID: 1694684950}
+  turnDelay: 0.1
 --- !u!4 &1603278047
 Transform:
   m_ObjectHideFlags: 0
@@ -3145,6 +3150,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 997af1b9092266d46bafc05aae127785, type: 2}
   buildOnStart: 1
   player: {fileID: 1675902408}
+  exitLocations: []
   usedSpaces: []
 --- !u!4 &1694684951
 Transform:

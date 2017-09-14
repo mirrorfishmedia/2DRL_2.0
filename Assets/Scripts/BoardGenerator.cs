@@ -31,10 +31,10 @@ public class BoardGenerator : MonoBehaviour {
 	public bool buildOnStart;
 	public Transform player;
 
+    public List<Vector2> exitLocations;
 	public MapCell[,] tileData;
 
     private EnemyController enemyController;
-	private GameObject boardHolder;
 	private List<GameObject> objectsInLevel = new List<GameObject>();
 	private RoomGenerator roomGenerator;
 	private bool roomChainHitEdge;
@@ -53,7 +53,6 @@ public class BoardGenerator : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		//boardData = new int[boardHorizontalSize,boardVerticalSize];
 		tileData = new MapCell[boardHorizontalSize, boardVerticalSize];
 		for (int x = 0; x < boardHorizontalSize; x++) {
 			for (int y = 0; y < boardVerticalSize; y++) {
@@ -66,9 +65,8 @@ public class BoardGenerator : MonoBehaviour {
 
 	void BuildLevel()
 	{
-		boardHolder = new GameObject("BoardHolder");
 		BuildBorder();
-		FillEmptySpaceWithRooms ();
+		//FillEmptySpaceWithRooms ();
 		BuildRoomPath ();
 		DisplayTilemapInFrustum((Vector2) player.position);
 	}
@@ -88,7 +86,7 @@ public class BoardGenerator : MonoBehaviour {
 		{
 			MapCell targetTile = tileData [x, y];
 
-			if (targetTile.cellType == MapCell.CellType.BlackFloor) {
+			if (targetTile.cellType == MapCell.CellType.BlackFloor || targetTile.cellType == MapCell.CellType.GrassFloor) {
 				return true;
 			} else 
 			{
@@ -102,35 +100,6 @@ public class BoardGenerator : MonoBehaviour {
 		}
 
 		return false;
-	}
-
-
-	void ClearAndRebuild()
-	{
-		roomsOnPathCreated = 0;
-		usedSpaces.Clear ();
-		for (int i = objectsInLevel.Count - 1; i >= 0 ; i--) 
-		{
-			GameObject toDestroy = objectsInLevel [i];
-			objectsInLevel.Remove (objectsInLevel [i]);
-			Destroy (toDestroy);
-		}
-		BuildLevel ();
-	}
-
-	void ClearInstantiated()
-	{
-		for (int i = objectsInLevel.Count - 1; i >= 0 ; i--) 
-		{
-			GameObject toDestroy = objectsInLevel [i];
-			objectsInLevel.Remove (objectsInLevel [i]);
-			Destroy (toDestroy);
-		}
-	}
-
-	public void TrackInstantiatedObject(GameObject trackedObject)
-	{
-		objectsInLevel.Add (trackedObject);
 	}
 
 	bool SpaceValid(Vector2 spaceToTest)
@@ -170,17 +139,14 @@ public class BoardGenerator : MonoBehaviour {
 
 	public void BuildRoomPath()
 	{
-		
 		Vector2 startLoc = roomSequenceStartLocations [Random.Range (0, roomSequenceStartLocations.Length)];
 		RoomTemplate firstRoom = startRoomTemplates [Random.Range (0, startRoomTemplates.Length)];
 
-		currentLocation = startLoc;
+        currentLocation = startLoc;
 		currentRoom = firstRoom;
-
 
 		for (int i = 0; i < 100; i++) 
 		{
-			//Debug.Log ("loop " + i);
 			ChooseDirection ();
 			if (roomsOnPathCreated >= roomsOnPathDesired) 
 			{
@@ -189,15 +155,17 @@ public class BoardGenerator : MonoBehaviour {
 			}
 				
 		}
+        ChooseExit();
 
-	}
+
+    }
 
 	public bool ChooseDirection()
 	{
 		RoomAndDirection nextResult = currentRoom.ChooseNextRoom (this, currentLocation, usedSpaces);
 
-
-		if (nextResult != null) {
+		if (nextResult != null)
+        {
 			Vector2 nextLocation = nextResult.selectedDirection + currentLocation;
 			RoomTemplate nextRoom = nextResult.selectedRoom;
 			usedSpaces.Add (nextLocation);
@@ -212,8 +180,6 @@ public class BoardGenerator : MonoBehaviour {
 		}
 
 	}
-
-
 
 	public void BuildBorder()
 	{
@@ -274,6 +240,7 @@ public class BoardGenerator : MonoBehaviour {
 		}
 			
 	}
+
 	public void DisplayTilemapInFrustum(Vector2 playerPos)
 	{
         tilemap.ClearAllTiles();
@@ -286,37 +253,35 @@ public class BoardGenerator : MonoBehaviour {
 		for (int x = frustumStartX; x < frustumStartX + cameraFrustumX; x++) {
 			for (int y = frustumStartY; y < frustumStartY + cameraFrustumY; y++) 
 			{
-				//int boardDataValue = boardData [x, y];
 				if (TestIfInGrid (x,y)) 
 				{
 					MapCell.CellType tileDataValue = tileData[x,y].cellType;
 					switch (tileDataValue) 
 					{
 					case MapCell.CellType.BlackFloor:
-                            //InstantiateFromArray (blackFloor, x, y);
                             SetTileFromGrid(blackFloorTile, x, y);
 						break;
-					case MapCell.CellType.Wall:
-                            //InstantiateFromArray (wall, x, y);
+                    case MapCell.CellType.GrassFloor:
+                        SetTileFromGrid(grassTile, x, y);
+                        break;
+                        case MapCell.CellType.Wall:
                             SetTileFromGrid(wall, x, y);
                         break;
 					case MapCell.CellType.Exit:
-                            //InstantiateFromArray (exit, x, y);
                             SetTileFromGrid(exitTile, x, y);
 						break;
 					case MapCell.CellType.Coin:
-                            //Debug.Log ("generating treasure");
-                            //InstantiateFromArray (coin, x, y);
                             SetTileFromGrid(coin, x, y);
                             break;
-					case MapCell.CellType.Enemy1:
-                            //InstantiateFromArray (enemy1, x, y);
-                            SetTileFromGrid(enemy1, x, y);
-                            enemyController.AddEnemy(MapCell.CellType.Enemy1);
+                        case MapCell.CellType.Mushroom:
+                            SetTileFromGrid(mushroom, x, y);
                             break;
-					case MapCell.CellType.Obstacle:
+					case MapCell.CellType.Enemy1:
+                            SetTileFromGrid(enemy1, x, y);
+                            break;
+					case MapCell.CellType.Enemy2:
                             SetTileFromGrid(enemy2, x, y);
-                            enemyController.AddEnemy(MapCell.CellType.Enemy2);
+                            enemyController.AddEnemy(MapCell.CellType.Enemy2, new Vector2(x, y));
                             break;
 
 					}
@@ -332,19 +297,21 @@ public class BoardGenerator : MonoBehaviour {
         tilemap.SetTile(pos, tile);
     }
 
-	void InstantiateFromArray (GameObject prefab, float xCoord, float yCoord)
-	{
-		// Create a random index for the array.
-		//int randomIndex = Random.Range(0, prefabs.Length);
+    void ChooseExit()
+    {
+        Vector2 exitLocation = exitLocations[exitLocations.Count-1];
+        Debug.Log("selected exit location " + exitLocation);
+        exitLocations.RemoveAt(exitLocations.Count-1);
+        for (int i = 0; i < exitLocations.Count; i++)
+        {
+            int x = (int)exitLocations[i].x;
+            int y = (int)exitLocations[i].y;
+            tileData[x, y].cellType = MapCell.CellType.GrassFloor;
+            tileData[x, y].interaction = null;
 
-		// The position to be instantiated at is based on the coordinates.
-		Vector3 position = new Vector3(xCoord, yCoord, 0f);
+            Debug.Log("setting " + x + " " + y + "to grass");
+        }
 
-		// Create an instance of the prefab from the random index of the array.
-		GameObject tileInstance = Instantiate(prefab, position, Quaternion.identity) as GameObject;
+    }
 
-		// Set the tile's parent to the board holder.
-		tileInstance.transform.parent = boardHolder.transform;
-		TrackInstantiatedObject (tileInstance);
-	}
 }
