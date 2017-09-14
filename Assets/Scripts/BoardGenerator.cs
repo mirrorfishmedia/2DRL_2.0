@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class BoardGenerator : MonoBehaviour {
 
@@ -12,16 +13,17 @@ public class BoardGenerator : MonoBehaviour {
 
 	public int roomSize = 10;
 	public int roomsOnPathDesired = 20;
-	public GameObject exitPrefab;
-	public GameObject blackFloor;
-	public GameObject grassFloor;
-	public GameObject exit;
 
-	public GameObject enemy1;
-	public GameObject enemy2;
-	public GameObject coin;
-	public GameObject mushroom;
-	public GameObject wall;
+    public Tilemap tilemap;
+
+    public Tile blackFloorTile;
+    public Tile exitTile;
+    public Tile grassTile;
+    public Tile enemy1;
+    public Tile enemy2;
+    public Tile coin;
+    public Tile mushroom;
+    public Tile wall;
 
 	public Vector2[] roomSequenceStartLocations;
 	public RoomTemplate[] startRoomTemplates;
@@ -31,7 +33,7 @@ public class BoardGenerator : MonoBehaviour {
 
 	public MapCell[,] tileData;
 
-
+    private EnemyController enemyController;
 	private GameObject boardHolder;
 	private List<GameObject> objectsInLevel = new List<GameObject>();
 	private RoomGenerator roomGenerator;
@@ -44,6 +46,7 @@ public class BoardGenerator : MonoBehaviour {
 
 	void Awake()
 	{
+        enemyController = GetComponent<EnemyController>();
 		roomGenerator = GetComponent<RoomGenerator> ();
 	}
 
@@ -67,25 +70,16 @@ public class BoardGenerator : MonoBehaviour {
 		BuildBorder();
 		FillEmptySpaceWithRooms ();
 		BuildRoomPath ();
-		//BuildGameObjectsFromGrid ();
-		BuildGridInFrustum((Vector2) player.position);
+		DisplayTilemapInFrustum((Vector2) player.position);
 	}
 	
-	void Update () 
-	{
-		if (Input.GetButtonDown ("Jump")) {
-			ClearAndRebuild ();
-		}
-	}
 
 	public void TrackMovingUnit(Vector2 unitCoordinates, MapCell.CellType tileType)
 	{
 		int unitX = (int)unitCoordinates.x;
 		int unitY = (int)unitCoordinates.y;
-		//boardData [unitX, unitY] = unitID;
 		tileData [unitX, unitY].cellType = tileType;
-		ClearInstantiated ();
-		BuildGridInFrustum (player.position);
+		DisplayTilemapInFrustum (player.position);
 	}
 
 	public bool CheckMapForObstruction(int x, int y)
@@ -101,8 +95,8 @@ public class BoardGenerator : MonoBehaviour {
 				if (targetTile.interaction != null) 
 				{
 					targetTile.interaction.RespondToInteraction (targetTile);
-					ClearInstantiated ();
-					BuildGridInFrustum (player.position);
+					//ClearInstantiated ();
+					DisplayTilemapInFrustum (player.position);
 				}
 			}
 		}
@@ -246,9 +240,9 @@ public class BoardGenerator : MonoBehaviour {
 		// While the value for Y is less than the end value...
 		while (currentY <= endingY)
 		{
-			// ... instantiate an outer wall tile at the x coordinate and the current y coordinate.
-			InstantiateFromArray(wall, xCoord, currentY);
-
+            // ... instantiate an outer wall tile at the x coordinate and the current y coordinate.
+            //InstantiateFromArray(wall, xCoord, currentY);
+            SetTileFromGrid(wall, (int)xCoord, (int)currentY); 
 			currentY++;
 		}
 	}
@@ -262,10 +256,10 @@ public class BoardGenerator : MonoBehaviour {
 		// While the value for X is less than the end value...
 		while (currentX <= endingX)
 		{
-			// ... instantiate an outer wall tile at the y coordinate and the current x coordinate.
-			InstantiateFromArray (wall, currentX, yCoord);
-
-			currentX++;
+            // ... instantiate an outer wall tile at the y coordinate and the current x coordinate.
+            //InstantiateFromArray (wall, currentX, yCoord);
+            SetTileFromGrid(wall, (int)currentX, (int)yCoord);
+            currentX++;
 		}
 	}
 
@@ -280,8 +274,9 @@ public class BoardGenerator : MonoBehaviour {
 		}
 			
 	}
-	public void BuildGridInFrustum(Vector2 playerPos)
+	public void DisplayTilemapInFrustum(Vector2 playerPos)
 	{
+        tilemap.ClearAllTiles();
 		int playerX = (int)playerPos.x;
 		int playerY = (int)playerPos.y;
 
@@ -298,24 +293,31 @@ public class BoardGenerator : MonoBehaviour {
 					switch (tileDataValue) 
 					{
 					case MapCell.CellType.BlackFloor:
-						InstantiateFromArray (blackFloor, x, y);
+                            //InstantiateFromArray (blackFloor, x, y);
+                            SetTileFromGrid(blackFloorTile, x, y);
 						break;
 					case MapCell.CellType.Wall:
-						InstantiateFromArray (wall, x, y);
-						break;
+                            //InstantiateFromArray (wall, x, y);
+                            SetTileFromGrid(wall, x, y);
+                        break;
 					case MapCell.CellType.Exit:
-						InstantiateFromArray (exit, x, y);
+                            //InstantiateFromArray (exit, x, y);
+                            SetTileFromGrid(exitTile, x, y);
 						break;
 					case MapCell.CellType.Coin:
-						Debug.Log ("generating treasure");
-						InstantiateFromArray (coin, x, y);
-						break;
+                            //Debug.Log ("generating treasure");
+                            //InstantiateFromArray (coin, x, y);
+                            SetTileFromGrid(coin, x, y);
+                            break;
 					case MapCell.CellType.Enemy1:
-						InstantiateFromArray (enemy1, x, y);
-						break;
+                            //InstantiateFromArray (enemy1, x, y);
+                            SetTileFromGrid(enemy1, x, y);
+                            enemyController.AddEnemy(MapCell.CellType.Enemy1);
+                            break;
 					case MapCell.CellType.Obstacle:
-						InstantiateFromArray (wall, x, y);
-						break;
+                            SetTileFromGrid(enemy2, x, y);
+                            enemyController.AddEnemy(MapCell.CellType.Enemy2);
+                            break;
 
 					}
 				}
@@ -323,7 +325,13 @@ public class BoardGenerator : MonoBehaviour {
 			}
 		}
 	}
-		
+
+    void SetTileFromGrid(Tile tile, int x, int y)
+    {
+        Vector3Int pos = new Vector3Int(x, y, 0);
+        tilemap.SetTile(pos, tile);
+    }
+
 	void InstantiateFromArray (GameObject prefab, float xCoord, float yCoord)
 	{
 		// Create a random index for the array.

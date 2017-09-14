@@ -136,7 +136,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 104273335}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -520, y: 211, z: 0}
+  m_LocalPosition: {x: -287, y: 191.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1294723420}
@@ -212,7 +212,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 140021809}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 6.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1175186019}
@@ -2422,7 +2422,7 @@ Tilemap:
   - serializedVersion: 1
     m_DirtyIndex: 0
   - serializedVersion: 1
-    m_DirtyIndex: 2
+    m_DirtyIndex: 0
 --- !u!114 &140021813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2459,7 +2459,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 712218708}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1675902408}
@@ -2509,6 +2509,34 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!1 &1115682037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1115682038}
+  m_Layer: 0
+  m_Name: Enemy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1115682038
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1115682037}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 108.97742, y: 66.03069, z: -2.138945}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1175186017
 GameObject:
   m_ObjectHideFlags: 0
@@ -2632,7 +2660,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1283521259}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 600, y: 226, z: 0}
+  m_LocalPosition: {x: 367, y: 206.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 104273336}
@@ -2817,7 +2845,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1587458924}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -520, y: 181.17, z: 0}
+  m_LocalPosition: {x: -287, y: 161.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1555778065}
@@ -3053,7 +3081,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitID: 2
-  tileType: 2
+  tileType: 3
 --- !u!1 &1694684949
 GameObject:
   m_ObjectHideFlags: 0
@@ -3064,6 +3092,7 @@ GameObject:
   - component: {fileID: 1694684951}
   - component: {fileID: 1694684950}
   - component: {fileID: 1694684952}
+  - component: {fileID: 1694684953}
   m_Layer: 0
   m_Name: BoardGenerator
   m_TagString: Untagged
@@ -3088,15 +3117,15 @@ MonoBehaviour:
   cameraFrustumY: 18
   roomSize: 10
   roomsOnPathDesired: 60
-  exitPrefab: {fileID: 1267978378634086, guid: db4942e0a5e445448845bf7ebb06d5c5, type: 2}
-  blackFloor: {fileID: 1529554858047600, guid: 844d26fb0a46f2a4c8e7e3384fed913c, type: 2}
-  grassFloor: {fileID: 1971428482311624, guid: d9735f83eb84eb24a8649e390e8bb523, type: 2}
-  exit: {fileID: 1267978378634086, guid: db4942e0a5e445448845bf7ebb06d5c5, type: 2}
-  enemy1: {fileID: 1877783239666240, guid: 138cff284d937ec49acb5e16122cff1d, type: 2}
-  enemy2: {fileID: 1039810714174570, guid: adf0484dff9245e419a8f6c225de6581, type: 2}
-  coin: {fileID: 1289197075884636, guid: 4e9e5036feee5724fa2ef26997d0a6bf, type: 2}
-  mushroom: {fileID: 1948572700681850, guid: 0de36b8e7d5bc364e8974c1b523a5dcb, type: 2}
-  wall: {fileID: 1588110854051134, guid: 29da9a3fa441a144c838f80fa61f0e7e, type: 2}
+  tilemap: {fileID: 140021812}
+  blackFloorTile: {fileID: 11400000, guid: e08cd58680f9f3946a1ea3e96ae7bb49, type: 2}
+  exitTile: {fileID: 11400000, guid: efc5a4af5b9fea946a7f177cbd2c328c, type: 2}
+  grassTile: {fileID: 11400000, guid: 2b951fec424f8f747a8fbd718683ad51, type: 2}
+  enemy1: {fileID: 11400000, guid: 29097ece74cf50c479b8710b7e2550cb, type: 2}
+  enemy2: {fileID: 11400000, guid: 95c80eddaf73319499a062233812449f, type: 2}
+  coin: {fileID: 11400000, guid: 0f7d00580da0237438ebdb20620c4a50, type: 2}
+  mushroom: {fileID: 11400000, guid: f7ae24b00592e1f42a19305d3c0a96f6, type: 2}
+  wall: {fileID: 11400000, guid: 7b91f706c03be2b41a84764a9e1532d8, type: 2}
   roomSequenceStartLocations:
   - {x: 50, y: 50}
   startRoomTemplates:
@@ -3149,6 +3178,18 @@ MonoBehaviour:
     type: 2}
   foodInteraction: {fileID: 11400000, guid: a05a349a16aa35c459a97c3b23f1e07d, type: 2}
   buildOnStart: 0
+--- !u!114 &1694684953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1694684949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ec47c246618627428c770a84d84ba39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemies: []
 --- !u!1 &2089718256
 GameObject:
   m_ObjectHideFlags: 0
@@ -3199,7 +3240,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0

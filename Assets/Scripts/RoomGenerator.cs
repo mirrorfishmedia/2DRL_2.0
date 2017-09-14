@@ -128,7 +128,7 @@ public class RoomGenerator : MonoBehaviour {
 	{
 		boardGenerator.tileData [gridX, gridY].cellType = value;
 		boardGenerator.tileData [gridX, gridY].interaction = AssignInteraction (value);
-		Debug.Log ("write to board grid, interaction: " + boardGenerator.tileData [gridX, gridY].interaction);
+		//Debug.Log ("write to board grid, interaction: " + boardGenerator.tileData [gridX, gridY].interaction);
 	}
 
 	Interaction AssignInteraction(MapCell.CellType value)
@@ -141,11 +141,11 @@ public class RoomGenerator : MonoBehaviour {
 			break;
 		case MapCell.CellType.Coin:
 			return treasureInteraction;
-			Debug.Log ("assigning interaction to exit");
+			Debug.Log ("assigning interaction to coin");
 			break;
 		case MapCell.CellType.Mushroom:
 			return foodInteraction;
-			Debug.Log ("assigning interaction to exit");
+			Debug.Log ("assigning interaction to mushroom");
 			break;
 
 		default:
