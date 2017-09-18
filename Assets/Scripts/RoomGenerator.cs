@@ -9,11 +9,9 @@ public class RoomGenerator : MonoBehaviour {
 	public RoomTemplate[] roomTemplates;
 
 
-	public Interaction exitInteraction;
-	public Interaction treasureInteraction;
-	public Interaction foodInteraction;
 
-	public bool buildOnStart;
+
+    public bool buildOnStart;
 
 	private BoardGenerator boardGenerator;
     private EnemyController enemyController;
@@ -22,7 +20,8 @@ public class RoomGenerator : MonoBehaviour {
 	{
 		boardGenerator = GetComponent<BoardGenerator> ();
         enemyController = GetComponent<EnemyController>();
-	}
+
+    }
 
 	void Start()
 	{
@@ -56,26 +55,30 @@ public class RoomGenerator : MonoBehaviour {
 
 
 				char selectedChar = processedCharData [j, i];
-
-				switch (selectedChar) 
+                int x = (int)spawnPos.x;
+                int y = (int)spawnPos.y;
+                switch (selectedChar) 
 				{
 				case '1':
-					WriteToBoardGrid (MapCell.CellType.Wall, (int)spawnPos.x, (int)spawnPos.y);
+					boardGenerator.WriteToBoardGrid (MapCell.CellType.Wall, x, y);
 					break;
 				case '0':
-					WriteToBoardGrid (MapCell.CellType.BlackFloor, (int)spawnPos.x, (int)spawnPos.y);
+                    boardGenerator.WriteToBoardGrid (MapCell.CellType.BlackFloor, x,y);
 					break;
 				case '3':
-					WriteToBoardGrid (MapCell.CellType.Exit, (int)spawnPos.x, (int)spawnPos.y);
+					boardGenerator.WriteToBoardGrid (MapCell.CellType.Exit, x, y);
 					break;
 				case '4':
-					WriteToBoardGrid (WriteRandomTileToGrid(roomTemplate.enemyTiles), (int)spawnPos.x, (int)spawnPos.y);
-					break;
+                        MapCell.CellType type = WriteRandomTileToGrid(roomTemplate.enemyTiles);                  
+                            boardGenerator.WriteToBoardGrid (type, x, y);
+                    enemyController.AddEnemy(type, new Vector2(x, y));
+
+                        break;
 				case '5':
-					WriteToBoardGrid (WriteRandomTileToGrid(roomTemplate.pickUpTiles), (int)spawnPos.x, (int)spawnPos.y);
+					boardGenerator.WriteToBoardGrid (WriteRandomTileToGrid(roomTemplate.pickUpTiles), x, y);
 					break;
 				case '6':
-					WriteToBoardGrid (WriteRandomTileToGrid(roomTemplate.obstacleTiles), (int)spawnPos.x, (int)spawnPos.y);
+					boardGenerator.WriteToBoardGrid (WriteRandomTileToGrid(roomTemplate.obstacleTiles), x, y);
 					break;
 				default:
 					break;
@@ -126,62 +129,9 @@ public class RoomGenerator : MonoBehaviour {
 		return rotatedRoomChars;
 	}
 
-	void WriteToBoardGrid(MapCell.CellType value, int x, int y)
-	{
-        switch (value)
-        {
-            case MapCell.CellType.BlackFloor:
-                break;
-            case MapCell.CellType.GrassFloor:
-                break;
-            case MapCell.CellType.Wall:
-                break;
-            case MapCell.CellType.Player:
-                break;
-            case MapCell.CellType.Coin:
-                break;
-            case MapCell.CellType.Mushroom:
-                break;
-            case MapCell.CellType.Enemy1:
-                enemyController.AddEnemy(MapCell.CellType.Enemy1, new Vector2(x, y));
+	
 
-                break;
-            case MapCell.CellType.Enemy2:
-                enemyController.AddEnemy(MapCell.CellType.Enemy2, new Vector2(x, y));
-
-                break;
-            case MapCell.CellType.Obstacle:
-                break;
-            case MapCell.CellType.Exit:
-                boardGenerator.exitLocations.Add(new Vector2 (x,y));
-                break;
-            default:
-                break;
-        }
-        boardGenerator.tileData [x, y].cellType = value;
-		boardGenerator.tileData [x, y].interaction = AssignInteraction (value);
-
-    }
-
-	Interaction AssignInteraction(MapCell.CellType value)
-	{
-		switch (value) 
-		{
-		case MapCell.CellType.Exit:
-			return exitInteraction;
-			break;
-		case MapCell.CellType.Coin:
-			return treasureInteraction;
-			break;
-		case MapCell.CellType.Mushroom:
-			return foodInteraction;
-			break;
-
-		default:
-			return null;
-			break;
-		}
-	}
+	
 
 
 }

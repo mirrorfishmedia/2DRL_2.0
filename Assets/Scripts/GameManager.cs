@@ -53,7 +53,6 @@ public class GameManager : MonoBehaviour {
         
         for (int i = 0; i < enemyController.enemies.Count; i++)
         {
-            Debug.Log("looping over enemies : " + i);
             enemyController.enemies[i].MoveToPlayer((Vector2)player.position, boardGenerator);
         }
         

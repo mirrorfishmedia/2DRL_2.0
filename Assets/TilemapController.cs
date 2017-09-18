@@ -22,8 +22,4 @@ public class TilemapController : MonoBehaviour {
 		tileMap.SetTile (new Vector3Int (10, 10, 0), testTile1);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

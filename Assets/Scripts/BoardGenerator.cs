@@ -25,7 +25,13 @@ public class BoardGenerator : MonoBehaviour {
     public Tile mushroom;
     public Tile wall;
 
-	public Vector2[] roomSequenceStartLocations;
+
+    public Interaction exitInteraction;
+    public Interaction treasureInteraction;
+    public Interaction foodInteraction;
+    public Interaction enemy1Interaction;
+
+    public Vector2[] roomSequenceStartLocations;
 	public RoomTemplate[] startRoomTemplates;
 	public RoomTemplate[] randomFillRooms;
 	public bool buildOnStart;
@@ -34,24 +40,25 @@ public class BoardGenerator : MonoBehaviour {
     public List<Vector2> exitLocations;
 	public MapCell[,] tileData;
 
-    private EnemyController enemyController;
-	private List<GameObject> objectsInLevel = new List<GameObject>();
 	private RoomGenerator roomGenerator;
 	private bool roomChainHitEdge;
 	public List<Vector2> usedSpaces = new List<Vector2>();
 	private Vector2 currentLocation;
 	private int roomsOnPathCreated;
 	private RoomTemplate currentRoom;
+    private EnemyController enemyController;
 
 
-	void Awake()
+
+    void Awake()
 	{
-        enemyController = GetComponent<EnemyController>();
 		roomGenerator = GetComponent<RoomGenerator> ();
-	}
+        enemyController = GetComponent<EnemyController>();
 
-	// Use this for initialization
-	void Start () 
+    }
+
+    // Use this for initialization
+    void Start () 
 	{
 		tileData = new MapCell[boardHorizontalSize, boardVerticalSize];
 		for (int x = 0; x < boardHorizontalSize; x++) {
@@ -84,16 +91,17 @@ public class BoardGenerator : MonoBehaviour {
 	{
 		if (TestIfInGrid(x,y)) 
 		{
-			MapCell targetTile = tileData [x, y];
+			MapCell targetCell = tileData [x, y];
 
-			if (targetTile.cellType == MapCell.CellType.BlackFloor || targetTile.cellType == MapCell.CellType.GrassFloor) {
+			if (targetCell.cellType == MapCell.CellType.BlackFloor || targetCell.cellType == MapCell.CellType.GrassFloor) {
 				return true;
 			} else 
 			{
-				if (targetTile.interaction != null) 
+//                Debug.Log("targetcell interaction 1" + targetCell.interaction);
+                if (targetCell.interaction != null) 
 				{
-					targetTile.interaction.RespondToInteraction (targetTile);
-					//ClearInstantiated ();
+//                    Debug.Log("targetcell interaction 2" + targetCell.interaction);
+					targetCell.interaction.RespondToInteraction (targetCell);
 					DisplayTilemapInFrustum (player.position);
 				}
 			}
@@ -102,18 +110,77 @@ public class BoardGenerator : MonoBehaviour {
 		return false;
 	}
 
-    public void TryMove(int horizontal, int vertical, MapCell.CellType cellType, Transform movingObject)
+    public void TryMove(int x, int y, MapCell.CellType cellType, Transform movingObject)
     {
-        Vector2 targetSpace = new Vector2(horizontal, vertical) + (Vector2)movingObject.transform.position;
+        Vector2 targetSpace = new Vector2(x, y) + (Vector2)movingObject.transform.position;
         if (SpaceOpen(targetSpace))
         {
             //set previous space back to floor
             TrackMovingUnit(movingObject.transform.position, 0);
             TrackMovingUnit(movingObject.transform.position, MapCell.CellType.BlackFloor);
+            WriteToBoardGrid(MapCell.CellType.BlackFloor, (int)movingObject.transform.position.x, (int)movingObject.transform.position.y);
             movingObject.transform.position = targetSpace;
             TrackMovingUnit(movingObject.transform.position, cellType);
+            WriteToBoardGrid(cellType, (int)targetSpace.x, (int)targetSpace.y);
+            Debug.Log("x y before write to grid " + x + " " + y);
+           
         }
 
+    }
+
+
+    public void WriteToBoardGrid(MapCell.CellType value, int x, int y)
+    {
+        switch (value)
+        {
+            case MapCell.CellType.BlackFloor:
+                break;
+            case MapCell.CellType.GrassFloor:
+                break;
+            case MapCell.CellType.Wall:
+                break;
+            case MapCell.CellType.Player:
+                break;
+            case MapCell.CellType.Coin:
+                break;
+            case MapCell.CellType.Mushroom:
+                break;
+            case MapCell.CellType.Enemy1:
+
+                break;
+            case MapCell.CellType.Enemy2:
+
+                break;
+            case MapCell.CellType.Obstacle:
+                break;
+            case MapCell.CellType.Exit:
+                exitLocations.Add(new Vector2(x, y));
+                break;
+            default:
+                break;
+        }
+        
+        tileData[x, y].cellType = value;
+
+        tileData[x, y].interaction = AssignInteraction(value);
+        Debug.Log("assigned interaction " + AssignInteraction(value));
+    }
+
+    Interaction AssignInteraction(MapCell.CellType value)
+    {
+        switch (value)
+        {
+            case MapCell.CellType.Exit:
+                return exitInteraction;
+            case MapCell.CellType.Coin:
+                return treasureInteraction;
+            case MapCell.CellType.Mushroom:
+                return foodInteraction;
+            case MapCell.CellType.Enemy1:
+                return enemy1Interaction;
+            default:
+                return null;
+        }
     }
 
     bool SpaceOpen(Vector2 targetSpace)
@@ -330,7 +397,7 @@ public class BoardGenerator : MonoBehaviour {
             tileData[x, y].cellType = MapCell.CellType.GrassFloor;
             tileData[x, y].interaction = null;
 
-            Debug.Log("setting " + x + " " + y + "to grass");
+            //Debug.Log("setting " + x + " " + y + "to grass");
         }
 
     }

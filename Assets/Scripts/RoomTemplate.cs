@@ -94,7 +94,7 @@ public class RoomTemplate : ScriptableObject
 	{
 		if (usedSpaces.Contains(spaceToTest))
 		{
-			Debug.Log ("space filled, cant build room");
+			//Debug.Log ("space filled, cant build room");
 			return false;
 
 		}
@@ -102,11 +102,11 @@ public class RoomTemplate : ScriptableObject
 		{
 			if (spaceToTest.x < generator.boardHorizontalSize && spaceToTest.y < generator.boardVerticalSize && spaceToTest.x > 0 && spaceToTest.y > 0) {
 
-				Debug.Log ("space not filled, in board");
+				//Debug.Log ("space not filled, in board");
 				return true;
 
 			} else {
-				Debug.Log ("out of board");
+				//Debug.Log ("out of board");
 				return false;
 			}
 
