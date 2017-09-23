@@ -136,7 +136,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 104273335}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -494, y: 246, z: 0}
+  m_LocalPosition: {x: -373, y: 203.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1294723420}
@@ -3036,7 +3036,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1283521259}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 574, y: 261, z: 0}
+  m_LocalPosition: {x: 453, y: 218.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 104273336}
@@ -3221,7 +3221,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1587458924}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -494, y: 216.17, z: 0}
+  m_LocalPosition: {x: -373, y: 173.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1555778065}
@@ -3474,6 +3474,7 @@ GameObject:
   - component: {fileID: 1694684950}
   - component: {fileID: 1694684952}
   - component: {fileID: 1694684953}
+  - component: {fileID: 1694684954}
   m_Layer: 0
   m_Name: BoardGenerator
   m_TagString: Untagged
@@ -3530,7 +3531,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: be92f3c41ff7bb8478c97d698d49f496, type: 2}
   - {fileID: 11400000, guid: 997af1b9092266d46bafc05aae127785, type: 2}
   buildOnStart: 1
-  player: {fileID: 1675902408}
   exitLocations: []
   usedSpaces: []
 --- !u!4 &1694684951
@@ -3573,6 +3573,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemies: []
+--- !u!114 &1694684954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1694684949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 599c5547eba3e6649b0805826aef5cc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapCellObjects:
+  - {fileID: 11400000, guid: 83206f2be64bc6546a4e66701aa7acec, type: 2}
+  - {fileID: 11400000, guid: 68814e37daa4b854994d6ea99c3c78e7, type: 2}
+  - {fileID: 11400000, guid: 863a50cfb1e7c484b8f2a86912859909, type: 2}
+  - {fileID: 11400000, guid: 11b454666ef6b394d869ca2a3dc79f1e, type: 2}
+  - {fileID: 11400000, guid: 6dc713d4e218c1541afc36d6b77f8ce1, type: 2}
 --- !u!1 &2089718256
 GameObject:
   m_ObjectHideFlags: 0

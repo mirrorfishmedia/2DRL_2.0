@@ -44,18 +44,14 @@ public class GameManager : MonoBehaviour {
             return;
         }
 
-        StartCoroutine(MoveEnemies());
+        StartCoroutine(EnemyTurn());
     }
 
-    private IEnumerator MoveEnemies()
+    private IEnumerator EnemyTurn()
     {
         enemiesMoving = true;
-        
-        for (int i = 0; i < enemyController.enemies.Count; i++)
-        {
-            enemyController.enemies[i].MoveToPlayer((Vector2)player.position, boardGenerator);
-        }
-        
+
+        enemyController.UpdateEnemies(boardGenerator);
         yield return waitBetweenTurns;
         playersTurn = true;
         enemiesMoving = false;
@@ -72,10 +68,5 @@ public class GameManager : MonoBehaviour {
 		currentFood += value;
 		foodDisplay.text = currentFood.ToString ();
 	}
-
-    public void EndPlayerTurn()
-    {
-       
-        
-    }
+    
 }

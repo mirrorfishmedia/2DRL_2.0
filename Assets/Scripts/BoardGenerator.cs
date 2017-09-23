@@ -35,7 +35,6 @@ public class BoardGenerator : MonoBehaviour {
 	public RoomTemplate[] startRoomTemplates;
 	public RoomTemplate[] randomFillRooms;
 	public bool buildOnStart;
-	public Transform player;
 
     public List<Vector2> exitLocations;
 	public MapCell[,] tileData;
@@ -47,13 +46,14 @@ public class BoardGenerator : MonoBehaviour {
 	private int roomsOnPathCreated;
 	private RoomTemplate currentRoom;
     private EnemyController enemyController;
-
+    private CellCatalog cellCatalog;
 
 
     void Awake()
 	{
 		roomGenerator = GetComponent<RoomGenerator> ();
         enemyController = GetComponent<EnemyController>();
+        cellCatalog = GetComponent<CellCatalog>();
 
     }
 
@@ -73,9 +73,9 @@ public class BoardGenerator : MonoBehaviour {
 	void BuildLevel()
 	{
 		BuildBorder();
-		//FillEmptySpaceWithRooms ();
+		FillEmptySpaceWithRooms ();
 		BuildRoomPath ();
-		DisplayTilemapInFrustum((Vector2) player.position);
+		DisplayTilemapInFrustum((Vector2) GameManager.instance.player.position);
 	}
 	
 
@@ -84,7 +84,7 @@ public class BoardGenerator : MonoBehaviour {
 		int unitX = (int)unitCoordinates.x;
 		int unitY = (int)unitCoordinates.y;
 		tileData [unitX, unitY].cellType = tileType;
-		DisplayTilemapInFrustum (player.position);
+		DisplayTilemapInFrustum (GameManager.instance.player.position);
 	}
 
 	public bool CheckMapForObstruction(int x, int y)
@@ -102,7 +102,7 @@ public class BoardGenerator : MonoBehaviour {
 				{
 //                    Debug.Log("targetcell interaction 2" + targetCell.interaction);
 					targetCell.interaction.RespondToInteraction (targetCell);
-					DisplayTilemapInFrustum (player.position);
+					DisplayTilemapInFrustum (GameManager.instance.player.position);
 				}
 			}
 		}
@@ -122,7 +122,6 @@ public class BoardGenerator : MonoBehaviour {
             movingObject.transform.position = targetSpace;
             TrackMovingUnit(movingObject.transform.position, cellType);
             WriteToBoardGrid(cellType, (int)targetSpace.x, (int)targetSpace.y);
-            Debug.Log("x y before write to grid " + x + " " + y);
            
         }
 
@@ -159,11 +158,12 @@ public class BoardGenerator : MonoBehaviour {
             default:
                 break;
         }
-        
+
+        tileData[x, y].x = x;
+        tileData[x, y].y = y;
         tileData[x, y].cellType = value;
 
         tileData[x, y].interaction = AssignInteraction(value);
-        Debug.Log("assigned interaction " + AssignInteraction(value));
     }
 
     Interaction AssignInteraction(MapCell.CellType value)

@@ -5,19 +5,20 @@ using UnityEngine;
 [System.Serializable]
 public class Enemy
 {
-    public Vector2 enemyPos;
     public MapCell.CellType cellType;
     public int maxHp = 3;
     public int currentHp;
+    public int x;
+    public int y;
 
-    private Transform enemyTransform;
+    public Transform enemyTransform;
 
 
     public void SetupEnemy(Vector2 position, Transform newTransform)
     {
         currentHp = maxHp;
-        enemyPos = position;
         enemyTransform = newTransform;
+        enemyTransform.position = position;
     }
 
     public void ModifyHp(int hpChange)
@@ -67,8 +68,10 @@ public class Enemy
         {
             yDir = 0;
         }
+
         boardGenerator.TryMove(xDir, yDir, MapCell.CellType.Enemy1, enemyTransform);
-        
+        x = (int)enemyTransform.position.x;
+        y = (int)enemyTransform.position.y;
     }
 
 }
