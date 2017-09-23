@@ -20,7 +20,7 @@ public class TilemapToRoom : MonoBehaviour {
 
     public void WriteTilemapToRoomTemplate()
     {
-        int charArrayIndex = 0;
+        int charIndex = 0;
         for (int x = 0; x < xSize; x++)
         {
             for (int y = 0; y < ySize; y++)
@@ -30,19 +30,25 @@ public class TilemapToRoom : MonoBehaviour {
                 if (foundTile == null)
                 {
                     Debug.Log("found tile is null");
-                    roomTemplate.roomChars[charArrayIndex] = '0';
+                    roomTemplate.roomChars[charIndex] = '0';
+                    charIndex++;
                 }
                 else
                 {
                     Debug.Log("else found tile is  " + foundTile);
                     MapCellObject mapCellObject;
                     mapCellObject = cellCatalog.CheckCellCatalog(foundTile);
-                    roomTemplate.roomChars[charArrayIndex] = mapCellObject.symbol;
+                    roomTemplate.roomChars[charIndex] = mapCellObject.symbol;
+                    charIndex++;
                 }
-                
-                charArrayIndex++;
+
             }
         } 
+    }
+
+    void DebugTileArray()
+    {
+        
     }
 
     Tile GetTileFromGrid(int x, int y)

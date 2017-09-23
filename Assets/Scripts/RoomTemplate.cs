@@ -20,8 +20,8 @@ public class RoomTemplate : ScriptableObject
 
 	public RoomAndDirection ChooseNextRoom(BoardGenerator generator, Vector2 currentLocation, List<Vector2> usedSpaces)
 	{
-		int direction = Random.Range (0, 4);
 
+        int direction = Random.Range(0, 4);
 		List<RoomAndDirection> results = new List<RoomAndDirection> ();
 
 		if (direction == 0 && northList != null) 

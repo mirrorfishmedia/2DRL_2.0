@@ -753,7 +753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b05dec35fc894a24ea9001a5f1e46458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomTemplate: {fileID: 11400000, guid: 414c6900f26eb3440b4b344a5c01658d, type: 2}
+  roomTemplate: {fileID: 11400000, guid: ce2392440e7f81449b9f75d0945ac32e, type: 2}
   tilemap: {fileID: 497811903}
   xSize: 10
   ySize: 10

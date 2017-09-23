@@ -54,7 +54,6 @@ public class BoardGenerator : MonoBehaviour {
 	{
 		roomGenerator = GetComponent<RoomGenerator> ();
         enemyController = GetComponent<EnemyController>();
-        cellCatalog = GetComponent<CellCatalog>();
 
     }
 
@@ -79,13 +78,15 @@ public class BoardGenerator : MonoBehaviour {
         }
 
         if (buildOnStart)
-		BuildLevel ();
-	}
+        {
+            BuildLevel();
+        }
+    }
 
 	void BuildLevel()
 	{
 		BuildBorder();
-		FillEmptySpaceWithRooms ();
+		//FillEmptySpaceWithRooms ();
 		BuildRoomPath ();
 		DisplayTilemapInFrustum((Vector2) GameManager.instance.player.position);
 	}
