@@ -38,6 +38,7 @@ public class BoardGenerator : MonoBehaviour {
 
     public List<Vector2> exitLocations;
 	public MapCell[,] tileData;
+    public MapCellObject[,] mapCellData;
 
 	private RoomGenerator roomGenerator;
 	private bool roomChainHitEdge;
@@ -60,13 +61,24 @@ public class BoardGenerator : MonoBehaviour {
     // Use this for initialization
     void Start () 
 	{
+        //erase this once scriptable approach is working
 		tileData = new MapCell[boardHorizontalSize, boardVerticalSize];
 		for (int x = 0; x < boardHorizontalSize; x++) {
 			for (int y = 0; y < boardVerticalSize; y++) {
 				tileData [x, y] = new MapCell ();
 			}
 		}
-		if (buildOnStart)
+
+        mapCellData = new MapCellObject[boardHorizontalSize, boardVerticalSize];
+        for (int x = 0; x < boardHorizontalSize; x++)
+        {
+            for (int y = 0; y < boardVerticalSize; y++)
+            {
+                mapCellData[x, y] = ScriptableObject.CreateInstance<MapCellObject>();
+            }
+        }
+
+        if (buildOnStart)
 		BuildLevel ();
 	}
 

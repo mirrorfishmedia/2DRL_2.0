@@ -11,5 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498ae09ecbae2eb4884dc8a442401c95, type: 3}
   m_Name: Enemy
   m_EditorClassIdentifier: 
+  symbol: 101
   tile: {fileID: 11400000, guid: 29097ece74cf50c479b8710b7e2550cb, type: 2}
   interaction: {fileID: 11400000, guid: 5ed7cc7118028ef4aae911990d94b1ca, type: 2}

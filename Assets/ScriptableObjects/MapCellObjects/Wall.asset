@@ -11,5 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498ae09ecbae2eb4884dc8a442401c95, type: 3}
   m_Name: Wall
   m_EditorClassIdentifier: 
+  symbol: 119
   tile: {fileID: 11400000, guid: 7b91f706c03be2b41a84764a9e1532d8, type: 2}
   interaction: {fileID: 0}

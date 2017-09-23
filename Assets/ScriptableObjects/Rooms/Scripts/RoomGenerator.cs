@@ -7,10 +7,6 @@ public class RoomGenerator : MonoBehaviour {
 	public RoomTemplate testRoom;
 	public int roomSize = 10;
 	public RoomTemplate[] roomTemplates;
-
-
-
-
     public bool buildOnStart;
 
 	private BoardGenerator boardGenerator;
@@ -20,7 +16,6 @@ public class RoomGenerator : MonoBehaviour {
 	{
 		boardGenerator = GetComponent<BoardGenerator> ();
         enemyController = GetComponent<EnemyController>();
-
     }
 
 	void Start()
@@ -128,10 +123,5 @@ public class RoomGenerator : MonoBehaviour {
 
 		return rotatedRoomChars;
 	}
-
-	
-
-	
-
 
 }

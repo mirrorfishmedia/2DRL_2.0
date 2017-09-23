@@ -11,5 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498ae09ecbae2eb4884dc8a442401c95, type: 3}
   m_Name: Food
   m_EditorClassIdentifier: 
+  symbol: 102
   tile: {fileID: 11400000, guid: f7ae24b00592e1f42a19305d3c0a96f6, type: 2}
   interaction: {fileID: 11400000, guid: a05a349a16aa35c459a97c3b23f1e07d, type: 2}

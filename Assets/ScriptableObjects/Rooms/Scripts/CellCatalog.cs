@@ -3,24 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class CellCatalog : MonoBehaviour {
+[CreateAssetMenu(menuName = "2DRL/CellCatalog")]
+public class CellCatalog : ScriptableObject {
 
     public Dictionary<Tile, MapCellObject> cellDictionary = new Dictionary<Tile, MapCellObject>();
 
     public MapCellObject[] mapCellObjects;
 
-	// Use this for initialization
-	void Start ()
-    {
-        BuildCellDictionary();
-
-    }
-
     public MapCellObject CheckCellCatalog(Tile key)
     {
+        if (key == null)
+            return null;
+        BuildCellDictionary();
         if (cellDictionary.ContainsKey(key))
         {
-            Debug.Log("found wall key in dictionary " + key);
             return cellDictionary[key];
         }
         return null;
@@ -32,10 +28,12 @@ public class CellCatalog : MonoBehaviour {
         {
             if (mapCellObjects[i].tile != null)
             {
-                cellDictionary.Add(mapCellObjects[i].tile, mapCellObjects[i]);
+                if (!cellDictionary.ContainsKey(mapCellObjects[i].tile))
+                {
+                    cellDictionary.Add(mapCellObjects[i].tile, mapCellObjects[i]);
+                }
+                
             }
-            
         }
     }
-    
 }

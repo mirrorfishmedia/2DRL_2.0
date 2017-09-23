@@ -11,5 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498ae09ecbae2eb4884dc8a442401c95, type: 3}
   m_Name: Coins
   m_EditorClassIdentifier: 
+  symbol: 99
   tile: {fileID: 11400000, guid: 0f7d00580da0237438ebdb20620c4a50, type: 2}
   interaction: {fileID: 11400000, guid: 9ac9e251a675e7e449e1145652ed28eb, type: 2}

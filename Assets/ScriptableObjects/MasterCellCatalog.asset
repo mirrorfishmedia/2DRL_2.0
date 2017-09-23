@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 599c5547eba3e6649b0805826aef5cc8, type: 3}
+  m_Name: MasterCellCatalog
+  m_EditorClassIdentifier: 
+  mapCellObjects:
+  - {fileID: 11400000, guid: 83206f2be64bc6546a4e66701aa7acec, type: 2}
+  - {fileID: 11400000, guid: 68814e37daa4b854994d6ea99c3c78e7, type: 2}
+  - {fileID: 11400000, guid: 863a50cfb1e7c484b8f2a86912859909, type: 2}
+  - {fileID: 11400000, guid: 11b454666ef6b394d869ca2a3dc79f1e, type: 2}
+  - {fileID: 11400000, guid: 6dc713d4e218c1541afc36d6b77f8ce1, type: 2}

@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu(menuName = "2DRL/MapCellObject")]
 public class MapCellObject : ScriptableObject
 {
+    public char symbol;
     public Tile tile;
     public Interaction interaction;
 

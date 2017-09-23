@@ -16,6 +16,7 @@ public class RoomTemplate : ScriptableObject
 	public MapCell.CellType[] pickUpTiles;
 	public MapCell.CellType[] obstacleTiles;
 
+    public char[] roomChars = new char[100];
 
 	public RoomAndDirection ChooseNextRoom(BoardGenerator generator, Vector2 currentLocation, List<Vector2> usedSpaces)
 	{

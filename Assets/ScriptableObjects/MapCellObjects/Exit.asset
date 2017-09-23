@@ -11,5 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498ae09ecbae2eb4884dc8a442401c95, type: 3}
   m_Name: Exit
   m_EditorClassIdentifier: 
+  symbol: 120
   tile: {fileID: 11400000, guid: efc5a4af5b9fea946a7f177cbd2c328c, type: 2}
   interaction: {fileID: 11400000, guid: c5b70c5d59813f84d830824fc22a8bd9, type: 2}
