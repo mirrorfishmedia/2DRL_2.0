@@ -7,6 +7,7 @@ public class RoomTemplate : ScriptableObject
 {
 	[TextArea(10,20)]
 	public string roomData;
+    public CellCatalog cellCatalog;
 	public RoomList northList;
 	public RoomList southList;
 	public RoomList eastList;

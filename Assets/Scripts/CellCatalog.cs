@@ -22,6 +22,18 @@ public class CellCatalog : ScriptableObject {
         return null;
     }
 
+    public Tile GetTileFromChar(char charToFind)
+    {
+        for (int i = 0; i < mapCellObjects.Length; i++)
+        {
+            if (mapCellObjects[i].symbol == charToFind)
+            {
+                return mapCellObjects[i].tile;
+            }
+        }
+        return null;
+    }
+
     void BuildCellDictionary()
     {
         for (int i = 0; i < mapCellObjects.Length; i++)
