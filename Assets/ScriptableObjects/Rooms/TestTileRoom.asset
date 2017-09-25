@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: TestTileRoom
   m_EditorClassIdentifier: 
   roomData: 
+  cellCatalog: {fileID: 11400000, guid: da174ba4d4794844eb0f2fb0bb0fd4dc, type: 2}
   northList: {fileID: 0}
   southList: {fileID: 0}
   eastList: {fileID: 0}

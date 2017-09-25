@@ -47,6 +47,22 @@ public class TilemapToRoom : EditorWindow {
         Tilemap tilemap = Selection.activeGameObject.GetComponent<Tilemap>();
         tilemap.ClearAllTiles();
         tilemap.ClearAllEditorPreviewTiles();
+        WriteTemplateSquare();
+    }
+
+    public void WriteTemplateSquare()
+    {
+        Tilemap tilemap = Selection.activeGameObject.GetComponent<Tilemap>();
+        Vector3Int origin = tilemap.origin;
+
+        for (int x = 0; x < xSize; x++)
+        {
+            for (int y = 0; y < ySize; y++)
+            {
+                Vector3Int tilePos = new Vector3Int(x, y, 0) + origin;
+                tilemap.SetTile(tilePos,roomTemplate.cellCatalog.mapCellObjects[4].tile);
+            }
+        }
     }
 
     public void WriteTilemapToRoomTemplate()
