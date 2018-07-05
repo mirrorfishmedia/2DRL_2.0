@@ -12,6 +12,4 @@ MonoBehaviour:
   m_Name: North
   m_EditorClassIdentifier: 
   rooms:
-  - {fileID: 11400000, guid: 90053b01965803c47a273727bf24f4dd, type: 2}
-  - {fileID: 11400000, guid: 92e3911fbdf82594f82fbc08f4da7b6a, type: 2}
-  - {fileID: 11400000, guid: 0e419ad9d35932c439efc3727f35b4ca, type: 2}
+  - {fileID: 11400000, guid: ce2392440e7f81449b9f75d0945ac32e, type: 2}

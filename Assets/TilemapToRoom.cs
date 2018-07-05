@@ -69,7 +69,7 @@ public class TilemapToRoom : EditorWindow {
     {
         if (Selection.activeGameObject == null)
         {
-            Debug.LogError("No GameObject selected. Please select a GameObject with a Tilemap component to capture data from.");
+            Debug.LogError("Please select a GameObject with a Tilemap component to capture data from.");
         }
         Tilemap tilemap = Selection.activeGameObject.GetComponent<Tilemap>();
         

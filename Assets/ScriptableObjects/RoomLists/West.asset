@@ -12,6 +12,4 @@ MonoBehaviour:
   m_Name: West
   m_EditorClassIdentifier: 
   rooms:
-  - {fileID: 11400000, guid: 44004df7c9db7f74b92f458b5e0896ca, type: 2}
-  - {fileID: 11400000, guid: 0e419ad9d35932c439efc3727f35b4ca, type: 2}
-  - {fileID: 11400000, guid: 92e3911fbdf82594f82fbc08f4da7b6a, type: 2}
+  - {fileID: 11400000, guid: ce2392440e7f81449b9f75d0945ac32e, type: 2}

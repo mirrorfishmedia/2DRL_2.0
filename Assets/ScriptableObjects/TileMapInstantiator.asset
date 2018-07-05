@@ -8,6 +8,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51b738f725e6d7b4b8b9d41502b5efb4, type: 3}
-  m_Name: Exit Level Interaction
+  m_Script: {fileID: 11500000, guid: 1d3e3435b62e95d4f9117b512b075a96, type: 3}
+  m_Name: TileMapInstantiator
   m_EditorClassIdentifier: 

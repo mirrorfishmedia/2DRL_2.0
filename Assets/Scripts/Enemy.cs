@@ -69,7 +69,7 @@ public class Enemy
             yDir = 0;
         }
 
-        boardGenerator.TryMove(xDir, yDir, MapCell.CellType.Enemy1, enemyTransform);
+       // boardGenerator.TryMove(xDir, yDir, MapCell.CellType.Enemy1, enemyTransform);
         x = (int)enemyTransform.position.x;
         y = (int)enemyTransform.position.y;
     }

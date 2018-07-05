@@ -39,11 +39,13 @@ public class PlayerMover : MonoBehaviour {
 		//Check if we have a non-zero value for horizontal or vertical
 		if(horizontal != 0 || vertical != 0)
 		{
+            /*
             if (GameManager.instance.playersTurn)
             {
-                boardGenerator.TryMove(horizontal, vertical, unitData.tileType, this.transform);
+                //boardGenerator.TryMove(horizontal, vertical, unitData.tileType, this.transform);
                 GameManager.instance.playersTurn = false;
             }
+            */
 		}
 	}
 

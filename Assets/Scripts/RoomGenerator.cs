@@ -10,12 +10,10 @@ public class RoomGenerator : MonoBehaviour {
     public bool buildOnStart;
 
 	private BoardGenerator boardGenerator;
-    private EnemyController enemyController;
 
 	void Awake()
 	{
 		boardGenerator = GetComponent<BoardGenerator> ();
-        enemyController = GetComponent<EnemyController>();
     }
 
 	void Start()
@@ -23,7 +21,7 @@ public class RoomGenerator : MonoBehaviour {
 		if (buildOnStart) 
 		{
 			Build (new Vector2 (50, 50), testRoom, 0);
-            boardGenerator.DisplayTilemapInFrustum((Vector2)GameManager.instance.player.position);
+            //boardGenerator.DisplayTilemapInFrustum((Vector2)GameManager.instance.player.position);
         }
 	}
 
@@ -48,90 +46,18 @@ public class RoomGenerator : MonoBehaviour {
         {
             for (int j = 0; j < roomSize; j++)
             {
-                Vector2 spawnPos = new Vector2(i, j) + roomOrigin;
-                Debug.Log("spawnpos " + spawnPos);
                 char selectedChar = roomTemplate.roomChars[charIndex];
                 charIndex++;
-                Debug.Log("selectedChar " + selectedChar + "i " + i + " j " + j);
+                Vector2 spawnPos = new Vector2(i, j) + roomOrigin;
 
                 int x = (int)spawnPos.x;
                 int y = (int)spawnPos.y;
-                switch (selectedChar)
-                {
-                    case 'w':
-                        boardGenerator.WriteToBoardGrid(MapCell.CellType.Wall, x, y);
-                        Debug.Log("case w");
-                        break;
-                    
-                    case 'x':
-                        boardGenerator.WriteToBoardGrid(MapCell.CellType.Exit, x, y);
-                        break;
-                    case 'e':
-                        MapCell.CellType type = WriteRandomTileToGrid(roomTemplate.enemyTiles);
-                        boardGenerator.WriteToBoardGrid(type, x, y);
-                        enemyController.AddEnemy(type, new Vector2(x, y));
-                        break;
-                    case 'c':
-                        boardGenerator.WriteToBoardGrid(WriteRandomTileToGrid(roomTemplate.pickUpTiles), x, y);
-                        break;
-                    default:
-                        break;
-                }
+
+                boardGenerator.boardGridAsCharacters[x, y] = selectedChar;
+
             }
         }
     }
-
-	public void StringToSquare(Vector2 roomOrigin, RoomTemplate roomTemplate, int chainNumber, bool isOnPath)
-	{
-
-		char[,] processedCharData = AsciiToGrid(roomTemplate.roomData);
-
-		if (isOnPath) 
-		{
-			GameObject roomHolder = new GameObject ("Path Room " + chainNumber);
-			roomHolder.transform.position = roomOrigin;
-		}
-
-
-		for (int i = 0; i < roomSize; i++) 
-		{
-			for (int j = 0; j < roomSize; j++) {
-				Vector2 spawnPos = new Vector2 (i, j) + roomOrigin;
-
-
-				char selectedChar = processedCharData [j, i];
-                int x = (int)spawnPos.x;
-                int y = (int)spawnPos.y;
-                switch (selectedChar) 
-				{
-				case '1':
-					boardGenerator.WriteToBoardGrid (MapCell.CellType.Wall, x, y);
-					break;
-				case '0':
-                    boardGenerator.WriteToBoardGrid (MapCell.CellType.BlackFloor, x,y);
-					break;
-				case '3':
-					boardGenerator.WriteToBoardGrid (MapCell.CellType.Exit, x, y);
-					break;
-				case '4':
-                        MapCell.CellType type = WriteRandomTileToGrid(roomTemplate.enemyTiles);                  
-                            boardGenerator.WriteToBoardGrid (type, x, y);
-                    enemyController.AddEnemy(type, new Vector2(x, y));
-
-                        break;
-				case '5':
-					boardGenerator.WriteToBoardGrid (WriteRandomTileToGrid(roomTemplate.pickUpTiles), x, y);
-					break;
-				case '6':
-					boardGenerator.WriteToBoardGrid (WriteRandomTileToGrid(roomTemplate.obstacleTiles), x, y);
-					break;
-				default:
-					break;
-				}
-			}
-		}
-
-	}
 
 	private MapCell.CellType WriteRandomTileToGrid(MapCell.CellType[] possibleTypes)
 	{
