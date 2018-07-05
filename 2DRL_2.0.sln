@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
+# Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2DRL_2.0", "2DRL_2.0.csproj", "{F5FB2210-F1EC-9FE0-DB23-A7CEB7965959}"
 EndProject
 Global

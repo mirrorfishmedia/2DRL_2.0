@@ -24,7 +24,7 @@ public class BoardGenerator : MonoBehaviour {
     public Tile coin;
     public Tile mushroom;
     public Tile wall;
-
+   
 
     public Interaction exitInteraction;
     public Interaction treasureInteraction;
@@ -60,14 +60,6 @@ public class BoardGenerator : MonoBehaviour {
     // Use this for initialization
     void Start () 
 	{
-        //erase this once scriptable approach is working
-		tileData = new MapCell[boardHorizontalSize, boardVerticalSize];
-		for (int x = 0; x < boardHorizontalSize; x++) {
-			for (int y = 0; y < boardVerticalSize; y++) {
-				tileData [x, y] = new MapCell ();
-			}
-		}
-
         mapCellData = new MapCellObject[boardHorizontalSize, boardVerticalSize];
         for (int x = 0; x < boardHorizontalSize; x++)
         {
@@ -86,7 +78,7 @@ public class BoardGenerator : MonoBehaviour {
 	void BuildLevel()
 	{
 		BuildBorder();
-		//FillEmptySpaceWithRooms ();
+		FillEmptySpaceWithRooms ();
 		BuildRoomPath ();
 		DisplayTilemapInFrustum((Vector2) GameManager.instance.player.position);
 	}
