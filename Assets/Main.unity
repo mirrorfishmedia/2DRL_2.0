@@ -2439,8 +2439,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 686566de92e5f514c9b59cc98a70ba2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testTile1: {fileID: 0}
-  testTile2: {fileID: 0}
 --- !u!114 &570382283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3388,8 +3386,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ed97783f0a5f064887bcdcbe0234a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitID: 2
-  tileType: 3
 --- !u!1 &1694684949
 GameObject:
   m_ObjectHideFlags: 0
@@ -3421,30 +3417,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boardHorizontalSize: 100
   boardVerticalSize: 100
-  cameraFrustumX: 26
-  cameraFrustumY: 18
   roomSize: 10
   roomsOnPathDesired: 60
   tilemap: {fileID: 140021812}
-  blackFloorTile: {fileID: 11400000, guid: e08cd58680f9f3946a1ea3e96ae7bb49, type: 2}
-  exitTile: {fileID: 11400000, guid: efc5a4af5b9fea946a7f177cbd2c328c, type: 2}
-  grassTile: {fileID: 11400000, guid: 2b951fec424f8f747a8fbd718683ad51, type: 2}
-  enemy1: {fileID: 11400000, guid: 29097ece74cf50c479b8710b7e2550cb, type: 2}
-  enemy2: {fileID: 11400000, guid: 95c80eddaf73319499a062233812449f, type: 2}
-  coin: {fileID: 11400000, guid: 0f7d00580da0237438ebdb20620c4a50, type: 2}
-  mushroom: {fileID: 11400000, guid: f7ae24b00592e1f42a19305d3c0a96f6, type: 2}
-  wall: {fileID: 11400000, guid: 7b91f706c03be2b41a84764a9e1532d8, type: 2}
-  exitInteraction: {fileID: 0}
-  treasureInteraction: {fileID: 0}
-  foodInteraction: {fileID: 0}
-  enemy1Interaction: {fileID: 0}
   roomSequenceStartLocations:
   - {x: 50, y: 50}
   startRoomTemplates:
-  - {fileID: 11400000, guid: ce2392440e7f81449b9f75d0945ac32e, type: 2}
+  - {fileID: 11400000, guid: ada4697f152d624479bdcda630ea1422, type: 2}
   randomFillRooms:
-  - {fileID: 11400000, guid: 457b1108f58e2ce4683c6635fadc8d13, type: 2}
+  - {fileID: 11400000, guid: ada4697f152d624479bdcda630ea1422, type: 2}
+  - {fileID: 11400000, guid: a999c61aff16aee4b97cfde10618b46f, type: 2}
+  - {fileID: 11400000, guid: 4f56fe08d0de24a4a8835349a150a9e1, type: 2}
+  - {fileID: 11400000, guid: 5962386067b66ab49a6842744ec4854d, type: 2}
+  - {fileID: 11400000, guid: 81b19dc4e1849674f89261a9cca64d5a, type: 2}
+  - {fileID: 11400000, guid: ada4697f152d624479bdcda630ea1422, type: 2}
+  - {fileID: 11400000, guid: 235466775f8624748ae5f3e53b083af7, type: 2}
+  - {fileID: 11400000, guid: a184274f618aaef4e98785b29b833f69, type: 2}
   buildOnStart: 1
+  fillEmptySpaceWithRandomRooms: 0
   exitLocations: []
   usedSpaces: []
 --- !u!4 &1694684951
@@ -3471,7 +3461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c3f817b3abbd144f9f65f537f6ac6b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testRoom: {fileID: 11400000, guid: ce2392440e7f81449b9f75d0945ac32e, type: 2}
+  testRoom: {fileID: 0}
   roomSize: 10
   roomTemplates: []
   buildOnStart: 1

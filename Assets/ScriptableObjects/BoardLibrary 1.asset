@@ -18,7 +18,7 @@ MonoBehaviour:
   - characterId: 119
     prefabToSpawn: {fileID: 0}
     tileToDraw: {fileID: 11400000, guid: 7b91f706c03be2b41a84764a9e1532d8, type: 2}
-  - characterId: 101
+  - characterId: 103
     prefabToSpawn: {fileID: 0}
     tileToDraw: {fileID: 11400000, guid: 2b951fec424f8f747a8fbd718683ad51, type: 2}
   - characterId: 102
@@ -30,5 +30,8 @@ MonoBehaviour:
   - characterId: 120
     prefabToSpawn: {fileID: 0}
     tileToDraw: {fileID: 11400000, guid: efc5a4af5b9fea946a7f177cbd2c328c, type: 2}
+  - characterId: 101
+    prefabToSpawn: {fileID: 0}
+    tileToDraw: {fileID: 11400000, guid: 29097ece74cf50c479b8710b7e2550cb, type: 2}
   instantiationTechnique: {fileID: 11400000, guid: ee5d05c4b90e128419865785b7a618f0,
     type: 2}

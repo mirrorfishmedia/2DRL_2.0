@@ -7,9 +7,7 @@ using UnityEditor;
 public class TilemapToRoom : EditorWindow {
 
     public RoomTemplate roomTemplate;
-
-    private int xSize = 10;
-    private int ySize = 10;
+    private Dictionary<Tile, BoardLibraryEntry> libraryDictionary;
 
     [MenuItem("Window/Tilemap To RoomTemplate Converter")]
     static void Init()
@@ -44,6 +42,7 @@ public class TilemapToRoom : EditorWindow {
 
     public void ClearTilemap()
     {
+        SelectTilemapInScene();
         Tilemap tilemap = Selection.activeGameObject.GetComponent<Tilemap>();
         tilemap.ClearAllTiles();
         tilemap.ClearAllEditorPreviewTiles();
@@ -55,28 +54,25 @@ public class TilemapToRoom : EditorWindow {
         Tilemap tilemap = Selection.activeGameObject.GetComponent<Tilemap>();
         Vector3Int origin = tilemap.origin;
 
-        for (int x = 0; x < xSize; x++)
+        for (int x = 0; x < roomTemplate.roomSizeX; x++)
         {
-            for (int y = 0; y < ySize; y++)
+            for (int y = 0; y < roomTemplate.roomSizeY; y++)
             {
                 Vector3Int tilePos = new Vector3Int(x, y, 0) + origin;
-                tilemap.SetTile(tilePos,roomTemplate.cellCatalog.mapCellObjects[4].tile);
+                tilemap.SetTile(tilePos,roomTemplate.library.GetDefaultTile());
             }
         }
     }
 
     public void WriteTilemapToRoomTemplate()
     {
-        if (Selection.activeGameObject == null)
-        {
-            Debug.LogError("Please select a GameObject with a Tilemap component to capture data from.");
-        }
+        SelectTilemapInScene();
         Tilemap tilemap = Selection.activeGameObject.GetComponent<Tilemap>();
         
         int charIndex = 0;
-        for (int x = 0; x < xSize; x++)
+        for (int x = 0; x < roomTemplate.roomSizeX; x++)
         {
-            for (int y = 0; y < ySize; y++)
+            for (int y = 0; y < roomTemplate.roomSizeY; y++)
             {
                 Tile foundTile = GetTileFromGrid(x, y, tilemap);
                 if (foundTile == null)
@@ -86,9 +82,14 @@ public class TilemapToRoom : EditorWindow {
                 }
                 else
                 {
-                    MapCellObject mapCellObject;
-                    mapCellObject = roomTemplate.cellCatalog.CheckCellCatalog(foundTile);
-                    roomTemplate.roomChars[charIndex] = mapCellObject.symbol;
+                    BoardLibraryEntry entry;
+                    entry = roomTemplate.library.CheckLibraryForTile(foundTile,libraryDictionary);
+
+                    if (entry == null)
+                    {
+                        Debug.LogError("Tile not found: " + entry.tileToDraw + " Have you added it to your BoardLibrary yet?");
+                    }
+                    roomTemplate.roomChars[charIndex] = entry.characterId;
                     charIndex++;
                 }
 
@@ -100,42 +101,43 @@ public class TilemapToRoom : EditorWindow {
 
     public void ReadTilemapFromRoomTemplate()
     {
-        
-        if (Selection.activeGameObject == null)
-        {
-            Debug.LogError("No GameObject selected. Please select a GameObject with a Tilemap component to capture data from.");
-        }
 
+        SelectTilemapInScene();
         Tilemap tilemap = Selection.activeGameObject.GetComponent<Tilemap>();
         tilemap.ClearAllTiles();
-        int x = 0;
-        int y = 0;
 
-        Debug.Log("tilemap origin " + tilemap.origin);
-
-        for (int i = 0; i < roomTemplate.roomChars.Length; i++)
+        int charIndex = 0;
+        for (int x = 0; x < roomTemplate.roomSizeX; x++)
         {
-            
-            if (x >= 10)
+            for (int y = 0; y < roomTemplate.roomSizeY; y++)
             {
-                x = 0;
-                y++;
+                Tile tileToSet = roomTemplate.library.GetTileFromChar(roomTemplate.roomChars[charIndex]);
+                Vector3Int pos = new Vector3Int(x, y, 0) + tilemap.origin;
+                tilemap.SetTile(pos, tileToSet);
+                charIndex++;
+
             }
+        }
+    }
 
-            Tile tileToSet = roomTemplate.cellCatalog.GetTileFromChar(roomTemplate.roomChars[i]);
-            Vector3Int pos = new Vector3Int(x, y, 0) + tilemap.origin;
-            Debug.Log("x " + x + " y" + y);
-            Debug.Log("pos " + pos);
-            tilemap.SetTile(pos, tileToSet);
+    public void SelectTilemapInScene()
+    {
 
-            x++;
-           
+        libraryDictionary = roomTemplate.library.BuildTileKeyLibraryDictionary();
+
+        if (Selection.activeGameObject == null)
+        {
+            Selection.activeGameObject = FindObjectOfType<Tilemap>().gameObject;
+
+        }
+        else if (Selection.activeGameObject.GetComponent<Tilemap>() == null)
+        {
+            Debug.LogError("No Tilemap on GameObject selected. Please select a GameObject with a Tilemap component to capture data from.");
         }
     }
 
     Tile GetTileFromGrid(int x, int y, Tilemap tilemap)
     {
-        Debug.Log("X get tile " + x + " y get tile " + y);
         Vector3Int pos = new Vector3Int(x, y, 0) + tilemap.origin;
         Tile tile = tilemap.GetTile(pos) as Tile;
 

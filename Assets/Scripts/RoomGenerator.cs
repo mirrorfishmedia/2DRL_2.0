@@ -47,13 +47,17 @@ public class RoomGenerator : MonoBehaviour {
             for (int j = 0; j < roomSize; j++)
             {
                 char selectedChar = roomTemplate.roomChars[charIndex];
+                if (selectedChar != '\0')
+                {
+                    Vector2 spawnPos = new Vector2(i, j) + roomOrigin;
+
+                    int x = (int)spawnPos.x;
+                    int y = (int)spawnPos.y;
+
+                    boardGenerator.boardGridAsCharacters[x, y] = selectedChar;
+                }
+                 
                 charIndex++;
-                Vector2 spawnPos = new Vector2(i, j) + roomOrigin;
-
-                int x = (int)spawnPos.x;
-                int y = (int)spawnPos.y;
-
-                boardGenerator.boardGridAsCharacters[x, y] = selectedChar;
 
             }
         }

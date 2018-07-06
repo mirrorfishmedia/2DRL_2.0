@@ -8,14 +8,13 @@ public class PlayerMover : MonoBehaviour {
 
 	public float moveRate = .1f;
 
-	private UnitData unitData;
 	private float nextMoveTime;
 
 
 	// Use this for initialization
 	void Start () 
 	{
-		unitData = GetComponent<UnitData> ();
+
 	}
 	
 	// Update is called once per frame

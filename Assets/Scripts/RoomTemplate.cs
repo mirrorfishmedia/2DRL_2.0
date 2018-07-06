@@ -5,17 +5,14 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "2DRL/RoomTemplate")]
 public class RoomTemplate : ScriptableObject 
 {
-	[TextArea(10,20)]
-	public string roomData;
-    public CellCatalog cellCatalog;
+
+    public int roomSizeX = 10;
+    public int roomSizeY = 10;
+    public BoardLibrary library;
 	public RoomList northList;
 	public RoomList southList;
 	public RoomList eastList;
 	public RoomList westList;
-
-	public MapCell.CellType[] enemyTiles;
-	public MapCell.CellType[] pickUpTiles;
-	public MapCell.CellType[] obstacleTiles;
 
     public char[] roomChars = new char[100];
 

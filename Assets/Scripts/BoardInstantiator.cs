@@ -9,8 +9,14 @@ public class BoardInstantiator : MonoBehaviour {
     public BoardLibrary boardLibrary;
     public Tilemap tilemap;
 
+    private void Start()
+    {
+        
+    }
+
     public void Initialize()
     {
+        tilemap.ClearAllTiles();
         libraryDictionary = new Dictionary<char, BoardLibraryEntry>();
         for (int i = 0; i < boardLibrary.boardLibraryEntries.Length; i++)
         {
@@ -28,6 +34,11 @@ public class BoardInstantiator : MonoBehaviour {
         }
         else
         {
+            if (charId == '\0')
+            {
+                return boardLibrary.GetDefaultEntry();
+            }
+
             Debug.LogError("Attempt to get charId " + charId.ToString() + " from boardLibrary failed, is there an entry with that ID in the boardLibrary?");
         }
 

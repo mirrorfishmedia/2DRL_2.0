@@ -20,6 +20,7 @@ public class BoardGenerator : MonoBehaviour {
 	public RoomTemplate[] startRoomTemplates;
 	public RoomTemplate[] randomFillRooms;
 	public bool buildOnStart;
+    public bool fillEmptySpaceWithRandomRooms;
 
     public List<Vector2> exitLocations;
 
@@ -48,7 +49,6 @@ public class BoardGenerator : MonoBehaviour {
         if (buildOnStart)
         {
             BuildLevel();
-           
         }
     }
 
@@ -56,7 +56,11 @@ public class BoardGenerator : MonoBehaviour {
 	{
         boardInstantiator.Initialize();
 		BuildBorder();
-		FillEmptySpaceWithRooms ();
+        if (fillEmptySpaceWithRandomRooms)
+        {
+            FillEmptySpaceWithRooms();
+        }
+		
 		BuildRoomPath ();
         InstantiateGeneratedLevelData();
     }

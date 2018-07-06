@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Name: East
   m_EditorClassIdentifier: 
   rooms:
-  - {fileID: 11400000, guid: ce2392440e7f81449b9f75d0945ac32e, type: 2}
+  - {fileID: 11400000, guid: ada4697f152d624479bdcda630ea1422, type: 2}
+  - {fileID: 11400000, guid: 235466775f8624748ae5f3e53b083af7, type: 2}
+  - {fileID: 11400000, guid: a184274f618aaef4e98785b29b833f69, type: 2}
+  - {fileID: 11400000, guid: a999c61aff16aee4b97cfde10618b46f, type: 2}
+  - {fileID: 11400000, guid: 4f56fe08d0de24a4a8835349a150a9e1, type: 2}
