@@ -9,31 +9,15 @@ public class RoomTemplate : ScriptableObject
     public int roomSizeX = 10;
     public int roomSizeY = 10;
     public BoardLibrary library;
-    public RoomTemplate openEndedFallbackRoom;
 	public RoomList northList;
 	public RoomList southList;
 	public RoomList eastList;
 	public RoomList westList;
 
-    public RoomList[] connectableRooms;
 
-    private List<RoomTemplate> allConnectableRooms = new List<RoomTemplate>();
 
 
     public char[] roomChars = new char[100];
-
-    public void BuildConnectableRoomList()
-    {
-        for (int i = 0; i < connectableRooms.Length; i++)
-        {
-            RoomList roomList = connectableRooms[i];
-            for (int j = 0; j < roomList.rooms.Length; j++)
-            {
-                allConnectableRooms.Add(roomList.rooms[j]);
-            }
-           
-        }
-    }
 
     public Vector2 FindUnblockedRandomSpace(Vector2 currentLocation, List<Vector2> usedSpaces)
     {
@@ -63,11 +47,15 @@ public class RoomTemplate : ScriptableObject
 
 	public RoomAndDirection ChooseNextRoom(BoardGenerator generator, Vector2 currentLocation, List<Vector2> usedSpaces)
 	{       
-		List<RoomAndDirection> results = new List<RoomAndDirection> ();
-        results.Clear();
-        RoomAndDirection result = new RoomAndDirection();
+		
 
-        for (int z = 0; z < 24; z++)        {
+        for (int z = 0; z < 400; z++)
+        {
+
+            List<RoomAndDirection> results = new List<RoomAndDirection>();
+            results.Clear();
+            RoomAndDirection result = new RoomAndDirection();
+
             int direction = Random.Range(0, 4);
             if (direction == 0 && northList != null)
             {
@@ -118,14 +106,16 @@ public class RoomTemplate : ScriptableObject
                     results.Add(result);
                 }
             }
-            
+
+
+            if (results.Count != 0)
+            {
+                RoomAndDirection selectedResult = results[Random.Range(0, results.Count)];
+                return selectedResult;
+            }
         }
 
-        if (results.Count != 0)
-        {
-            RoomAndDirection selectedResult = results[Random.Range(0, results.Count)];
-            return selectedResult;
-        }
+        
 
         //Debug.LogError("room generation failed and returned null!");
         return null;

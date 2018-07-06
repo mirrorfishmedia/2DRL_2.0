@@ -9,8 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dcaf6a7a02540c14898118f2dfdabf2c, type: 3}
-  m_Name: ConnectFromSouth
+  m_Name: MovingEast
   m_EditorClassIdentifier: 
   rooms:
   - {fileID: 11400000, guid: ada4697f152d624479bdcda630ea1422, type: 2}
-  - {fileID: 11400000, guid: 5962386067b66ab49a6842744ec4854d, type: 2}
+  - {fileID: 11400000, guid: a999c61aff16aee4b97cfde10618b46f, type: 2}
+  - {fileID: 11400000, guid: bef8851cbbd65cd41a3499a696b3963b, type: 2}
+  - {fileID: 11400000, guid: 32b2736bd6631644da776161b51feac0, type: 2}
