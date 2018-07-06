@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class RoomGenerator : MonoBehaviour {
 
-	public RoomTemplate testRoom;
 	public int roomSize = 10;
 	public RoomTemplate[] roomTemplates;
-    public bool buildOnStart;
 
 	private BoardGenerator boardGenerator;
 
@@ -15,15 +13,6 @@ public class RoomGenerator : MonoBehaviour {
 	{
 		boardGenerator = GetComponent<BoardGenerator> ();
     }
-
-	void Start()
-	{
-		if (buildOnStart) 
-		{
-			Build (new Vector2 (50, 50), testRoom, 0);
-            //boardGenerator.DisplayTilemapInFrustum((Vector2)GameManager.instance.player.position);
-        }
-	}
 
 	public void Build(Vector2 roomOrigin, RoomTemplate roomTemplate, int chainNumber)
 	{
@@ -37,7 +26,7 @@ public class RoomGenerator : MonoBehaviour {
 
         if (isOnPath)
         {
-            GameObject roomHolder = new GameObject("Path Room " + chainNumber);
+            GameObject roomHolder = new GameObject("Path Room " + chainNumber + " " + roomTemplate.name);
             roomHolder.transform.position = roomOrigin;
         }
         int charIndex = 0;

@@ -8,7 +8,7 @@ public class TilemapInstantiationTechnique : BoardInstantiationTechnique
 {
     public override void SpawnBoardSquare(Vector2 location, BoardLibraryEntry inputEntry, BoardInstantiator boardInstantiator)
     {
-     
+        
         if (inputEntry != null)
         {
             Tile tile = inputEntry.tileToDraw;

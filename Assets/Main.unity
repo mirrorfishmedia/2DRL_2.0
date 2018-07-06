@@ -198,7 +198,6 @@ GameObject:
   - component: {fileID: 140021810}
   - component: {fileID: 140021812}
   - component: {fileID: 140021811}
-  - component: {fileID: 140021813}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
@@ -2428,17 +2427,6 @@ Tilemap:
     m_DirtyIndex: 0
   - serializedVersion: 1
     m_DirtyIndex: 0
---- !u!114 &140021813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 140021809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 686566de92e5f514c9b59cc98a70ba2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &570382283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3319,7 +3307,6 @@ GameObject:
   - component: {fileID: 1675902408}
   - component: {fileID: 1675902407}
   - component: {fileID: 1675902406}
-  - component: {fileID: 1675902409}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3375,17 +3362,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1675902409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1675902405}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ed97783f0a5f064887bcdcbe0234a3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1694684949
 GameObject:
   m_ObjectHideFlags: 0
@@ -3427,12 +3403,8 @@ MonoBehaviour:
   randomFillRooms:
   - {fileID: 11400000, guid: ada4697f152d624479bdcda630ea1422, type: 2}
   - {fileID: 11400000, guid: a999c61aff16aee4b97cfde10618b46f, type: 2}
-  - {fileID: 11400000, guid: 4f56fe08d0de24a4a8835349a150a9e1, type: 2}
-  - {fileID: 11400000, guid: 5962386067b66ab49a6842744ec4854d, type: 2}
-  - {fileID: 11400000, guid: 81b19dc4e1849674f89261a9cca64d5a, type: 2}
   - {fileID: 11400000, guid: ada4697f152d624479bdcda630ea1422, type: 2}
-  - {fileID: 11400000, guid: 235466775f8624748ae5f3e53b083af7, type: 2}
-  - {fileID: 11400000, guid: a184274f618aaef4e98785b29b833f69, type: 2}
+  - {fileID: 11400000, guid: 5962386067b66ab49a6842744ec4854d, type: 2}
   buildOnStart: 1
   fillEmptySpaceWithRandomRooms: 0
   exitLocations: []
@@ -3461,10 +3433,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c3f817b3abbd144f9f65f537f6ac6b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testRoom: {fileID: 0}
   roomSize: 10
   roomTemplates: []
-  buildOnStart: 1
 --- !u!114 &1694684953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3487,7 +3457,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2089718261}
   - component: {fileID: 2089718260}
-  - component: {fileID: 2089718259}
   - component: {fileID: 2089718258}
   - component: {fileID: 2089718257}
   m_Layer: 0
@@ -3505,13 +3474,6 @@ AudioListener:
   m_GameObject: {fileID: 2089718256}
   m_Enabled: 1
 --- !u!124 &2089718258
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2089718256}
-  m_Enabled: 1
---- !u!92 &2089718259
 Behaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}

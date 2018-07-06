@@ -120,7 +120,11 @@ public class BoardGenerator : MonoBehaviour {
 
 		for (int i = 0; i < 100; i++) 
 		{
-			ChooseDirectionAndAddRoom ();
+            if (!ChooseDirectionAndAddRoom())
+            {
+                Debug.Log("Roomgeneration terminated");
+                break;
+            }
 			if (roomsOnPathCreated >= roomsOnPathDesired) 
 			{
 				Debug.Log ("created all desired rooms");

@@ -21,7 +21,6 @@ public class BoardInstantiator : MonoBehaviour {
         for (int i = 0; i < boardLibrary.boardLibraryEntries.Length; i++)
         {
             libraryDictionary.Add(boardLibrary.boardLibraryEntries[i].characterId, boardLibrary.boardLibraryEntries[i]);
-            Debug.Log("library dictionary count " + libraryDictionary.Count);
         }
     }
 
