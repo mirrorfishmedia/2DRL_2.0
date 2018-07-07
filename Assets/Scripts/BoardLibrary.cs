@@ -6,8 +6,17 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu (menuName = "BoardGeneration/BoardLibrary")]
 public class BoardLibrary : ScriptableObject
 {
-    public BoardLibraryEntry[] boardLibraryEntries;
     public BoardInstantiationTechnique instantiationTechnique;
+
+    public BoardLibraryEntry[] boardLibraryEntries;
+
+    public void Initialize()
+    {
+        for (int i = 0; i < boardLibraryEntries.Length; i++)
+        {
+            boardLibraryEntries[i].chanceBoardLibraryEntry.BuildChanceCharListProbabilities();
+        }
+    }
 
     public Tile GetDefaultTile()
     {
@@ -31,6 +40,49 @@ public class BoardLibrary : ScriptableObject
         return libraryDictionary;
     }
 
+    public Dictionary<char,ChanceBoardLibraryEntry> BuildChanceCharDictionary()
+    {
+        Dictionary<char, ChanceBoardLibraryEntry> inputCharToChanceBoardLibraryEntry = new Dictionary<char, ChanceBoardLibraryEntry>();
+        for (int i = 0; i < boardLibraryEntries.Length; i++)
+        {
+            BoardLibraryEntry entry = boardLibraryEntries[i];
+
+            inputCharToChanceBoardLibraryEntry.Add(entry.characterId, entry.chanceBoardLibraryEntry);
+
+        }
+
+        //Debug.Log("dictionary length " + inputCharToChanceBoardLibraryEntry.Count);
+        return inputCharToChanceBoardLibraryEntry;
+
+    }
+
+    public char TestCharForChanceBeforeWritingToGrid(char charToTest)
+    {
+        char testedChar;
+        Dictionary<char, ChanceBoardLibraryEntry> inputCharToChanceBoardLibraryEntry = BuildChanceCharDictionary();
+        if (inputCharToChanceBoardLibraryEntry.ContainsKey(charToTest))
+        {
+            ChanceBoardLibraryEntry entry = inputCharToChanceBoardLibraryEntry[charToTest];
+            if (entry.chanceChars.Length > 0)
+            {
+                testedChar = entry.GetChanceCharId();
+            }
+            else
+            {
+                //no change, return the original character
+                Debug.Log("No change return original");
+                testedChar = charToTest;
+            }
+        }
+        else
+        {
+            testedChar = '0';
+        }
+        
+
+        return testedChar;
+    }
+
     public BoardLibraryEntry CheckLibraryForTile(Tile key, Dictionary<Tile, BoardLibraryEntry> boardLibraryDictionary)
     {
         if (boardLibraryDictionary.ContainsKey(key))
@@ -51,6 +103,8 @@ public class BoardLibrary : ScriptableObject
         return null;
         
     }
+
+ 
 
     public Tile GetTileFromChar(char charToFind)
     {

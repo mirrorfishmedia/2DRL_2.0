@@ -10,6 +10,7 @@ public class BoardGenerator : MonoBehaviour {
     public int boardHorizontalSize = 8;
 	public int boardVerticalSize = 8;
     public Tilemap tilemap;
+    public BoardLibrary boardLibrary;
 
     public Generator[] generators;
     public char emptySpaceChar = '0';
@@ -43,6 +44,7 @@ public class BoardGenerator : MonoBehaviour {
     void BuildLevel()
     {
         boardInstantiator.Initialize();
+        boardLibrary.Initialize();
         SetupEmptyGrid();
         RunGenerators();
         InstantiateGeneratedLevelData();
@@ -106,6 +108,11 @@ public class BoardGenerator : MonoBehaviour {
         return randomPosition;
     }
 
+    public void SpawnChanceTile()
+    {
+
+    }
+
     public void DrawTemplate(int x, int y, RoomTemplate templateToSpawn, bool overWriteFilledCharacters)
     {
         int charIndex = 0;
@@ -129,7 +136,6 @@ public class BoardGenerator : MonoBehaviour {
 		{
 			return false;
 		}
-			
 	}
 
 
@@ -139,18 +145,19 @@ public class BoardGenerator : MonoBehaviour {
         {
             if (overwriteFilledSpaces)
             {
-                boardGridAsCharacters[x, y] = charIdToWrite;
+                char nextChar = boardLibrary.TestCharForChanceBeforeWritingToGrid(charIdToWrite);
+                boardGridAsCharacters[x, y] = nextChar;
             }
             else
             {
                 if (boardGridAsCharacters[x, y] == emptySpaceChar)
                 {
-                    boardGridAsCharacters[x, y] = charIdToWrite;
+                    char nextChar = boardLibrary.TestCharForChanceBeforeWritingToGrid(charIdToWrite);
+                    boardGridAsCharacters[x, y] = nextChar;
                 }
             }
         }
-        
-        
+
     }
 
     public void SetTileFromGrid(char charId, int x, int y)
@@ -158,58 +165,6 @@ public class BoardGenerator : MonoBehaviour {
         Vector2 pos = new Vector2(x, y);
         boardInstantiator.InstantiateTile(pos, charId);
     }
-    /*
-	public void DisplayTilemapInFrustum(Vector2 playerPos)
-	{
-        tilemap.ClearAllTiles();
-		int playerX = (int)playerPos.x;
-		int playerY = (int)playerPos.y;
-
-		int frustumStartX = playerX - (cameraFrustumX / 2);
-		int frustumStartY = playerY - (cameraFrustumY / 2);
-
-		for (int x = frustumStartX; x < frustumStartX + cameraFrustumX; x++) {
-			for (int y = frustumStartY; y < frustumStartY + cameraFrustumY; y++) 
-			{
-				if (TestIfInGrid (x,y)) 
-				{
-					MapCell.CellType tileDataValue = tileData[x,y].cellType;
-					switch (tileDataValue) 
-					{
-					case MapCell.CellType.BlackFloor:
-                            SetTileFromGrid(blackFloorTile, x, y);
-						break;
-                    case MapCell.CellType.GrassFloor:
-                        SetTileFromGrid(grassTile, x, y);
-                        break;
-                        case MapCell.CellType.Wall:
-                            SetTileFromGrid(wall, x, y);
-                        break;
-					case MapCell.CellType.Exit:
-                            SetTileFromGrid(exitTile, x, y);
-						break;
-					case MapCell.CellType.Coin:
-                            SetTileFromGrid(coin, x, y);
-                            break;
-                        case MapCell.CellType.Mushroom:
-                            SetTileFromGrid(mushroom, x, y);
-                            break;
-					case MapCell.CellType.Enemy1:
-                            SetTileFromGrid(enemy1, x, y);
-                            break;
-					case MapCell.CellType.Enemy2:
-                            SetTileFromGrid(enemy2, x, y);
-                            break;
-
-					}
-				}
-
-			}
-		}
-	}
-    */
-
-   
 
     /*
     void ChooseExit()

@@ -8,12 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fa0022688b5c58408ed42372d880222, type: 3}
-  m_Name: New Generator Cellular Automata
+  m_Script: {fileID: 11500000, guid: cfe8aaeffe7401241bd04fb607c22de4, type: 3}
+  m_Name: New Generator Scatter Random Grass
   m_EditorClassIdentifier: 
-  charForFill: 119
-  charForEmpty: 48
-  seed: asds
-  useRandomSeed: 0
-  overwriteFilledSpaces: 0
-  randomFillPercent: 25
+  charIdToScatter: 103
+  howManyToScatter: 500
+  overwriteFilledCharacters: 0

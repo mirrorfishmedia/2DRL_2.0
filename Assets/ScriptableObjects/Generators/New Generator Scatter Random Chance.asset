@@ -8,10 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc35e86ca6729d2469e62aab163175e0, type: 3}
-  m_Name: New Generator Scatter Rooms
+  m_Script: {fileID: 11500000, guid: cfe8aaeffe7401241bd04fb607c22de4, type: 3}
+  m_Name: New Generator Scatter Random Chance
   m_EditorClassIdentifier: 
-  howManyToScatter: 12
-  roomTemplates:
-  - {fileID: 11400000, guid: 096ae7824bf01b74895fa31f84bd4976, type: 2}
-  overWriteFilledCharacters: 0
+  charIdToScatter: 122
+  howManyToScatter: 100
+  overwriteFilledCharacters: 0

@@ -9,4 +9,5 @@ public class BoardLibraryEntry
     public char characterId;
     public GameObject prefabToSpawn;
     public Tile tile;
+    public ChanceBoardLibraryEntry chanceBoardLibraryEntry;
 }

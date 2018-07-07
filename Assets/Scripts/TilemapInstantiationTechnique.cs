@@ -18,7 +18,6 @@ public class TilemapInstantiationTechnique : BoardInstantiationTechnique
             else
             {
                 Instantiate(inputEntry.prefabToSpawn, location, Quaternion.identity);
-
             }
             
         }
