@@ -9,11 +9,6 @@ public class BoardInstantiator : MonoBehaviour {
     public BoardLibrary boardLibrary;
     public Tilemap tilemap;
 
-    private void Start()
-    {
-        
-    }
-
     public void Initialize()
     {
         tilemap.ClearAllTiles();

@@ -8,5 +8,5 @@ public class BoardLibraryEntry
 {
     public char characterId;
     public GameObject prefabToSpawn;
-    public Tile tileToDraw;
+    public Tile tile;
 }

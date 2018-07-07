@@ -87,7 +87,7 @@ public class TilemapToRoom : EditorWindow {
 
                     if (entry == null)
                     {
-                        Debug.LogError("Tile not found: " + entry.tileToDraw + " Have you added it to your BoardLibrary yet?");
+                        Debug.LogError("Tile not found: " + entry.tile + " Have you added it to your BoardLibrary yet?");
                     }
                     roomTemplate.roomChars[charIndex] = entry.characterId;
                     charIndex++;

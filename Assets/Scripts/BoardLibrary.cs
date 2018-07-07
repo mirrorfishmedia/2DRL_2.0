@@ -11,7 +11,7 @@ public class BoardLibrary : ScriptableObject
 
     public Tile GetDefaultTile()
     {
-        return boardLibraryEntries[0].tileToDraw;
+        return boardLibraryEntries[0].tile;
     }
 
     public BoardLibraryEntry GetDefaultEntry()
@@ -25,7 +25,7 @@ public class BoardLibrary : ScriptableObject
         Dictionary<Tile, BoardLibraryEntry> libraryDictionary = new Dictionary<Tile, BoardLibraryEntry>();
         for (int i = 0; i < boardLibraryEntries.Length; i++)
         {
-            libraryDictionary.Add(boardLibraryEntries[i].tileToDraw, boardLibraryEntries[i]);
+            libraryDictionary.Add(boardLibraryEntries[i].tile, boardLibraryEntries[i]);
         }
 
         return libraryDictionary;
@@ -59,7 +59,7 @@ public class BoardLibrary : ScriptableObject
         {
             if (boardLibraryEntries[i].characterId == charToFind)
             {
-                return boardLibraryEntries[i].tileToDraw;
+                return boardLibraryEntries[i].tile;
             }
         }
 
