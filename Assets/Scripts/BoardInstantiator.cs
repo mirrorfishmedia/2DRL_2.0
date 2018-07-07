@@ -44,5 +44,4 @@ public class BoardInstantiator : MonoBehaviour {
         BoardLibraryEntry entryToSpawn = GetLibraryEntryViaCharacterId(charId);
         boardLibrary.instantiationTechnique.SpawnBoardSquare(posToSpawn, entryToSpawn, this);
     }
-
 }

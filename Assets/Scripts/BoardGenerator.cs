@@ -7,7 +7,8 @@ public class BoardGenerator : MonoBehaviour {
 
 	public int boardHorizontalSize = 8;
 	public int boardVerticalSize = 8;
-    
+
+    public Generator[] generators;
 
 	public int roomSize = 10;
 	public int roomsOnPathDesired = 20;
