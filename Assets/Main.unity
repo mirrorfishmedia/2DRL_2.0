@@ -1955,7 +1955,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1675902405}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 55, y: 55, z: 0}
+  m_LocalPosition: {x: 35, y: 35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 712218709}
@@ -1972,7 +1972,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1694684951}
   - component: {fileID: 1694684950}
-  - component: {fileID: 1694684952}
   - component: {fileID: 1694684953}
   m_Layer: 0
   m_Name: BoardGenerator
@@ -1992,24 +1991,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 270a35e41dd27874fa85bcaa4d9e2788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boardHorizontalSize: 100
-  boardVerticalSize: 100
-  roomSize: 10
-  roomsOnPathDesired: 60
-  tilemap: {fileID: 140021812}
-  roomSequenceStartLocations:
-  - {x: 50, y: 50}
-  startRoomTemplates:
-  - {fileID: 11400000, guid: ada4697f152d624479bdcda630ea1422, type: 2}
-  randomFillRooms:
-  - {fileID: 11400000, guid: ada4697f152d624479bdcda630ea1422, type: 2}
-  - {fileID: 11400000, guid: a999c61aff16aee4b97cfde10618b46f, type: 2}
-  - {fileID: 11400000, guid: ada4697f152d624479bdcda630ea1422, type: 2}
-  - {fileID: 11400000, guid: 5962386067b66ab49a6842744ec4854d, type: 2}
   buildOnStart: 1
-  fillEmptySpaceWithRandomRooms: 0
+  boardHorizontalSize: 60
+  boardVerticalSize: 60
+  tilemap: {fileID: 140021812}
+  generators:
+  - {fileID: 11400000, guid: 949cfef19b932734d8851ee4e4c98f91, type: 2}
   exitLocations: []
   usedSpaces: []
+  currentLocation: {x: 0, y: 0}
+  roomsOnPathCreated: 0
+  currentRoom: {fileID: 0}
 --- !u!4 &1694684951
 Transform:
   m_ObjectHideFlags: 0
@@ -2023,19 +2015,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1694684952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1694684949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c3f817b3abbd144f9f65f537f6ac6b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomSize: 10
-  roomTemplates: []
 --- !u!114 &1694684953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2049,6 +2028,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boardLibrary: {fileID: 11400000, guid: 2954fdcdb895e744ea1e913f56bec52a, type: 2}
   tilemap: {fileID: 140021812}
+--- !u!1001 &1965479152
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4895096730058738, guid: 04e56f56d187b724a90ebcd02fe71758, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4895096730058738, guid: 04e56f56d187b724a90ebcd02fe71758, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4895096730058738, guid: 04e56f56d187b724a90ebcd02fe71758, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4895096730058738, guid: 04e56f56d187b724a90ebcd02fe71758, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4895096730058738, guid: 04e56f56d187b724a90ebcd02fe71758, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4895096730058738, guid: 04e56f56d187b724a90ebcd02fe71758, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4895096730058738, guid: 04e56f56d187b724a90ebcd02fe71758, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4895096730058738, guid: 04e56f56d187b724a90ebcd02fe71758, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112280337250944, guid: 04e56f56d187b724a90ebcd02fe71758, type: 2}
+      propertyPath: m_Name
+      value: ExitPrefab (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 04e56f56d187b724a90ebcd02fe71758, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &2089718256
 GameObject:
   m_ObjectHideFlags: 0
