@@ -37,5 +37,8 @@ MonoBehaviour:
     prefabToSpawn: {fileID: 1877783239666240, guid: 138cff284d937ec49acb5e16122cff1d,
       type: 2}
     tile: {fileID: 11400000, guid: 29097ece74cf50c479b8710b7e2550cb, type: 2}
+  - characterId: 97
+    prefabToSpawn: {fileID: 0}
+    tile: {fileID: 11400000, guid: 7a75a27410c3d9f488b06dbaff3c3a11, type: 2}
   instantiationTechnique: {fileID: 11400000, guid: ee5d05c4b90e128419865785b7a618f0,
     type: 2}

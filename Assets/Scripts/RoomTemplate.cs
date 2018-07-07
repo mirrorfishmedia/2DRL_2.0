@@ -19,7 +19,6 @@ public class RoomTemplate : ScriptableObject
 
     public char[] roomChars = new char[100];
 
-
 	public RoomAndDirection ChooseNextRoom(BoardGenerator boardGenerator, Vector2 currentLocation, List<Vector2> usedSpaces)
 	{       
         for (int z = 0; z < 400; z++)

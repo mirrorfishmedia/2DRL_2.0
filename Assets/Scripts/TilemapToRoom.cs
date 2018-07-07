@@ -66,6 +66,7 @@ public class TilemapToRoom : EditorWindow {
 
     public void WriteTilemapToRoomTemplate()
     {
+
         SelectTilemapInScene();
         Tilemap tilemap = Selection.activeGameObject.GetComponent<Tilemap>();
         

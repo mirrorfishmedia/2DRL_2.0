@@ -33,7 +33,6 @@ public class BoardLibrary : ScriptableObject
 
     public BoardLibraryEntry CheckLibraryForTile(Tile key, Dictionary<Tile, BoardLibraryEntry> boardLibraryDictionary)
     {
-        Debug.Log("boardlib dict " + boardLibraryDictionary);
         if (boardLibraryDictionary.ContainsKey(key))
         {
             return boardLibraryDictionary[key];

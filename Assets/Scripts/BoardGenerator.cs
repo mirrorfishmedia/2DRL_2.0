@@ -12,8 +12,7 @@ public class BoardGenerator : MonoBehaviour {
     public Tilemap tilemap;
 
     public Generator[] generators;
-
-
+    public char emptySpaceChar = '0';
 
     public List<Vector2> exitLocations;
 
@@ -35,11 +34,29 @@ public class BoardGenerator : MonoBehaviour {
     // Use this for initialization
     void Start () 
 	{
-        boardGridAsCharacters = new char[boardHorizontalSize, boardVerticalSize];
-
         if (buildOnStart)
         {
             BuildLevel();
+        }
+    }
+
+    void BuildLevel()
+    {
+        boardInstantiator.Initialize();
+        SetupEmptyGrid();
+        RunGenerators();
+        InstantiateGeneratedLevelData();
+    }
+
+    void SetupEmptyGrid()
+    {
+        boardGridAsCharacters = new char[boardHorizontalSize, boardVerticalSize];
+        for (int i = 0; i < boardHorizontalSize; i++)
+        {
+            for (int j = 0; j < boardVerticalSize; j++)
+            {
+                boardGridAsCharacters[i, j] = emptySpaceChar;
+            }
         }
     }
 
@@ -50,17 +67,6 @@ public class BoardGenerator : MonoBehaviour {
             generators[i].Generate(this);
         }
     }
-
-	void BuildLevel()
-	{
-        boardInstantiator.Initialize();
-
-        RunGenerators();
-        InstantiateGeneratedLevelData();
-    }
-
-
-  
 
     void InstantiateGeneratedLevelData()
     {
@@ -94,10 +100,27 @@ public class BoardGenerator : MonoBehaviour {
 		}
 	}
 
+    public GridPosition GetRandomGridPosition()
+    {
+        GridPosition randomPosition = new GridPosition(Random.Range(0, boardHorizontalSize), Random.Range(0, boardVerticalSize));
+        return randomPosition;
+    }
 
-	
+    public void DrawTemplate(int x, int y, RoomTemplate templateToSpawn, bool overWriteFilledCharacters)
+    {
+        int charIndex = 0;
+        for (int i = 0; i < templateToSpawn.roomSizeX; i++)
+        {
+            for (int j = 0; j < templateToSpawn.roomSizeY; j++)
+            {
+                WriteToBoardGrid(x + i, y + j, templateToSpawn.roomChars[charIndex], overWriteFilledCharacters);
+                charIndex++;
+            }
+        }
+    }
 
-	bool TestIfInGrid(int x, int y)
+
+    bool TestIfInGrid(int x, int y)
 	{
 		if (x < boardHorizontalSize && y < boardVerticalSize && x >= 0 && y >= 0) 
 		{
@@ -108,6 +131,27 @@ public class BoardGenerator : MonoBehaviour {
 		}
 			
 	}
+
+
+    public void WriteToBoardGrid(int x, int y, char charIdToWrite, bool overwriteFilledSpaces)
+    {
+        if (TestIfInGrid(x, y))
+        {
+            if (overwriteFilledSpaces)
+            {
+                boardGridAsCharacters[x, y] = charIdToWrite;
+            }
+            else
+            {
+                if (boardGridAsCharacters[x, y] == emptySpaceChar)
+                {
+                    boardGridAsCharacters[x, y] = charIdToWrite;
+                }
+            }
+        }
+        
+        
+    }
 
     public void SetTileFromGrid(char charId, int x, int y)
     {
