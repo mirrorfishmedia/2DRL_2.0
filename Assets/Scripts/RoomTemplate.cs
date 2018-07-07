@@ -19,36 +19,9 @@ public class RoomTemplate : ScriptableObject
 
     public char[] roomChars = new char[100];
 
-    public Vector2 FindUnblockedRandomSpace(Vector2 currentLocation, List<Vector2> usedSpaces)
-    {
-        List<Vector2> possibleNextRoomLocations = new List<Vector2>();
-        Vector2 dirToNextLocation = Vector2.zero;
-
-        possibleNextRoomLocations.Add(currentLocation + new Vector2(1, 0));
-        possibleNextRoomLocations.Add(currentLocation + new Vector2(0, 1));
-        possibleNextRoomLocations.Add(currentLocation + new Vector2(-1, 0));
-        possibleNextRoomLocations.Add(currentLocation + new Vector2(0, -1));
-
-        for (int i = 0; i < possibleNextRoomLocations.Count; i++)
-        {
-            for (int j = 0; j < usedSpaces.Count; j++)
-            {
-                if (possibleNextRoomLocations.Contains(usedSpaces[j]))
-                {
-                    possibleNextRoomLocations.Remove(usedSpaces[j]);
-                }
-            }
-        }
-        
-        Vector2 selectedLocation = possibleNextRoomLocations[Random.Range(0, possibleNextRoomLocations.Count)];
-       
-        return selectedLocation;
-    }
 
 	public RoomAndDirection ChooseNextRoom(BoardGenerator generator, Vector2 currentLocation, List<Vector2> usedSpaces)
 	{       
-		
-
         for (int z = 0; z < 400; z++)
         {
 
@@ -107,7 +80,6 @@ public class RoomTemplate : ScriptableObject
                 }
             }
 
-
             if (results.Count != 0)
             {
                 RoomAndDirection selectedResult = results[Random.Range(0, results.Count)];
@@ -115,13 +87,8 @@ public class RoomTemplate : ScriptableObject
             }
         }
 
-        
-
-        //Debug.LogError("room generation failed and returned null!");
         return null;
 
-        
-        
 	}
 
 	bool SpaceValid(Vector2 spaceToTest, List<Vector2> usedSpaces, BoardGenerator generator)

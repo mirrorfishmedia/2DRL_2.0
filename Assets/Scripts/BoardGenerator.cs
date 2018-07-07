@@ -14,8 +14,6 @@ public class BoardGenerator : MonoBehaviour {
 
     public Tilemap tilemap;
 
-
-
     public Vector2[] roomSequenceStartLocations;
 	public RoomTemplate[] startRoomTemplates;
 	public RoomTemplate[] randomFillRooms;
@@ -65,6 +63,56 @@ public class BoardGenerator : MonoBehaviour {
         InstantiateGeneratedLevelData();
     }
 
+
+    public void BuildRoomPath()
+    {
+        Vector2 startLoc = roomSequenceStartLocations[Random.Range(0, roomSequenceStartLocations.Length)];
+        RoomTemplate firstRoom = startRoomTemplates[Random.Range(0, startRoomTemplates.Length)];
+
+        currentLocation = startLoc;
+        currentRoom = firstRoom;
+
+        roomGenerator.Build(currentLocation, currentRoom, roomsOnPathCreated);
+
+        for (int i = 0; i < 100; i++)
+        {
+            if (!ChooseDirectionAndAddRoom())
+            {
+                Debug.Log("Roomgeneration terminated");
+                break;
+            }
+            if (roomsOnPathCreated >= roomsOnPathDesired)
+            {
+                Debug.Log("created all desired rooms");
+                break;
+            }
+
+        }
+        //ChooseExit();
+    }
+
+    public bool ChooseDirectionAndAddRoom()
+    {
+        RoomAndDirection nextResult = currentRoom.ChooseNextRoom(this, currentLocation, usedSpaces);
+
+        if (nextResult != null)
+        {
+            Vector2 nextLocation = nextResult.selectedDirection + currentLocation;
+            RoomTemplate nextRoom = nextResult.selectedRoom;
+            usedSpaces.Add(nextLocation);
+            roomGenerator.Build(nextLocation, nextRoom, roomsOnPathCreated);
+            roomsOnPathCreated++;
+            currentRoom = nextRoom;
+            currentLocation = nextLocation;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
     void InstantiateGeneratedLevelData()
     {
         for (int x = 0; x < boardHorizontalSize; x++)
@@ -110,53 +158,6 @@ public class BoardGenerator : MonoBehaviour {
 		}
 	}
 
-	public void BuildRoomPath()
-	{
-		Vector2 startLoc = roomSequenceStartLocations [Random.Range (0, roomSequenceStartLocations.Length)];
-		RoomTemplate firstRoom = startRoomTemplates [Random.Range (0, startRoomTemplates.Length)];
-
-        currentLocation = startLoc;
-		currentRoom = firstRoom;
-
-		for (int i = 0; i < 100; i++) 
-		{
-            if (!ChooseDirectionAndAddRoom())
-            {
-                Debug.Log("Roomgeneration terminated");
-                break;
-            }
-			if (roomsOnPathCreated >= roomsOnPathDesired) 
-			{
-				Debug.Log ("created all desired rooms");
-				break;
-			}
-				
-		}
-       // ChooseExit();
-
-
-    }
-
-	public bool ChooseDirectionAndAddRoom()
-	{
-		RoomAndDirection nextResult = currentRoom.ChooseNextRoom (this, currentLocation, usedSpaces);
-
-		if (nextResult != null)
-        {
-			Vector2 nextLocation = nextResult.selectedDirection + currentLocation;
-			RoomTemplate nextRoom = nextResult.selectedRoom;
-			usedSpaces.Add (nextLocation);
-			roomGenerator.Build (nextLocation, nextRoom, roomsOnPathCreated);
-			roomsOnPathCreated++;
-			currentRoom = nextRoom;
-			currentLocation = nextLocation;
-			return true;
-		} else 
-		{
-			return false;
-		}
-
-	}
 
 	public void BuildBorder()
 	{
@@ -220,7 +221,6 @@ public class BoardGenerator : MonoBehaviour {
 
     void SetTileFromGrid(char charId, int x, int y)
     {
-
         Vector2 pos = new Vector2(x, y);
         boardInstantiator.InstantiateTile(pos, charId);
     }
