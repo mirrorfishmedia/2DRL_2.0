@@ -16,4 +16,4 @@ MonoBehaviour:
   seed: asdsdd
   useRandomSeed: 0
   overwriteFilledSpaces: 1
-  randomFillPercent: 48
+  randomFillPercent: 100

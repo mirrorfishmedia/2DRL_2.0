@@ -70,7 +70,7 @@ public class BoardLibrary : ScriptableObject
             else
             {
                 //no change, return the original character
-                Debug.Log("No change return original");
+               // Debug.Log("No change return original");
                 testedChar = charToTest;
             }
         }

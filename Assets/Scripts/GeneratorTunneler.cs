@@ -22,7 +22,7 @@ public class GeneratorTunneler : Generator
         }
     }
 
-    private GridPosition DigTunnel(BoardGenerator boardGenerator, GridPosition startPosition, GridPosition tunnelGoal)
+    public GridPosition DigTunnel(BoardGenerator boardGenerator, GridPosition startPosition, GridPosition tunnelGoal)
     {
         GridPosition currentDigPosition = startPosition;
 
