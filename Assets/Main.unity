@@ -1929,10 +1929,12 @@ MonoBehaviour:
   boardLibrary: {fileID: 11400000, guid: 2954fdcdb895e744ea1e913f56bec52a, type: 2}
   generators:
   - {fileID: 11400000, guid: 26b1c1cee3c43e14eb19c7891a6f54a0, type: 2}
-  - {fileID: 11400000, guid: 73c4642d842d6ea43953f0f95b649578, type: 2}
+  - {fileID: 11400000, guid: e39cc77f78167f54882e0ebead5fda4d, type: 2}
   - {fileID: 11400000, guid: 949cfef19b932734d8851ee4e4c98f91, type: 2}
   - {fileID: 11400000, guid: f7918bdc31cdc7142a9589d8f86bf4a8, type: 2}
   - {fileID: 11400000, guid: d572ada0623c60b4ea6fafabeeaf8fe5, type: 2}
+  - {fileID: 11400000, guid: 27f74d0eda8bb3447b3f3f4756d28eae, type: 2}
+  - {fileID: 11400000, guid: 72a9b94fc0aaa8845bd0df28e0fd96b3, type: 2}
   emptySpaceChar: 48
   exitLocations: []
   usedSpaces: []
