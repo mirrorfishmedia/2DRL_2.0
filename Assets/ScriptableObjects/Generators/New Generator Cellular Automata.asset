@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   charForFill: 119
   charForEmpty: 48
-  seed: asdsdd
+  seed: asggg
   useRandomSeed: 0
   overwriteFilledSpaces: 1
-  randomFillPercent: 100
+  randomFillPercent: 55

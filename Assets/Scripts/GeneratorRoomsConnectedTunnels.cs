@@ -43,6 +43,8 @@ public class GeneratorRoomsConnectedTunnels : Generator
             tunnelTemplate.DigTunnel(boardGenerator, firstRoomPosition, roomPositions[i]);
         }
 
+        tunnelTemplate.DigTunnel(boardGenerator, roomPositions[roomPositions.Count - 1], firstRoomPosition);
+
     }
 
 

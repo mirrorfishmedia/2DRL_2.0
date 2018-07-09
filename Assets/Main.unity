@@ -2360,10 +2360,10 @@ MonoBehaviour:
   tilemap: {fileID: 140021812}
   boardLibrary: {fileID: 11400000, guid: 2954fdcdb895e744ea1e913f56bec52a, type: 2}
   generators:
-  - {fileID: 11400000, guid: 8b9e32cf3846ae241a60f7ee2a3390a1, type: 2}
-  - {fileID: 11400000, guid: 78b0d0caefdb3fe499addb4890df0675, type: 2}
+  - {fileID: 11400000, guid: 26b1c1cee3c43e14eb19c7891a6f54a0, type: 2}
   - {fileID: 11400000, guid: 949cfef19b932734d8851ee4e4c98f91, type: 2}
-  - {fileID: 11400000, guid: 73c4642d842d6ea43953f0f95b649578, type: 2}
+  - {fileID: 11400000, guid: eb55ae5355ae98e498be2c6026146c95, type: 2}
+  - {fileID: 11400000, guid: eb55ae5355ae98e498be2c6026146c95, type: 2}
   emptySpaceChar: 48
   exitLocations: []
   usedSpaces: []

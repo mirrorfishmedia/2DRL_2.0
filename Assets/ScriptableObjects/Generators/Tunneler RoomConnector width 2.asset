@@ -9,10 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4556ca038e5f8b44a986ddd9d1a570a2, type: 3}
-  m_Name: New Generator Tunneler
+  m_Name: Tunneler RoomConnector width 2
   m_EditorClassIdentifier: 
   emptySpaceChar: 48
   numTunnels: 8
   tunnelWidth: 2
-  tunnelEndTemplates: []
+  tunnelEndTemplates:
+  - {fileID: 11400000, guid: 27c873bc795d7c64491187e48bfd4525, type: 2}
   overWriteFilledCharacters: 1
