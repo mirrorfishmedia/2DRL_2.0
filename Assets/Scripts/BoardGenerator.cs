@@ -18,7 +18,7 @@ public class BoardGenerator : MonoBehaviour {
     public List<Vector2> exitLocations;
 
 	private bool roomChainHitEdge;
-	public List<Vector2> usedSpaces = new List<Vector2>();
+	public List<Vector2> usedRoomAreas = new List<Vector2>();
 	public Vector2 currentLocation;
     public int roomsOnPathCreated;
 	public RoomTemplate currentRoom;
@@ -27,10 +27,14 @@ public class BoardGenerator : MonoBehaviour {
     private BoardInstantiator boardInstantiator;
 
 
+    public GeneratorSpaceList[] generatorSpaceLists;
+
     void Awake()
 	{
         boardInstantiator = GetComponent<BoardInstantiator>();
+       
     }
+
 
     // Use this for initialization
     void Start () 
@@ -43,11 +47,26 @@ public class BoardGenerator : MonoBehaviour {
 
     void BuildLevel()
     {
+        SetupGeneratorSpaceLists();
         boardInstantiator.Initialize();
         boardLibrary.Initialize();
         SetupEmptyGrid();
         RunGenerators();
         InstantiateGeneratedLevelData();
+    }
+
+
+    void SetupGeneratorSpaceLists()
+    {
+        generatorSpaceLists = new GeneratorSpaceList[generators.Length];
+        for (int i = 0; i < generatorSpaceLists.Length; i++)
+        {
+            generatorSpaceLists[i] = new GeneratorSpaceList();
+            generatorSpaceLists[i].generatorType = generators[i];
+            generatorSpaceLists[i].Initialize();
+
+        }
+
     }
 
     void SetupEmptyGrid()
@@ -84,7 +103,7 @@ public class BoardGenerator : MonoBehaviour {
 
     bool SpaceValid(Vector2 spaceToTest)
 	{
-		if (usedSpaces.Contains(spaceToTest))
+		if (usedRoomAreas.Contains(spaceToTest))
 		{
 			Debug.Log ("space filled");
 			return false;
@@ -138,6 +157,33 @@ public class BoardGenerator : MonoBehaviour {
 		}
 	}
 
+    public bool TestIfTileTraversable(char charId)
+    {
+        for (int i = 0; i < boardLibrary.boardLibraryEntries.Length; i++)
+        {
+            if (boardLibrary.boardLibraryEntries[i].characterId == charId)
+            {
+                if (boardLibrary.boardLibraryEntries[i].traversable > 0)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void WriteToGeneratorSpaceList(GridPosition positionToWrite, Generator generator)
+    {
+        for (int i = 0; i < generatorSpaceLists.Length; i++)
+        {
+
+            //if (generatorSpaceLists[i].generatorType == generator)
+            //{
+                //Debug.Log("generatorSpaceLists[i].generatorType " + generatorSpaceLists[i].generatorType);
+                generatorSpaceLists[i].positionList.Add(positionToWrite);
+            //}
+        }
+    }
 
     public void WriteToBoardGrid(int x, int y, char charIdToWrite, bool overwriteFilledSpaces)
     {

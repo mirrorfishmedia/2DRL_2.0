@@ -8,11 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4556ca038e5f8b44a986ddd9d1a570a2, type: 3}
-  m_Name: Tunneler RoomConnector width 1
+  m_Script: {fileID: 11500000, guid: 81840d26290f88a4388c00b0d4a5eacb, type: 3}
+  m_Name: New Connected Generator Chain
   m_EditorClassIdentifier: 
-  emptySpaceChar: 48
-  numTunnels: 8
-  tunnelWidth: 1
-  tunnelEndTemplates: []
-  overWriteFilledCharacters: 1
+  tunnelTemplate: {fileID: 11400000, guid: 93364610e6ab07845bc1b8fb89aaec98, type: 2}

@@ -9,5 +9,6 @@ public class BoardLibraryEntry
     public char characterId;
     public GameObject prefabToSpawn;
     public Tile tile;
+    public float traversable = 1f;
     public ChanceBoardLibraryEntry chanceBoardLibraryEntry;
 }

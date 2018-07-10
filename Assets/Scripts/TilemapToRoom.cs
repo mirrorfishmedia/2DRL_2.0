@@ -59,7 +59,7 @@ public class TilemapToRoom : EditorWindow {
             for (int y = 0; y < roomTemplate.roomSizeY; y++)
             {
                 Vector3Int tilePos = new Vector3Int(x, y, 0) + origin;
-                tilemap.SetTile(tilePos,roomTemplate.library.GetDefaultTile());
+                tilemap.SetTile(tilePos,roomTemplate.boardLibrary.GetDefaultTile());
             }
         }
     }
@@ -84,7 +84,7 @@ public class TilemapToRoom : EditorWindow {
                 else
                 {
                     BoardLibraryEntry entry;
-                    entry = roomTemplate.library.CheckLibraryForTile(foundTile,libraryDictionary);
+                    entry = roomTemplate.boardLibrary.CheckLibraryForTile(foundTile,libraryDictionary);
 
                     if (entry == null)
                     {
@@ -112,7 +112,7 @@ public class TilemapToRoom : EditorWindow {
         {
             for (int y = 0; y < roomTemplate.roomSizeY; y++)
             {
-                Tile tileToSet = roomTemplate.library.GetTileFromChar(roomTemplate.roomChars[charIndex]);
+                Tile tileToSet = roomTemplate.boardLibrary.GetTileFromChar(roomTemplate.roomChars[charIndex]);
                 Vector3Int pos = new Vector3Int(x, y, 0) + tilemap.origin;
                 tilemap.SetTile(pos, tileToSet);
                 charIndex++;
@@ -124,7 +124,7 @@ public class TilemapToRoom : EditorWindow {
     public void SelectTilemapInScene()
     {
 
-        libraryDictionary = roomTemplate.library.BuildTileKeyLibraryDictionary();
+        libraryDictionary = roomTemplate.boardLibrary.BuildTileKeyLibraryDictionary();
 
         if (Selection.activeGameObject == null)
         {

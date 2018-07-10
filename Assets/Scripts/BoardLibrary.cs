@@ -8,6 +8,11 @@ public class BoardLibrary : ScriptableObject
 {
     public BoardInstantiationTechnique instantiationTechnique;
 
+    public RoomList northList;
+    public RoomList eastList;
+    public RoomList southList;
+    public RoomList westList;
+
     public BoardLibraryEntry[] boardLibraryEntries;
 
     public void Initialize()
@@ -116,7 +121,7 @@ public class BoardLibrary : ScriptableObject
             }
         }
 
-        if (charToFind == null)
+        if (charToFind == '\0')
         {
             return GetDefaultTile();
         }

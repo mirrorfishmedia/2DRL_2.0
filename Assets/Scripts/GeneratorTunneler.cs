@@ -47,6 +47,10 @@ public class GeneratorTunneler : Generator
             for (int j = 0; j < tunnelWidth; j++)
             {
                 boardGenerator.WriteToBoardGrid(currentDigPosition.x, currentDigPosition.y+j, emptySpaceChar, true);
+                if (boardGenerator.TestIfTileTraversable(emptySpaceChar))
+                {
+                    boardGenerator.WriteToGeneratorSpaceList(currentDigPosition, this);
+                }
             }
            
         }
@@ -70,6 +74,10 @@ public class GeneratorTunneler : Generator
             for (int s = 0; s < tunnelWidth; s++)
             {
                 boardGenerator.WriteToBoardGrid(currentDigPosition.x + s, currentDigPosition.y, emptySpaceChar, true);
+                if (boardGenerator.TestIfTileTraversable(emptySpaceChar))
+                {
+                    boardGenerator.WriteToGeneratorSpaceList(currentDigPosition, this);
+                }
             }
         }
 
@@ -82,6 +90,7 @@ public class GeneratorTunneler : Generator
         {
             RoomTemplate templateToSpawn = tunnelEndTemplates[Random.Range(0, tunnelEndTemplates.Length)];
             boardGenerator.DrawTemplate(spawnPosition.x, spawnPosition.y, templateToSpawn, overWriteFilledCharacters);
+
         }
     }
 }

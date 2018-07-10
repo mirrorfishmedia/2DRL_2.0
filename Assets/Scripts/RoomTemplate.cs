@@ -8,18 +8,27 @@ public class RoomTemplate : ScriptableObject
 
     public int roomSizeX = 10;
     public int roomSizeY = 10;
-    public BoardLibrary library;
-	public RoomList northList;
-	public RoomList southList;
-	public RoomList eastList;
-	public RoomList westList;
+    public BoardLibrary boardLibrary;
+
+    public bool opensToNorth;
+    public bool opensToEast;
+    public bool opensToSouth;
+    public bool opensToWest;
 
 
 
-
+    [HideInInspector]
     public char[] roomChars = new char[100];
 
-	public RoomAndDirection ChooseNextRoom(BoardGenerator boardGenerator, Vector2 currentLocation, List<Vector2> usedSpaces)
+    public void OnValidate()
+    {
+        if (roomChars.Length != (roomSizeX * roomSizeY))
+        {
+            roomChars = new char[roomSizeX * roomSizeY];
+        }
+    }
+
+        public RoomAndDirection ChooseNextRoom(BoardGenerator boardGenerator, Vector2 currentLocation, List<Vector2> usedSpaces)
 	{       
         for (int z = 0; z < 400; z++)
         {
@@ -27,12 +36,11 @@ public class RoomTemplate : ScriptableObject
             List<RoomAndDirection> results = new List<RoomAndDirection>();
             results.Clear();
             RoomAndDirection result = new RoomAndDirection();
-            Debug.Log("Result selected room " + result.selectedRoom);
 
             int direction = Random.Range(0, 4);
-            if (direction == 0 && northList != null)
+            if (direction == 0 && opensToNorth)
             {
-                result.selectedRoom = northList.rooms[Random.Range(0, northList.rooms.Length)];
+                result.selectedRoom = boardLibrary.northList.rooms[Random.Range(0, boardLibrary.northList.rooms.Length)];
                 Vector2 northDir = new Vector2(0, result.selectedRoom.roomSizeY);
 
                 if (SpaceValid(currentLocation + northDir, usedSpaces, boardGenerator))
@@ -42,24 +50,10 @@ public class RoomTemplate : ScriptableObject
                 }
             }
 
-            if (direction == 1 && southList != null)
+
+            if (direction == 2 && opensToEast)
             {
-                result.selectedRoom = southList.rooms[Random.Range(0, southList.rooms.Length)];
-
-                Vector2 southDir = new Vector2(0, -result.selectedRoom.roomSizeY);
-
-                if (SpaceValid(currentLocation + southDir, usedSpaces, boardGenerator))
-                {
-                    result.selectedDirection = southDir;
-                    results.Add(result);
-                }
-            }
-
-
-
-            if (direction == 2 && eastList != null)
-            {
-                result.selectedRoom = eastList.rooms[Random.Range(0, eastList.rooms.Length)];
+                result.selectedRoom = boardLibrary.eastList.rooms[Random.Range(0, boardLibrary.eastList.rooms.Length)];
 
                 Vector2 eastDir = new Vector2(result.selectedRoom.roomSizeX, 0);
 
@@ -70,9 +64,22 @@ public class RoomTemplate : ScriptableObject
                 }
             }
 
-            if (direction == 3 && westList != null)
+            if (direction == 1 && opensToSouth)
             {
-                result.selectedRoom = westList.rooms[Random.Range(0, westList.rooms.Length)];
+                result.selectedRoom = boardLibrary.southList.rooms[Random.Range(0, boardLibrary.southList.rooms.Length)];
+
+                Vector2 southDir = new Vector2(0, -result.selectedRoom.roomSizeY);
+
+                if (SpaceValid(currentLocation + southDir, usedSpaces, boardGenerator))
+                {
+                    result.selectedDirection = southDir;
+                    results.Add(result);
+                }
+            }
+
+            if (direction == 3 && opensToWest)
+            {
+                result.selectedRoom = boardLibrary.westList.rooms[Random.Range(0, boardLibrary.westList.rooms.Length)];
 
                 Vector2 westDir = new Vector2(-result.selectedRoom.roomSizeX, 0);
 

@@ -52,13 +52,13 @@ public class GeneratorRoomChain : Generator
 
     public bool ChooseDirectionAndAddRoom(BoardGenerator boardGenerator)
     {
-        RoomAndDirection nextResult = boardGenerator.currentRoom.ChooseNextRoom(boardGenerator, boardGenerator.currentLocation, boardGenerator.usedSpaces);
+        RoomAndDirection nextResult = boardGenerator.currentRoom.ChooseNextRoom(boardGenerator, boardGenerator.currentLocation, boardGenerator.usedRoomAreas);
 
         if (nextResult != null)
         {
             Vector2 nextLocation = nextResult.selectedDirection + boardGenerator.currentLocation;
             RoomTemplate nextRoom = nextResult.selectedRoom;
-            boardGenerator.usedSpaces.Add(nextLocation);
+            boardGenerator.usedRoomAreas.Add(nextLocation);
             ScriptableRoom(nextLocation, nextRoom, boardGenerator.roomsOnPathCreated, true, boardGenerator);
             boardGenerator.roomsOnPathCreated++;
             boardGenerator.currentRoom = nextRoom;
@@ -106,10 +106,13 @@ public class GeneratorRoomChain : Generator
                 {
                     Vector2 spawnPos = new Vector2(i, j) + roomOrigin;
 
-                    int x = (int)spawnPos.x;
-                    int y = (int)spawnPos.y;
-
-                    boardGenerator.boardGridAsCharacters[x, y] = selectedChar;
+                    GridPosition spawnGrid = new GridPosition((int)spawnPos.x, (int)spawnPos.y);
+                    
+                    boardGenerator.WriteToBoardGrid(spawnGrid.x, spawnGrid.y, selectedChar, true);
+                    if (boardGenerator.TestIfTileTraversable(selectedChar))
+                    {
+                        boardGenerator.WriteToGeneratorSpaceList(spawnGrid, this);
+                    }
                 }
 
                 charIndex++;

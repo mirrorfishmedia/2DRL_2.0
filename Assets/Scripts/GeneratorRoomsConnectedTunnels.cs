@@ -31,7 +31,6 @@ public class GeneratorRoomsConnectedTunnels : Generator
             roomGridPositions.Add(randRoomPosition);
             boardGenerator.DrawTemplate(randRoomPosition.x, randRoomPosition.y, roomTemplates[Random.Range(0, roomTemplates.Length)], overWriteFilledSpaces);
         }
-        Debug.Log("roomPositions Count " + roomGridPositions.Count);
         ConnectRooms(boardGenerator, firstRoomPosition, roomGridPositions);
 
     }
