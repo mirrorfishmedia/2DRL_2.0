@@ -1,8 +1,0 @@
-<set>
-  <tiles>
-<tile name="Assets/unity_wfc/unity-wave-function-collapse/Quad" symmetry="X" weight="1.0"/>
-	</tiles>
-<neighbors>  <neighbor left="Assets/unity_wfc/unity-wave-function-collapse/Quad 0" right="Assets/unity_wfc/unity-wave-function-collapse/Quad 0"/>
-  <neighbor left="Assets/unity_wfc/unity-wave-function-collapse/Quad 1" right="Assets/unity_wfc/unity-wave-function-collapse/Quad 1"/>
-	</neighbors>
-</set>

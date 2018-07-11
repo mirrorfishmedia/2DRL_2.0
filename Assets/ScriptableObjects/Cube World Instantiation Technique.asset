@@ -8,12 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fa0022688b5c58408ed42372d880222, type: 3}
-  m_Name: New Generator Cellular Automata
+  m_Script: {fileID: 11500000, guid: 279947dfb3146fe4c8e6f8bc8e600134, type: 3}
+  m_Name: Cube World Instantiation Technique
   m_EditorClassIdentifier: 
-  charForFill: 119
-  charForEmpty: 48
-  seed: asggg
-  useRandomSeed: 0
-  overwriteFilledSpaces: 1
-  randomFillPercent: 49
+  mapYLayers: 3

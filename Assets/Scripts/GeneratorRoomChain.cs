@@ -52,13 +52,13 @@ public class GeneratorRoomChain : Generator
 
     public bool ChooseDirectionAndAddRoom(BoardGenerator boardGenerator)
     {
-        RoomAndDirection nextResult = boardGenerator.currentRoom.ChooseNextRoom(boardGenerator, boardGenerator.currentLocation, boardGenerator.usedSpaces);
+        RoomAndDirection nextResult = boardGenerator.currentRoom.ChooseNextRoom(boardGenerator, boardGenerator.currentLocation, boardGenerator.roomChainRoomLocationsFilled);
 
         if (nextResult != null)
         {
             Vector2 nextLocation = nextResult.selectedDirection + boardGenerator.currentLocation;
             RoomTemplate nextRoom = nextResult.selectedRoom;
-            boardGenerator.usedSpaces.Add(nextLocation);
+            boardGenerator.roomChainRoomLocationsFilled.Add(nextLocation);
             ScriptableRoom(nextLocation, nextRoom, boardGenerator.roomsOnPathCreated, true, boardGenerator);
             boardGenerator.roomsOnPathCreated++;
             boardGenerator.currentRoom = nextRoom;

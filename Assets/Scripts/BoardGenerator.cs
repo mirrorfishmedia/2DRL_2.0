@@ -15,22 +15,22 @@ public class BoardGenerator : MonoBehaviour {
     public Generator[] generators;
     public char emptySpaceChar = '0';
 
+    [HideInInspector]
     public List<Vector2> exitLocations;
 
-	private bool roomChainHitEdge;
-	public List<Vector2> usedSpaces = new List<Vector2>();
-	public Vector2 currentLocation;
+
+    [HideInInspector]
+    public List<Vector2> roomChainRoomLocationsFilled = new List<Vector2>();
+    [HideInInspector]
+    public Vector2 currentLocation;
+    [HideInInspector]
     public int roomsOnPathCreated;
-	public RoomTemplate currentRoom;
+    [HideInInspector]
+    public RoomTemplate currentRoom;
 
     public char[,] boardGridAsCharacters;
-    private BoardInstantiator boardInstantiator;
-
-
-    void Awake()
-	{
-        boardInstantiator = GetComponent<BoardInstantiator>();
-    }
+    private Dictionary<char, BoardLibraryEntry> libraryDictionary;
+    
 
     // Use this for initialization
     void Start () 
@@ -43,7 +43,7 @@ public class BoardGenerator : MonoBehaviour {
 
     void BuildLevel()
     {
-        boardInstantiator.Initialize();
+        InitializeLibraryDictionary();
         boardLibrary.Initialize();
         SetupEmptyGrid();
         RunGenerators();
@@ -62,6 +62,35 @@ public class BoardGenerator : MonoBehaviour {
         }
     }
 
+    public void InitializeLibraryDictionary()
+    {
+        libraryDictionary = new Dictionary<char, BoardLibraryEntry>();
+        for (int i = 0; i < boardLibrary.boardLibraryEntries.Length; i++)
+        {
+            libraryDictionary.Add(boardLibrary.boardLibraryEntries[i].characterId, boardLibrary.boardLibraryEntries[i]);
+        }
+    }
+
+    public BoardLibraryEntry GetLibraryEntryViaCharacterId(char charId)
+    {
+        BoardLibraryEntry entry = null;
+        if (libraryDictionary.ContainsKey(charId))
+        {
+            entry = libraryDictionary[charId];
+        }
+        else
+        {
+            if (charId == '\0')
+            {
+                return boardLibrary.GetDefaultEntry();
+            }
+
+            Debug.LogError("Attempt to get charId " + charId.ToString() + " from boardLibrary failed, is there an entry with that ID in the boardLibrary?");
+        }
+
+        return entry;
+    }
+
     void RunGenerators()
     {
         for (int i = 0; i < generators.Length; i++)
@@ -77,14 +106,14 @@ public class BoardGenerator : MonoBehaviour {
             for (int y = 0; y < boardVerticalSize; y++)
             {
                 Vector2 spawnPos = new Vector2(x, y);
-                boardInstantiator.InstantiateTile(spawnPos, boardGridAsCharacters[x, y]);
+                CreateMapEntryFromGrid(boardGridAsCharacters[x, y],spawnPos);
             }
         }
     }
 
     bool SpaceValid(Vector2 spaceToTest)
 	{
-		if (usedSpaces.Contains(spaceToTest))
+		if (roomChainRoomLocationsFilled.Contains(spaceToTest))
 		{
 			Debug.Log ("space filled");
 			return false;
@@ -160,12 +189,12 @@ public class BoardGenerator : MonoBehaviour {
 
     }
 
-    public void SetTileFromGrid(char charId, int x, int y)
+    public void CreateMapEntryFromGrid(char charId, Vector2 position)
     {
-        Vector2 pos = new Vector2(x, y);
-        boardInstantiator.InstantiateTile(pos, charId);
+        BoardLibraryEntry entryToSpawn = GetLibraryEntryViaCharacterId(charId);
+        boardLibrary.instantiationTechnique.SpawnBoardSquare(this, position, entryToSpawn);
     }
-
+    
     /*
     void ChooseExit()
     {

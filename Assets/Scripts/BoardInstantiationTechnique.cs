@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class BoardInstantiationTechnique : ScriptableObject
 {
-    public abstract void SpawnBoardSquare(Vector2 location, BoardLibraryEntry inputEntry, BoardInstantiator boardInstantiator);
+    public abstract void SpawnBoardSquare(BoardGenerator boardGenerator, Vector2 location, BoardLibraryEntry inputEntry);
 }

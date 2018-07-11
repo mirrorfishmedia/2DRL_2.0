@@ -39,7 +39,8 @@ public class GeneratorSquareBorder : Generator
         {
             // ... instantiate an outer wall tile at the x coordinate and the current y coordinate.
             //InstantiateFromArray(wall, xCoord, currentY);
-            boardGenerator.SetTileFromGrid(borderChar, (int)xCoord, (int)currentY);
+            Vector2 spawnPos = new Vector2(xCoord, currentY);
+            boardGenerator.CreateMapEntryFromGrid(borderChar, spawnPos);
             currentY++;
         }
     }
@@ -55,7 +56,8 @@ public class GeneratorSquareBorder : Generator
         {
             // ... instantiate an outer wall tile at the y coordinate and the current x coordinate.
             //InstantiateFromArray (wall, currentX, yCoord);
-            boardGenerator.SetTileFromGrid(borderChar, (int)currentX, (int)yCoord);
+            Vector2 spawnPos = new Vector2(currentX, yCoord);
+            boardGenerator.CreateMapEntryFromGrid(borderChar, spawnPos);
             currentX++;
         }
     }

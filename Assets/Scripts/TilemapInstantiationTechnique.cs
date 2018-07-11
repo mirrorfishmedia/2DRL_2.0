@@ -6,14 +6,14 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu(menuName = "BoardGeneration/TileMapInstantiator")]
 public class TilemapInstantiationTechnique : BoardInstantiationTechnique
 {
-    public override void SpawnBoardSquare(Vector2 location, BoardLibraryEntry inputEntry, BoardInstantiator boardInstantiator)
+    public override void SpawnBoardSquare(BoardGenerator boardGenerator, Vector2 location, BoardLibraryEntry inputEntry)
     {
         if (inputEntry != null)
         {
             if (inputEntry.prefabToSpawn == null)
             {
                 Vector3Int pos = new Vector3Int((int)location.x, (int)location.y, 0);
-                boardInstantiator.tilemap.SetTile(pos, inputEntry.tile);
+                boardGenerator.tilemap.SetTile(pos, inputEntry.tile);
             }
             else
             {

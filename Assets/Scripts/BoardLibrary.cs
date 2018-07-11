@@ -116,7 +116,7 @@ public class BoardLibrary : ScriptableObject
             }
         }
 
-        if (charToFind == null)
+        if (charToFind == '\0')
         {
             return GetDefaultTile();
         }
