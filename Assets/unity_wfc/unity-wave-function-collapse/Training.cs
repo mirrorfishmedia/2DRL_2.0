@@ -24,67 +24,7 @@ class Training : MonoBehaviour{
 		return (n%4 + 4)%4;
 	}
 
-	public void RecordNeighbors() {
-		Compile();
-		neighbors = new Dictionary<string, int[]>();
-		for (int y = 0; y < depth; y++){
-			for (int x = 0; x < width; x++){
-				for (int r = 0; r < 2; r++){
-					int idx = (int)sample[x, y];
-					int rot = Card(RS[idx] + r);
-                    int rx = x + 1 - r;
-                    int ry = y + r;
-                    if (rx < width && ry < depth)
-                    {
-                        int ridx = (int)sample[rx, ry];
-                        int rrot = Card(RS[ridx] + r);
-                        string key = "" + idx + "." + rot + "|" + ridx + "." + rrot;
-                        if (!neighbors.ContainsKey(key) && tiles[idx] && tiles[ridx])
-                        {
-                            neighbors.Add(key, new int[] { idx, rot, ridx, rrot });
-                            Debug.DrawLine(
-                                transform.TransformPoint(new Vector3((x + 0f) * gridsize, (y + 0f) * gridsize, 1f)),
-                                transform.TransformPoint(new Vector3((x + 1f - r) * gridsize, (y + 0f + r) * gridsize, 1f)), Color.red, 9.0f, false);
-                        }
-                    }
-				}
-			}
-		}
-		System.IO.File.WriteAllText(Application.dataPath+"/"+this.gameObject.name+".xml", NeighborXML());
-	}
-
-	public string AssetPath(UnityEngine.Object o){
-		#if UNITY_EDITOR
-		return AssetDatabase.GetAssetPath(o).Trim().Replace("Assets/Resources/", "").Replace(".prefab", "");
-		#else
-		return "";
-		#endif
-	}
-
-	public string NeighborXML(){
-		Dictionary<UnityEngine.Object,int> counts = new Dictionary<UnityEngine.Object,int>();
-		string res = "<set>\n  <tiles>\n";
-		for (int i = 0; i < tiles.Length; i++){
-			UnityEngine.Object o = tiles[i];
-			if (o && !counts.ContainsKey(o)){
-				counts[o] = 1;
-				string assetpath = AssetPath(o);
-				string sym = "X";
-				string last = assetpath.Substring(assetpath.Length - 1);
-				if (last == "X" || last == "I" || last == "L" || last == "T" || last == "D"){
-					sym = last;
-				}
-				res += "<tile name=\""+assetpath+"\" symmetry=\""+sym+"\" weight=\"1.0\"/>\n";
-			}
-		}
-		res += "	</tiles>\n<neighbors>";
-		Dictionary<string, int[]>.ValueCollection v = neighbors.Values;
-		foreach( int[] link in v ) {
-	    	res += "  <neighbor left=\""+AssetPath(tiles[link[0]])+" "+link[1]+
-	    				   "\" right=\""+AssetPath(tiles[link[2]])+" "+link[3]+"\"/>\n";
-		}
-		return res + "	</neighbors>\n</set>";
-	}
+	//removed record neighbors here
 
 	public bool hasWhitespace(){
 		byte ws = (byte)0;
@@ -173,9 +113,11 @@ public class TrainingEditor : Editor {
 		if(GUILayout.Button("compile")){
 			training.Compile();
 		}
+        /*
 		if(GUILayout.Button("record neighbors")){
 			training.RecordNeighbors();
 		}
+        */
 		DrawDefaultInspector ();
 	}
 }
