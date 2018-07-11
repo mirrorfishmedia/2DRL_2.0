@@ -6,7 +6,14 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu (menuName = "BoardGeneration/BoardLibrary")]
 public class BoardLibrary : ScriptableObject
 {
+
     public BoardInstantiationTechnique instantiationTechnique;
+    public char emptySpaceCharDefault = '0';
+    [Header ("Room chain lists of by exit direction")]
+    public RoomList movingNorthRoomTemplateList;
+    public RoomList movingEastRoomTemplateList;
+    public RoomList movingSouthRoomTemplateList;
+    public RoomList movingWestRoomTemplateList;
 
     public BoardLibraryEntry[] boardLibraryEntries;
 

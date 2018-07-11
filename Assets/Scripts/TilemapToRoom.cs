@@ -7,6 +7,8 @@ using UnityEditor;
 public class TilemapToRoom : EditorWindow {
 
     public RoomTemplate roomTemplate;
+    public BoardLibrary boardLibrary;
+
     private Dictionary<Tile, BoardLibraryEntry> libraryDictionary;
 
     [MenuItem("Window/Tilemap To RoomTemplate Converter")]
@@ -17,16 +19,39 @@ public class TilemapToRoom : EditorWindow {
 
     void OnGUI()
     {
-
-        SerializedObject serializedRoomTemplateObject = new SerializedObject(this);
-        SerializedProperty serializedRoomTemplateProperty = serializedRoomTemplateObject.FindProperty("roomTemplate");
+ 
+        SerializedObject serializedObject = new SerializedObject(this);
+        SerializedProperty serializedRoomTemplateProperty = serializedObject.FindProperty("roomTemplate");
         EditorGUILayout.PropertyField(serializedRoomTemplateProperty, true);
+        
+        SerializedProperty serializedBoardLibraryProperty = serializedObject.FindProperty("boardLibrary");
+        EditorGUILayout.PropertyField(serializedBoardLibraryProperty, true);
 
-        serializedRoomTemplateObject.ApplyModifiedProperties();
-
+        serializedObject.ApplyModifiedProperties();
+        
         if (GUILayout.Button("Load Room"))
         {
-            ReadTilemapFromRoomTemplate();
+            LoadTileMapFromRoomTemplate();
+        }
+
+        if (GUILayout.Button("Add To North Exiting Rooms List"))
+        {
+            FlagWithNorthAndAddToList();
+        }
+
+        if (GUILayout.Button("Add To East Exiting Rooms List"))
+        {
+            FlagWithEastAndAddToList();
+        }
+
+        if (GUILayout.Button("Add To South Exiting Rooms List"))
+        {
+            FlagWithSouthAndAddToList();
+        }
+
+        if (GUILayout.Button("Add To West Exiting Rooms List"))
+        {
+            FlagWithWestAndAddToList();
         }
 
         if (GUILayout.Button("Save Room"))
@@ -34,7 +59,7 @@ public class TilemapToRoom : EditorWindow {
             WriteTilemapToRoomTemplate();
         }
 
-        if (GUILayout.Button("Clear Selected Tilemap"))
+        if (GUILayout.Button("Clear & Draw Empty " + roomTemplate.roomSizeX + " x " + roomTemplate.roomSizeY))
         {
             ClearTilemap();
         }
@@ -59,7 +84,7 @@ public class TilemapToRoom : EditorWindow {
             for (int y = 0; y < roomTemplate.roomSizeY; y++)
             {
                 Vector3Int tilePos = new Vector3Int(x, y, 0) + origin;
-                tilemap.SetTile(tilePos,roomTemplate.library.GetDefaultTile());
+                tilemap.SetTile(tilePos,boardLibrary.GetDefaultEntry().tile);
             }
         }
     }
@@ -84,7 +109,7 @@ public class TilemapToRoom : EditorWindow {
                 else
                 {
                     BoardLibraryEntry entry;
-                    entry = roomTemplate.library.CheckLibraryForTile(foundTile,libraryDictionary);
+                    entry = boardLibrary.CheckLibraryForTile(foundTile,libraryDictionary);
 
                     if (entry == null)
                     {
@@ -100,7 +125,31 @@ public class TilemapToRoom : EditorWindow {
         Debug.Log("Success. Tilemap written to RoomTemplate");
     }
 
-    public void ReadTilemapFromRoomTemplate()
+    public void FlagWithNorthAndAddToList()
+    {
+        roomTemplate.hasNorthExit = true;
+        boardLibrary.movingNorthRoomTemplateList.roomList.Add(roomTemplate);
+    }
+
+    public void FlagWithEastAndAddToList()
+    {
+        roomTemplate.hasEastExit = true;
+        boardLibrary.movingEastRoomTemplateList.roomList.Add(roomTemplate);
+    }
+
+    public void FlagWithSouthAndAddToList()
+    {
+        roomTemplate.hasSouthExit = true;
+        boardLibrary.movingSouthRoomTemplateList.roomList.Add(roomTemplate);
+    }
+
+    public void FlagWithWestAndAddToList()
+    {
+        roomTemplate.hasWestExit = true;
+        boardLibrary.movingWestRoomTemplateList.roomList.Add(roomTemplate);
+    }
+
+    public void LoadTileMapFromRoomTemplate()
     {
 
         SelectTilemapInScene();
@@ -112,7 +161,7 @@ public class TilemapToRoom : EditorWindow {
         {
             for (int y = 0; y < roomTemplate.roomSizeY; y++)
             {
-                Tile tileToSet = roomTemplate.library.GetTileFromChar(roomTemplate.roomChars[charIndex]);
+                Tile tileToSet = boardLibrary.GetTileFromChar(roomTemplate.roomChars[charIndex]);
                 Vector3Int pos = new Vector3Int(x, y, 0) + tilemap.origin;
                 tilemap.SetTile(pos, tileToSet);
                 charIndex++;
@@ -124,7 +173,7 @@ public class TilemapToRoom : EditorWindow {
     public void SelectTilemapInScene()
     {
 
-        libraryDictionary = roomTemplate.library.BuildTileKeyLibraryDictionary();
+        libraryDictionary = boardLibrary.BuildTileKeyLibraryDictionary();
 
         if (Selection.activeGameObject == null)
         {

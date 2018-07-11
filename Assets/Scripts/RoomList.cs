@@ -6,5 +6,5 @@ using UnityEngine;
 
 public class RoomList : ScriptableObject {
 
-	public RoomTemplate[] rooms;
+	public List<RoomTemplate> roomList;
 }

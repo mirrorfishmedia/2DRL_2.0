@@ -21,10 +21,8 @@ public class CubeWorldInstantiationTechnique : BoardInstantiationTechnique
                 for (int i = 0; i < mapYLayers; i++)
                 {
                     Vector3 pos = new Vector3((int)location.x, i, (int)location.y);
-                    //boardInstantiator.tilemap.SetTile(pos, inputEntry.tile);
                     SpawnCube(pos, inputEntry.prefabToSpawn);
                 }
-                //Instantiate(inputEntry.prefabToSpawn, location, Quaternion.identity);
             }
         }
         else
@@ -35,6 +33,6 @@ public class CubeWorldInstantiationTechnique : BoardInstantiationTechnique
 
     private void SpawnCube(Vector3 spawnPosition, GameObject prefab)
     {
-        GameObject clone = Instantiate(prefab, spawnPosition, Quaternion.identity);
+        Instantiate(prefab, spawnPosition, Quaternion.identity);
     }
 }

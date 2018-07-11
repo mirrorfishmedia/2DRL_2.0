@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcaf6a7a02540c14898118f2dfdabf2c, type: 3}
   m_Name: MovingSouth
   m_EditorClassIdentifier: 
-  rooms:
-  - {fileID: 11400000, guid: ada4697f152d624479bdcda630ea1422, type: 2}
+  roomList:
   - {fileID: 11400000, guid: 5962386067b66ab49a6842744ec4854d, type: 2}
-  - {fileID: 11400000, guid: 607aef962c0932246b7ebba0ce8ad6d0, type: 2}
-  - {fileID: 11400000, guid: 32b2736bd6631644da776161b51feac0, type: 2}
+  - {fileID: 11400000, guid: ada4697f152d624479bdcda630ea1422, type: 2}
+  - {fileID: 11400000, guid: 78830ab5ca3c07e4e8373f93a75f5691, type: 2}
+  - {fileID: 11400000, guid: bef8851cbbd65cd41a3499a696b3963b, type: 2}

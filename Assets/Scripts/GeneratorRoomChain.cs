@@ -14,6 +14,11 @@ public class GeneratorRoomChain : Generator
     public RoomTemplate[] randomFillRooms;
     public bool fillEmptySpaceWithRandomRooms;
 
+    public RoomList movingNorth;
+    public RoomList movingEast;
+    public RoomList movingSouth;
+    public RoomList movingWest;
+
     public override void Generate(BoardGenerator boardGenerator)
     {
         BuildRoomPath(boardGenerator);
