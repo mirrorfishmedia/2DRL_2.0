@@ -1326,14 +1326,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildOnStart: 1
-  boardHorizontalSize: 60
-  boardVerticalSize: 60
   tilemap: {fileID: 140021812}
-  boardLibrary: {fileID: 11400000, guid: 2954fdcdb895e744ea1e913f56bec52a, type: 2}
-  generators:
-  - {fileID: 11400000, guid: 26b1c1cee3c43e14eb19c7891a6f54a0, type: 2}
-  - {fileID: 11400000, guid: 949cfef19b932734d8851ee4e4c98f91, type: 2}
-  emptySpaceChar: 48
+  profile: {fileID: 11400000, guid: a508704f9fd1a484fac8071cca9de465, type: 2}
   exitLocations: []
   roomChainRoomLocationsFilled: []
   currentLocation: {x: 0, y: 0}

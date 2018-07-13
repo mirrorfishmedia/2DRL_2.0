@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomAndDirection
+namespace Strata
 {
-	public RoomTemplate selectedRoom;
-	public Vector2 selectedDirection;
+    public class RoomAndDirection
+    {
+        public RoomTemplate selectedRoom;
+        public Vector2 selectedDirection;
 
+    }
 }

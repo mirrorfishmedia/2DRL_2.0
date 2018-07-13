@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "2DRL/RoomList")]
+namespace Strata
+{
+    [CreateAssetMenu(menuName = "2DRL/RoomList")]
+    public class RoomList : ScriptableObject
+    {
 
-public class RoomList : ScriptableObject {
-
-	public List<RoomTemplate> roomList;
+        public List<RoomTemplate> roomList;
+    }
 }
+

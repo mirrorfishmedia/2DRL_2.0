@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[System.Serializable]
-public class BoardLibraryEntry
+namespace Strata
 {
-    public char characterId;
-    public GameObject prefabToSpawn;
-    public Tile tile;
-    public ChanceBoardLibraryEntry chanceBoardLibraryEntry;
+    [System.Serializable]
+    public class BoardLibraryEntry
+    {
+        public char characterId;
+        public GameObject prefabToSpawn;
+        public Tile tile;
+        public ChanceBoardLibraryEntry chanceBoardLibraryEntry;
+    }
 }
