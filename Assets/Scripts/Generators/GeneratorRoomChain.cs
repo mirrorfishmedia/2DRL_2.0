@@ -31,9 +31,9 @@ namespace Strata
             RoomTemplate firstRoom = startRoomTemplates[Random.Range(0, startRoomTemplates.Length)];
 
             boardGenerator.currentLocation = startLoc;
-            boardGenerator.currentRoom = firstRoom;
+            boardGenerator.currentChainRoom = firstRoom;
 
-            ScriptableRoom(boardGenerator.currentLocation, boardGenerator.currentRoom, 0, true, boardGenerator);
+            ScriptableRoom(boardGenerator.currentLocation, boardGenerator.currentChainRoom, 0, true, boardGenerator);
 
             for (int i = 0; i < 100; i++)
             {
@@ -54,16 +54,16 @@ namespace Strata
 
         public bool ChooseDirectionAndAddRoom(BoardGenerator boardGenerator)
         {
-            RoomAndDirection nextResult = boardGenerator.currentRoom.ChooseNextRoom(boardGenerator, boardGenerator.currentLocation, boardGenerator.roomChainRoomLocationsFilled);
+            RoomAndDirection nextResult = boardGenerator.currentChainRoom.ChooseNextRoom(boardGenerator, boardGenerator.currentLocation, boardGenerator.roomChainRoomLocationsFilled);
 
             if (nextResult != null)
             {
                 Vector2 nextLocation = nextResult.selectedDirection + boardGenerator.currentLocation;
-                RoomTemplate nextRoom = nextResult.selectedRoom;
+                RoomTemplate nextRoom = nextResult.selectedChainRoom;
                 boardGenerator.roomChainRoomLocationsFilled.Add(nextLocation);
                 ScriptableRoom(nextLocation, nextRoom, boardGenerator.roomsOnPathCreated, true, boardGenerator);
                 boardGenerator.roomsOnPathCreated++;
-                boardGenerator.currentRoom = nextRoom;
+                boardGenerator.currentChainRoom = nextRoom;
                 boardGenerator.currentLocation = nextLocation;
                 return true;
             }

@@ -14,7 +14,6 @@ namespace Strata
 
         private Dictionary<Tile, BoardLibraryEntry> libraryDictionary;
 
-        private List<char> charsAlreadyUsedInBoardLibrary = new List<char>();
 
         [MenuItem("Window/Tilemap To RoomTemplate Converter")]
         static void Init()
@@ -64,29 +63,38 @@ namespace Strata
                 WriteTilemapToRoomTemplate();
             }
 
-            if (GUILayout.Button("Clear & Draw Empty " + roomTemplate.roomSizeX + " x " + roomTemplate.roomSizeY))
+            if (roomTemplate != null)
             {
-                ClearTilemap();
+                if (GUILayout.Button("Clear & Draw Empty " + roomTemplate.roomSizeX + " x " + roomTemplate.roomSizeY))
+                {
+                    ClearTilemap();
+                }
             }
+
 
             if (GUILayout.Button("Create New  BoardLibrary"))
             {
                 CreateNewBoardLibraryAsset();
+            }
+
+            if (GUILayout.Button("Create New RoomTemplate"))
+            {
+                CreateNewRoomTemplateAsset();
             }
         }
 
         public void CreateNewBoardLibraryAsset()
         {
             boardLibrary = CreateAsset<BoardLibrary>("Library") as BoardLibrary;
-            boardLibrary.movingNorthRoomTemplateList = CreateAsset<RoomList>(boardLibrary.name + " Moving North") as RoomList;
-            boardLibrary.movingEastRoomTemplateList = CreateAsset<RoomList>(boardLibrary.name + " Moving East") as RoomList;
-            boardLibrary.movingSouthRoomTemplateList = CreateAsset<RoomList>(boardLibrary.name + " Moving South") as RoomList;
-            boardLibrary.movingWestRoomTemplateList = CreateAsset<RoomList>(boardLibrary.name + " Moving West") as RoomList;
+            boardLibrary.movingNorthRoomTemplateList = CreateAsset<ChainRoomList>(boardLibrary.name + " Moving North") as ChainRoomList;
+            boardLibrary.movingEastRoomTemplateList = CreateAsset<ChainRoomList>(boardLibrary.name + " Moving East") as ChainRoomList;
+            boardLibrary.movingSouthRoomTemplateList = CreateAsset<ChainRoomList>(boardLibrary.name + " Moving South") as ChainRoomList;
+            boardLibrary.movingWestRoomTemplateList = CreateAsset<ChainRoomList>(boardLibrary.name + " Moving West") as ChainRoomList;
         }
 
-        void ReadTilesFromPalette()
+        public void CreateNewRoomTemplateAsset()
         {
-            
+            roomTemplate = CreateAsset<RoomTemplate>("Room") as RoomTemplate;
         }
 
         public static ScriptableObject CreateAsset<T>(string assetName) where T : ScriptableObject

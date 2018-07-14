@@ -26,7 +26,7 @@ namespace Strata
         [HideInInspector]
         public int roomsOnPathCreated;
         [HideInInspector]
-        public RoomTemplate currentRoom;
+        public RoomTemplate currentChainRoom;
 
         public char[,] boardGridAsCharacters;
         private Dictionary<char, BoardLibraryEntry> libraryDictionary;
@@ -90,7 +90,7 @@ namespace Strata
             roomChainRoomLocationsFilled.Clear();
             currentLocation = Vector2.zero;
             roomsOnPathCreated = 0;
-            currentRoom = null;
+            currentChainRoom = null;
             for (int x = 0; x < profile.boardHorizontalSize; x++)
             {
                 for (int y = 0; y < profile.boardVerticalSize; y++)

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Strata
 {
     [CreateAssetMenu(menuName = "2DRL/RoomList")]
-    public class RoomList : ScriptableObject
+    public class ChainRoomList : ScriptableObject
     {
 
         public List<RoomTemplate> roomList;

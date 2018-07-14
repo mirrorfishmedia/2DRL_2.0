@@ -6,7 +6,7 @@ namespace Strata
 {
     public class RoomAndDirection
     {
-        public RoomTemplate selectedRoom;
+        public RoomTemplate selectedChainRoom;
         public Vector2 selectedDirection;
 
     }

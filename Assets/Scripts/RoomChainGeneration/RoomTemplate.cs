@@ -4,20 +4,18 @@ using UnityEngine;
 
 namespace Strata
 {
-
-    [CreateAssetMenu(menuName = "BoardGenerator/Templates/RoomTemplate")]
+    [CreateAssetMenu(menuName = "Strata/Templates/RoomTemplate")]
     public class RoomTemplate : ScriptableObject
     {
-
         public int roomSizeX = 10;
         public int roomSizeY = 10;
+
+        public char[] roomChars = new char[100];
 
         public bool hasNorthExit;
         public bool hasEastExit;
         public bool hasSouthExit;
         public bool hasWestExit;
-   
-        public char[] roomChars = new char[100];
 
         public RoomAndDirection ChooseNextRoom(BoardGenerator boardGenerator, Vector2 currentLocation, List<Vector2> usedSpaces)
         {
@@ -31,8 +29,8 @@ namespace Strata
                 int direction = Random.Range(0, 4);
                 if (direction == 0 && hasNorthExit)
                 {
-                    result.selectedRoom = boardGenerator.profile.boardLibrary.movingNorthRoomTemplateList.roomList[Random.Range(0, boardGenerator.profile.boardLibrary.movingNorthRoomTemplateList.roomList.Count)];
-                    Vector2 northDir = new Vector2(0, result.selectedRoom.roomSizeY);
+                    result.selectedChainRoom = boardGenerator.profile.boardLibrary.movingNorthRoomTemplateList.roomList[Random.Range(0, boardGenerator.profile.boardLibrary.movingNorthRoomTemplateList.roomList.Count)];
+                    Vector2 northDir = new Vector2(0, result.selectedChainRoom.roomSizeY);
 
                     if (SpaceValid(currentLocation + northDir, usedSpaces, boardGenerator))
                     {
@@ -43,9 +41,9 @@ namespace Strata
 
                 if (direction == 2 && hasEastExit)
                 {
-                    result.selectedRoom = boardGenerator.profile.boardLibrary.movingEastRoomTemplateList.roomList[Random.Range(0, boardGenerator.profile.boardLibrary.movingEastRoomTemplateList.roomList.Count)];
+                    result.selectedChainRoom = boardGenerator.profile.boardLibrary.movingEastRoomTemplateList.roomList[Random.Range(0, boardGenerator.profile.boardLibrary.movingEastRoomTemplateList.roomList.Count)];
 
-                    Vector2 eastDir = new Vector2(result.selectedRoom.roomSizeX, 0);
+                    Vector2 eastDir = new Vector2(result.selectedChainRoom.roomSizeX, 0);
 
                     if (SpaceValid(currentLocation + eastDir, usedSpaces, boardGenerator))
                     {
@@ -56,9 +54,9 @@ namespace Strata
 
                 if (direction == 1 && hasSouthExit)
                 {
-                    result.selectedRoom = boardGenerator.profile.boardLibrary.movingSouthRoomTemplateList.roomList[Random.Range(0, boardGenerator.profile.boardLibrary.movingSouthRoomTemplateList.roomList.Count)];
+                    result.selectedChainRoom = boardGenerator.profile.boardLibrary.movingSouthRoomTemplateList.roomList[Random.Range(0, boardGenerator.profile.boardLibrary.movingSouthRoomTemplateList.roomList.Count)];
 
-                    Vector2 southDir = new Vector2(0, -result.selectedRoom.roomSizeY);
+                    Vector2 southDir = new Vector2(0, -result.selectedChainRoom.roomSizeY);
 
                     if (SpaceValid(currentLocation + southDir, usedSpaces, boardGenerator))
                     {
@@ -69,9 +67,9 @@ namespace Strata
 
                 if (direction == 3 && hasWestExit)
                 {
-                    result.selectedRoom = boardGenerator.profile.boardLibrary.movingWestRoomTemplateList.roomList[Random.Range(0, boardGenerator.profile.boardLibrary.movingWestRoomTemplateList.roomList.Count)];
+                    result.selectedChainRoom = boardGenerator.profile.boardLibrary.movingWestRoomTemplateList.roomList[Random.Range(0, boardGenerator.profile.boardLibrary.movingWestRoomTemplateList.roomList.Count)];
 
-                    Vector2 westDir = new Vector2(-result.selectedRoom.roomSizeX, 0);
+                    Vector2 westDir = new Vector2(-result.selectedChainRoom.roomSizeX, 0);
 
                     if (SpaceValid(currentLocation + westDir, usedSpaces, boardGenerator))
                     {
@@ -95,7 +93,7 @@ namespace Strata
         {
             if (usedSpaces.Contains(spaceToTest))
             {
-                //Debug.Log ("space filled, cant build room");
+                //space filled, cant build room
                 return false;
             }
             else
@@ -103,16 +101,17 @@ namespace Strata
                 if (spaceToTest.x < generator.profile.boardHorizontalSize && spaceToTest.y < generator.profile.boardVerticalSize && spaceToTest.x > 0 && spaceToTest.y > 0)
                 {
 
-                    //Debug.Log ("space not filled, in board");
+                    //Space not filled, in board
                     return true;
 
                 }
                 else
                 {
-                    //Debug.Log ("out of board");
+                    //Space out of board
                     return false;
                 }
             }
         }
     }
+
 }

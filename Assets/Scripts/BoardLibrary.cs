@@ -13,15 +13,17 @@ namespace Strata
         public BoardInstantiationTechnique instantiationTechnique;
         public char emptySpaceCharDefault = '0';
         [Header("Room chain lists of by exit direction")]
-        public RoomList movingNorthRoomTemplateList;
-        public RoomList movingEastRoomTemplateList;
-        public RoomList movingSouthRoomTemplateList;
-        public RoomList movingWestRoomTemplateList;
+        public ChainRoomList movingNorthRoomTemplateList;
+        public ChainRoomList movingEastRoomTemplateList;
+        public ChainRoomList movingSouthRoomTemplateList;
+        public ChainRoomList movingWestRoomTemplateList;
 
         //public BoardLibraryEntry[] boardLibraryEntries;
         public List<BoardLibraryEntry> boardLibraryEntryList = new List<BoardLibraryEntry>();
 
-        public string startingCharIdPoolForAutogeneration = "qwertyuiopasdfghjklzxcvbnm1234567890 - !@#$%^&*";
+        // This string represents all the printable ASCII characters and is used to define the possible entries into a recorded map, 
+        // note that display tiles can be randomised after the fact if you run out, this is just for storing map designs.
+        public string startingCharIdPoolForAutogeneration = "!#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 
         public void Initialize()
         {
