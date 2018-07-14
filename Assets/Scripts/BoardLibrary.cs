@@ -93,13 +93,31 @@ namespace Strata
 
         public BoardLibraryEntry AddBoardLibraryEntryIfTileNotYetEntered(Tile tileToTest)
         {
-
+            //Look through the BoardLibrary to see if there is already a matching tile entered
             BoardLibraryEntry entry = CheckLibraryForTile(tileToTest, BuildTileKeyLibraryDictionary());
             if (entry == null)
             {
+                //If there is no Tile entered, create a new entry
                 entry = new BoardLibraryEntry();
+
+                //And set it's tile to the tile we were testing
                 entry.tile = tileToTest;
-                entry.characterId = RandomCharFromAllowedChars();
+                //Get the first character of the name of the tile we're using to assign that as it's new charId
+                char firstCharInTileName = tileToTest.name[0];
+
+                //Check existing entries to see if this charId is already used
+                if (!CheckBoardLibraryForUsedCharIds(firstCharInTileName))
+                {
+                    //If not, assign the first letter of the name as the charId
+                    entry.characterId = firstCharInTileName;
+                }
+                else
+                {
+                    //If it is already used, then assign a random character from the string of allowed characters defined in startingCharIdPoolForAutogeneration
+                    entry.characterId = RandomCharFromAllowedChars();
+                }
+                
+                //Add the new entry
                 boardLibraryEntryList.Add(entry);
                 Debug.Log("Tile from tilemap not yet in Library. Added the tile " + entry.tile + " to " + this.name + " with charId " + entry.characterId);
             }
@@ -107,10 +125,32 @@ namespace Strata
             return entry;
         }
 
+        public bool CheckBoardLibraryForUsedCharIds(char charToTest)
+        {
+            for (int i = 0; i < boardLibraryEntryList.Count; i++)
+            {
+                if (boardLibraryEntryList[i].characterId == charToTest)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private char RandomCharFromAllowedChars()
+        {
+            string characterString = CleanManuallyEnteredCharIdsFromAutoGenerationCharList();
+            int randomCharIndex = Random.Range(0, characterString.Length);
+            char foundChar = characterString[randomCharIndex];
+            characterString.Remove(randomCharIndex, 1);
+            return foundChar;
+        }
+
         private string CleanManuallyEnteredCharIdsFromAutoGenerationCharList()
         {
 
-            string stringWithRemovedChars = "no characters removed";
+            string stringWithRemovedChars = "no characters removed yet";
             for (int i = startingCharIdPoolForAutogeneration.Length - 1; i > 0; i--)
             {
                 if (startingCharIdPoolForAutogeneration[i] == emptySpaceCharDefault)
@@ -131,14 +171,7 @@ namespace Strata
             return stringWithRemovedChars;
         }
 
-        private char RandomCharFromAllowedChars()
-        {
-            string characterList = CleanManuallyEnteredCharIdsFromAutoGenerationCharList();
-            int randomCharIndex = Random.Range(0, characterList.Length);
-            char foundChar = characterList[randomCharIndex];
-            characterList.Remove(randomCharIndex, 1);
-            return foundChar;
-        }
+
 
         private bool CheckLibraryIfCharIdExists(char charIdToTest)
         {

@@ -65,9 +65,9 @@ namespace Strata
                     int neighbourWallTiles = GetSurroundingWallCount(x, y, boardGenerator);
 
                     if (neighbourWallTiles > 4)
-                        boardGenerator.boardGridAsCharacters[x, y] = charForFill;
+                        boardGenerator.WriteToBoardGrid(x,y,charForFill,overwriteFilledSpaces);
                     else if (neighbourWallTiles < 4)
-                        boardGenerator.boardGridAsCharacters[x, y] = charForEmpty;
+                        boardGenerator.WriteToBoardGrid(x, y, charForEmpty, overwriteFilledSpaces);
 
                 }
             }

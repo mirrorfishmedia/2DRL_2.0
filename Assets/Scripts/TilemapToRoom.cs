@@ -14,6 +14,8 @@ namespace Strata
 
         private Dictionary<Tile, BoardLibraryEntry> libraryDictionary;
 
+        private List<char> charsAlreadyUsedInBoardLibrary = new List<char>();
+
         [MenuItem("Window/Tilemap To RoomTemplate Converter")]
         static void Init()
         {
