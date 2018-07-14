@@ -34,10 +34,18 @@ namespace Strata
         // Use this for initialization
         void Start()
         {
+            SetRandomStateFromStringSeed();
             if (buildOnStart)
             {
                 BuildLevel();
             }
+        }
+
+        void SetRandomStateFromStringSeed()
+        {
+            int intFromSeedString = profile.seedValue.GetHashCode();
+            Debug.Log("intFromSeedString = " + intFromSeedString);
+            Random.InitState(intFromSeedString);
         }
 
         void BuildLevel()

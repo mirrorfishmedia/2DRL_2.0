@@ -19,8 +19,6 @@ namespace Strata
         public char charForFill = 'w';
         //Character used for negative space
         public char charForEmpty = '\0';
-        //Seed for random generation
-        public string seed;
         //Whether to use a random seed or not
         public bool useRandomSeed;
         //Should this overwrite generators earlier than it in the sequence, by default this generator tends to do this so it should be early in the list
@@ -49,18 +47,11 @@ namespace Strata
 
         void RandomFillMap(BoardGenerator boardGenerator)
         {
-            if (useRandomSeed)
-            {
-                seed = Time.time.ToString();
-            }
-
-            System.Random pseudoRandom = new System.Random(seed.GetHashCode());
-
             for (int x = 0; x < boardGenerator.profile.boardHorizontalSize; x++)
             {
                 for (int y = 0; y < boardGenerator.profile.boardVerticalSize; y++)
                 {
-                    boardGenerator.WriteToBoardGrid(x, y, (pseudoRandom.Next(0, 100) < randomFillPercent) ? charForFill : charForEmpty, overwriteFilledSpaces);
+                    boardGenerator.WriteToBoardGrid(x, y, (Random.Range(0,100) < randomFillPercent) ? charForFill : charForEmpty, overwriteFilledSpaces);
                 }
             }
         }
