@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * This class is adapted from Sebastian Lague's procedural cave generation tutorial, for more information on cellular automata and the technique applied to 
+ * marching squares 3d mesh generation please check out his series: https://unity3d.com/learn/tutorials/s/procedural-cave-generation-tutorial
+ */
+
+
 namespace Strata
 {
     //Change the string here to change where this appears in the create menu and what it's called
@@ -20,9 +26,11 @@ namespace Strata
         //Should this overwrite generators earlier than it in the sequence, by default this generator tends to do this so it should be early in the list
         private bool overwriteFilledSpaces = true;
 
+        //How much to fill space in the map, try values from 40-55
         [Range(0, 100)]
         public int randomFillPercent;
 
+        //This is the function that will be called by BoardGenerator to kick off the generation process
         public override void Generate(BoardGenerator boardGenerator)
         {
             GenerateMap(boardGenerator);

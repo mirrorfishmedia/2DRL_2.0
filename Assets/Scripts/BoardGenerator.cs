@@ -49,6 +49,39 @@ namespace Strata
             InstantiateGeneratedLevelData();
         }
 
+
+#if UNITY_EDITOR
+        //Checking to see if the 0 (zero) key is pressed during play mode, only in the Unity Editor. Remove the if/endif if you want this in your build for testing.
+        private void Update()
+        {
+            //Check for the 0 key
+            if (Input.GetKeyUp(KeyCode.Alpha0))
+            {
+                //And empty all collections and data, then rebuild the level.
+                ClearAndRegenerate();
+            }
+        }
+#endif
+        //Clear out all local variables and regenerate the level, useful for testing your algorithms quickly, enter play mode and press 0 repeatedly
+        //Worth noting that this does allocate significant memory so you probably don't want to be repeatedly generating levels during performance critical gameplay.
+        void ClearAndRegenerate()
+        {
+            tilemap.ClearAllTiles();
+            roomChainRoomLocationsFilled.Clear();
+            currentLocation = Vector2.zero;
+            roomsOnPathCreated = 0;
+            currentRoom = null;
+            for (int x = 0; x < profile.boardHorizontalSize; x++)
+            {
+                for (int y = 0; y < profile.boardVerticalSize; y++)
+                {
+                    boardGridAsCharacters[x, y] = '0';
+                }
+            }
+            BuildLevel();
+        }
+
+
         void SetupEmptyGrid()
         {
             boardGridAsCharacters = new char[profile.boardHorizontalSize, profile.boardVerticalSize];

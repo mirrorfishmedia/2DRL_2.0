@@ -39,12 +39,12 @@ namespace Strata
             {
                 if (!ChooseDirectionAndAddRoom(boardGenerator))
                 {
-                    Debug.Log("Roomgeneration terminated");
+                    //Debug.Log("Roomgeneration terminated");
                     break;
                 }
                 if (boardGenerator.roomsOnPathCreated >= roomsOnPathDesired)
                 {
-                    Debug.Log("created all desired rooms");
+                    //Debug.Log("created all desired rooms");
                     break;
                 }
 
@@ -90,12 +90,13 @@ namespace Strata
 
         public void ScriptableRoom(Vector2 roomOrigin, RoomTemplate roomTemplate, int chainNumber, bool isOnPath, BoardGenerator boardGenerator)
         {
-
+#if UNITY_EDITOR
             if (isOnPath)
             {
                 GameObject roomHolder = new GameObject("Path Room " + chainNumber + " " + roomTemplate.name);
                 roomHolder.transform.position = roomOrigin;
             }
+#endif
 
             int charIndex = 0;
 
