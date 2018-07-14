@@ -91,6 +91,8 @@ namespace Strata
         public void ScriptableRoom(Vector2 roomOrigin, RoomTemplate roomTemplate, int chainNumber, bool isOnPath, BoardGenerator boardGenerator)
         {
 #if UNITY_EDITOR
+            //This generates GameObjects for each room in a room chain, it's useful in editor to be able to record the generation path and see if room generation is working correctly.
+            //This does not run during the build of your game and can be safely removed if desired.
             if (isOnPath)
             {
                 GameObject roomHolder = new GameObject("Path Room " + chainNumber + " " + roomTemplate.name);

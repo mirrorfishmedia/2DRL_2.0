@@ -14,7 +14,6 @@ namespace Strata
         public BoardLibrary boardLibrary;
 
         public Generator[] generators;
-        public char emptySpaceChar = '0';
     }
 
 }

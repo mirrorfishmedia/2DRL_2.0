@@ -18,33 +18,59 @@ namespace Strata
         public RoomList movingSouthRoomTemplateList;
         public RoomList movingWestRoomTemplateList;
 
-        public BoardLibraryEntry[] boardLibraryEntries;
+        //public BoardLibraryEntry[] boardLibraryEntries;
+        public List<BoardLibraryEntry> boardLibraryEntryList = new List<BoardLibraryEntry>();
+
+        public string startingCharIdPoolForAutogeneration = "qwertyuiopasdfghjklzxcvbnm1234567890 - !@#$%^&*";
 
         public void Initialize()
         {
-            for (int i = 0; i < boardLibraryEntries.Length; i++)
+            for (int i = 0; i < boardLibraryEntryList.Count; i++)
             {
-                boardLibraryEntries[i].chanceBoardLibraryEntry.BuildChanceCharListProbabilities();
+                boardLibraryEntryList[i].chanceBoardLibraryEntry.BuildChanceCharListProbabilities();
             }
+        }
+
+        void OnValidate()
+        {
+            CleanManuallyEnteredCharIdsFromAutoGenerationCharList();
+        }
+
+        public char GetDefaultEmptyChar()
+        {
+            return GetDefaultEntry().characterId;
         }
 
         public Tile GetDefaultTile()
         {
-            return boardLibraryEntries[0].tile;
+            return GetDefaultEntry().tile;
         }
 
         public BoardLibraryEntry GetDefaultEntry()
         {
-            return boardLibraryEntries[0];
+            BoardLibraryEntry entry = null;
+
+            //Loop over the list of entries and look for one that is flagged as useAsDefaultEmptySpace in the Inspector, return it to the calling method
+            for (int i = 0; i < boardLibraryEntryList.Count; i++)
+            {
+                if (boardLibraryEntryList[i].useAsDefaultEmptySpace)
+                {
+                    entry = boardLibraryEntryList[i];
+                    return entry;
+                }
+            }
+
+            //Otherwise return entry 0 in the list, effectively a random entry if list is auto-generated
+            return boardLibraryEntryList[0];
         }
 
 
         public Dictionary<Tile, BoardLibraryEntry> BuildTileKeyLibraryDictionary()
         {
             Dictionary<Tile, BoardLibraryEntry> libraryDictionary = new Dictionary<Tile, BoardLibraryEntry>();
-            for (int i = 0; i < boardLibraryEntries.Length; i++)
+            for (int i = 0; i < boardLibraryEntryList.Count; i++)
             {
-                libraryDictionary.Add(boardLibraryEntries[i].tile, boardLibraryEntries[i]);
+                libraryDictionary.Add(boardLibraryEntryList[i].tile, boardLibraryEntryList[i]);
             }
 
             return libraryDictionary;
@@ -53,17 +79,77 @@ namespace Strata
         public Dictionary<char, ChanceBoardLibraryEntry> BuildChanceCharDictionary()
         {
             Dictionary<char, ChanceBoardLibraryEntry> inputCharToChanceBoardLibraryEntry = new Dictionary<char, ChanceBoardLibraryEntry>();
-            for (int i = 0; i < boardLibraryEntries.Length; i++)
+            for (int i = 0; i < boardLibraryEntryList.Count; i++)
             {
-                BoardLibraryEntry entry = boardLibraryEntries[i];
+                BoardLibraryEntry entry = boardLibraryEntryList[i];
 
                 inputCharToChanceBoardLibraryEntry.Add(entry.characterId, entry.chanceBoardLibraryEntry);
 
             }
 
-            //Debug.Log("dictionary length " + inputCharToChanceBoardLibraryEntry.Count);
             return inputCharToChanceBoardLibraryEntry;
 
+        }
+
+        public BoardLibraryEntry AddBoardLibraryEntryIfTileNotYetEntered(Tile tileToTest)
+        {
+
+            BoardLibraryEntry entry = CheckLibraryForTile(tileToTest, BuildTileKeyLibraryDictionary());
+            if (entry == null)
+            {
+                entry = new BoardLibraryEntry();
+                entry.tile = tileToTest;
+                entry.characterId = RandomCharFromAllowedChars();
+                boardLibraryEntryList.Add(entry);
+                Debug.Log("Tile from tilemap not yet in Library. Added the tile " + entry.tile + " to " + this.name + " with charId " + entry.characterId);
+            }
+
+            return entry;
+        }
+
+        private string CleanManuallyEnteredCharIdsFromAutoGenerationCharList()
+        {
+
+            string stringWithRemovedChars = "no characters removed";
+            for (int i = startingCharIdPoolForAutogeneration.Length - 1; i > 0; i--)
+            {
+                if (startingCharIdPoolForAutogeneration[i] == emptySpaceCharDefault)
+                {
+                    startingCharIdPoolForAutogeneration.Remove(i, 1);
+                }
+
+                for (int j = 0; j < boardLibraryEntryList.Count; j++)
+                {
+                    if (startingCharIdPoolForAutogeneration[i] == boardLibraryEntryList[j].characterId)
+                    {
+                        stringWithRemovedChars = startingCharIdPoolForAutogeneration.Remove(i, 1);
+                        continue;
+                    }
+                }
+            }
+
+            return stringWithRemovedChars;
+        }
+
+        private char RandomCharFromAllowedChars()
+        {
+            string characterList = CleanManuallyEnteredCharIdsFromAutoGenerationCharList();
+            int randomCharIndex = Random.Range(0, characterList.Length);
+            char foundChar = characterList[randomCharIndex];
+            characterList.Remove(randomCharIndex, 1);
+            return foundChar;
+        }
+
+        private bool CheckLibraryIfCharIdExists(char charIdToTest)
+        {
+            for (int i = 0; i < boardLibraryEntryList.Count; i++)
+            {
+                if (boardLibraryEntryList[i].characterId == charIdToTest)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public char TestCharForChanceBeforeWritingToGrid(char charToTest)
@@ -80,7 +166,6 @@ namespace Strata
                 else
                 {
                     //no change, return the original character
-                    // Debug.Log("No change return original");
                     testedChar = charToTest;
                 }
             }
@@ -88,7 +173,6 @@ namespace Strata
             {
                 testedChar = '0';
             }
-
 
             return testedChar;
         }
@@ -101,28 +185,19 @@ namespace Strata
             }
             else
             {
-                Debug.LogError("Tile key not found in BoardLibrary " + key.name);
-            }
-
-            if (key == null)
-            {
                 return null;
             }
-
-            Debug.LogError("check library returned null");
-            return null;
-
         }
 
 
 
         public Tile GetTileFromChar(char charToFind)
         {
-            for (int i = 0; i < boardLibraryEntries.Length; i++)
+            for (int i = 0; i < boardLibraryEntryList.Count; i++)
             {
-                if (boardLibraryEntries[i].characterId == charToFind)
+                if (boardLibraryEntryList[i].characterId == charToFind)
                 {
-                    return boardLibraryEntries[i].tile;
+                    return boardLibraryEntryList[i].tile;
                 }
             }
 

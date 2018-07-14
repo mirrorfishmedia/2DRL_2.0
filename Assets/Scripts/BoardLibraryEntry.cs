@@ -9,6 +9,7 @@ namespace Strata
     public class BoardLibraryEntry
     {
         public char characterId;
+        public bool useAsDefaultEmptySpace;
         public GameObject prefabToSpawn;
         public Tile tile;
         public ChanceBoardLibraryEntry chanceBoardLibraryEntry;

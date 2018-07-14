@@ -10,6 +10,7 @@ namespace Strata
     {
 
         public bool buildOnStart;
+        public bool chooseRandomSeedOnStart;
         public Tilemap tilemap;
         public BoardGenerationProfile profile;
 
@@ -43,9 +44,20 @@ namespace Strata
 
         void SetRandomStateFromStringSeed()
         {
-            int intFromSeedString = profile.seedValue.GetHashCode();
-            Debug.Log("intFromSeedString = " + intFromSeedString);
-            Random.InitState(intFromSeedString);
+            int seedInt = 0;
+            if (chooseRandomSeedOnStart)
+            {
+                seedInt = Random.Range(0, 100000);
+            }
+            else
+            {
+                seedInt = profile.seedValue.GetHashCode();
+
+            }
+
+            Debug.Log("seedInt = " + seedInt);
+            Random.InitState(seedInt);
+
         }
 
         void BuildLevel()
@@ -83,7 +95,7 @@ namespace Strata
             {
                 for (int y = 0; y < profile.boardVerticalSize; y++)
                 {
-                    boardGridAsCharacters[x, y] = '0';
+                    boardGridAsCharacters[x, y] = profile.boardLibrary.GetDefaultEntry().characterId;
                 }
             }
             BuildLevel();
@@ -97,7 +109,7 @@ namespace Strata
             {
                 for (int j = 0; j < profile.boardVerticalSize; j++)
                 {
-                    boardGridAsCharacters[i, j] = profile.emptySpaceChar;
+                    boardGridAsCharacters[i, j] = profile.boardLibrary.GetDefaultEmptyChar();
                 }
             }
         }
@@ -105,9 +117,9 @@ namespace Strata
         public void InitializeLibraryDictionary()
         {
             libraryDictionary = new Dictionary<char, BoardLibraryEntry>();
-            for (int i = 0; i < profile.boardLibrary.boardLibraryEntries.Length; i++)
+            for (int i = 0; i < profile.boardLibrary.boardLibraryEntryList.Count; i++)
             {
-                libraryDictionary.Add(profile.boardLibrary.boardLibraryEntries[i].characterId, profile.boardLibrary.boardLibraryEntries[i]);
+                libraryDictionary.Add(profile.boardLibrary.boardLibraryEntryList[i].characterId, profile.boardLibrary.boardLibraryEntryList[i]);
             }
         }
 
@@ -124,8 +136,6 @@ namespace Strata
                 {
                     return profile.boardLibrary.GetDefaultEntry();
                 }
-
-                Debug.LogError("Attempt to get charId " + charId.ToString() + " from boardLibrary failed, is there an entry with that ID in the boardLibrary?");
             }
 
             return entry;
@@ -149,6 +159,16 @@ namespace Strata
                     CreateMapEntryFromGrid(boardGridAsCharacters[x, y], spawnPos);
                 }
             }
+        }
+
+        public void CreateMapEntryFromGrid(char charId, Vector2 position)
+        {
+            BoardLibraryEntry entryToSpawn = GetLibraryEntryViaCharacterId(charId);
+            if (entryToSpawn != null)
+            {
+                profile.boardLibrary.instantiationTechnique.SpawnBoardSquare(this, position, entryToSpawn);
+            }
+            
         }
 
         bool SpaceValid(Vector2 spaceToTest)
@@ -223,7 +243,7 @@ namespace Strata
                 }
                 else
                 {
-                    if (boardGridAsCharacters[x, y] == profile.emptySpaceChar)
+                    if (boardGridAsCharacters[x, y] == profile.boardLibrary.GetDefaultEmptyChar())
                     {
                         char nextChar = profile.boardLibrary.TestCharForChanceBeforeWritingToGrid(charIdToWrite);
                         boardGridAsCharacters[x, y] = nextChar;
@@ -233,11 +253,6 @@ namespace Strata
 
         }
 
-        public void CreateMapEntryFromGrid(char charId, Vector2 position)
-        {
-            BoardLibraryEntry entryToSpawn = GetLibraryEntryViaCharacterId(charId);
-            profile.boardLibrary.instantiationTechnique.SpawnBoardSquare(this, position, entryToSpawn);
-        }
 
         /*
         void ChooseExit()

@@ -1326,6 +1326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildOnStart: 1
+  chooseRandomSeedOnStart: 0
   tilemap: {fileID: 140021812}
   profile: {fileID: 11400000, guid: a508704f9fd1a484fac8071cca9de465, type: 2}
   exitLocations: []

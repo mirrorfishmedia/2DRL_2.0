@@ -13,5 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   howManyToScatter: 12
   roomTemplates:
-  - {fileID: 11400000, guid: a27e3b34726c47c47a95f1ad7c37426a, type: 2}
+  - {fileID: 11400000, guid: 9a6dc6defc136eb489dce0b38ffdf967, type: 2}
   overWriteFilledCharacters: 1
