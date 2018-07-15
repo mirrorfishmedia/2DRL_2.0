@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfe8aaeffe7401241bd04fb607c22de4, type: 3}
   m_Name: New Generator Scatter Random Grass
   m_EditorClassIdentifier: 
-  charIdToScatter: 103
-  howManyToScatter: 500
+  charIdToScatter: 71
+  howManyToScatter: 200
   overwriteFilledCharacters: 0

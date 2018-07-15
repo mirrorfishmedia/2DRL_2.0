@@ -8,10 +8,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fa0022688b5c58408ed42372d880222, type: 3}
-  m_Name: New Generator Cellular Automata Fill Grid
+  m_Script: {fileID: 11500000, guid: 9fb00e67f6711b3428b25a43d9e3c627, type: 3}
+  m_Name: New Generator Room Tree
   m_EditorClassIdentifier: 
-  charForFill: 87
-  emptySpaceChar: 66
-  useRandomSeed: 1
-  randomFillPercent: 48
+  roomLocationsToGenerate: 10
+  roomSizeUniformXY: 10
+  startingPosition:
+    x: 0
+    y: 0
+  potentialRoomLocations: []
