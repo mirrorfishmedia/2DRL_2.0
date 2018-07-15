@@ -11,6 +11,7 @@ namespace Strata
 
         public bool buildOnStart;
         public bool chooseRandomSeedOnStart;
+        public bool useDailySeed;
         public Tilemap tilemap;
         public BoardGenerationProfile profile;
 
@@ -60,6 +61,10 @@ namespace Strata
             if (chooseRandomSeedOnStart)
             {
                 seedInt = Random.Range(0, 100000);
+            }
+            else if (useDailySeed)
+            {
+                seedInt = System.DateTime.Today.GetHashCode();
             }
             else
             {
@@ -291,8 +296,6 @@ namespace Strata
                     }
                 }
 
-
-
                 if (boardGridAsCharacters[x, y] == profile.boardLibrary.GetDefaultEmptyChar())
                 {
                     //Wrote an empty space to grid, let's add it to our list of lists
@@ -310,8 +313,6 @@ namespace Strata
 
         public void RecordEmptySpacesLeftByEachGenerator(GridPosition emptyPosition)
         {
-            //Debug.Log("recording position " + emptyPosition.x + " " + emptyPosition.y + " to index " + currentGeneratorIndexIdForEmptySpaceTracking);
-
             emptySpaceLists[currentGeneratorIndexIdForEmptySpaceTracking].gridPositionList.Add(emptyPosition);
         }
 
@@ -324,7 +325,6 @@ namespace Strata
                     if (emptySpaceLists[i].gridPositionList[j].x == filledPosition.x && emptySpaceLists[i].gridPositionList[j].y == filledPosition.y)
                     {
                         emptySpaceLists[i].gridPositionList.RemoveAt(j);
-                        //Debug.Log("removing filled space at " + emptySpaceLists[i].gridPositionList[j].x + " " + emptySpaceLists[i].gridPositionList[j].y);
                     }
 
                 }
@@ -339,31 +339,9 @@ namespace Strata
             GridPosition randPosition = new GridPosition(0,0);
 
             randPosition = emptySpaceLists[genIndex].gridPositionList[Random.Range(0, emptySpaceLists[genIndex].gridPositionList.Count)];
-            Debug.Log("returning rand position " + randPosition.x + " " + randPosition.y);
 
             return randPosition;
         }
-
-
-        /*
-        void ChooseExit()
-        {
-            Vector2 exitLocation = exitLocations[exitLocations.Count-1];
-            Debug.Log("selected exit location " + exitLocation);
-            exitLocations.RemoveAt(exitLocations.Count-1);
-            for (int i = 0; i < exitLocations.Count; i++)
-            {
-                int x = (int)exitLocations[i].x;
-                int y = (int)exitLocations[i].y;
-                tileData[x, y].cellType = MapCell.CellType.GrassFloor;
-                tileData[x, y].interaction = null;
-
-                //Debug.Log("setting " + x + " " + y + "to grass");
-            }
-
-        }
-        */
-
     }
 }
 

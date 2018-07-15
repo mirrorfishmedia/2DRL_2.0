@@ -14,6 +14,6 @@ MonoBehaviour:
   overwriteFilledSpaces: 1
   generatesEmptySpace: 1
   charForFill: 87
-  emptySpaceChar: 0
+  emptySpaceChar: 66
   useRandomSeed: 0
-  randomFillPercent: 49
+  randomFillPercent: 51

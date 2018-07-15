@@ -118,9 +118,9 @@ namespace Strata
                 {
 
                     RoomAndDirection selectedResult = results[Random.Range(0, results.Count)];
-                    Debug.Log("boardgen last dir moved original " + boardGenerator.lastChainDirectionMoved);
+                    //Debug.Log("boardgen last dir moved original " + boardGenerator.lastChainDirectionMoved);
                     boardGenerator.lastChainDirectionMoved = selectedResult.selectedDirection;
-                    Debug.Log("boardgen last dir moved reset " + boardGenerator.lastChainDirectionMoved);
+                    //Debug.Log("boardgen last dir moved reset " + boardGenerator.lastChainDirectionMoved);
 
                     results.Remove(selectedResult);
 
@@ -131,8 +131,8 @@ namespace Strata
                             boardGenerator.branchDirections.Add(results[i]);
                         }
                     }
-                    DebugRoomResults(results, "before return");
-                    Debug.Log("selected result direction " + selectedResult.selectedDirection);
+                    //DebugRoomResults(results, "before return");
+                    //Debug.Log("selected result direction " + selectedResult.selectedDirection);
                     return selectedResult;
                 }
             }
@@ -147,7 +147,7 @@ namespace Strata
             Debug.Log(flag);
             for (int k = 0; k < results.Count; k++)
             {
-                Debug.Log("results count " + results.Count + " " + "results k " + k + " " + results[k].selectedChainRoom + " dir " + results[k].selectedDirection);
+                //Debug.Log("results count " + results.Count + " " + "results k " + k + " " + results[k].selectedChainRoom + " dir " + results[k].selectedDirection);
             }
         }
 

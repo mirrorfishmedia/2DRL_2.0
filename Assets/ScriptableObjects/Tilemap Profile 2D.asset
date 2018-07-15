@@ -9,14 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7fb54412e0f82da4caf22151b67a0b98, type: 3}
-  m_Name: Tilemap Profile 1
+  m_Name: Tilemap Profile 2D
   m_EditorClassIdentifier: 
-  seedValue: asd
-  boardHorizontalSize: 50
-  boardVerticalSize: 50
+  seedValue: 01
+  boardHorizontalSize: 60
+  boardVerticalSize: 60
   boardLibrary: {fileID: 11400000, guid: 88757bdb0ee58eb41ae4582a1af9d09c, type: 2}
   generators:
-  - {fileID: 11400000, guid: 8b9e32cf3846ae241a60f7ee2a3390a1, type: 2}
+  - {fileID: 11400000, guid: 26b1c1cee3c43e14eb19c7891a6f54a0, type: 2}
   - {fileID: 11400000, guid: 949cfef19b932734d8851ee4e4c98f91, type: 2}
   - {fileID: 11400000, guid: 78b0d0caefdb3fe499addb4890df0675, type: 2}
   - {fileID: 11400000, guid: 77c5e21bc3c6e8f4280d5e6472735aa0, type: 2}
