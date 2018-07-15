@@ -4,11 +4,25 @@ using UnityEngine;
 
 namespace Strata
 {
-    [CreateAssetMenu(menuName = "2DRL/RoomList")]
-    public class ChainRoomList : ScriptableObject
+    [CreateAssetMenu(menuName = "Strata/Collections/RoomList")]
+    public class RoomList : ScriptableObject
     {
-
         public List<RoomTemplate> roomList;
+
+        public void RemoveEmptyEntriesThenAdd(RoomTemplate templateToAdd)
+        {
+            for (int i = roomList.Count - 1; i >= 0; i--)
+            {
+                if (roomList[i] == null)
+                {
+                    roomList.RemoveAt(i);
+                }
+            }
+
+            roomList.Add(templateToAdd);
+        }
     }
+
+    
 }
 

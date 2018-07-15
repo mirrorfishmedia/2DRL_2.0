@@ -14,20 +14,10 @@ MonoBehaviour:
   roomSize: 10
   roomsOnPathDesired: 20
   roomSequenceStartLocations:
-  - {x: 30, y: 30}
-  - {x: 40, y: 40}
   - {x: 20, y: 20}
   startRoomTemplates:
-  - {fileID: 11400000, guid: ada4697f152d624479bdcda630ea1422, type: 2}
-  randomFillRooms:
-  - {fileID: 11400000, guid: a999c61aff16aee4b97cfde10618b46f, type: 2}
-  - {fileID: 11400000, guid: 607aef962c0932246b7ebba0ce8ad6d0, type: 2}
-  - {fileID: 11400000, guid: 5962386067b66ab49a6842744ec4854d, type: 2}
-  - {fileID: 11400000, guid: ada4697f152d624479bdcda630ea1422, type: 2}
-  - {fileID: 11400000, guid: 32b2736bd6631644da776161b51feac0, type: 2}
-  - {fileID: 11400000, guid: 78830ab5ca3c07e4e8373f93a75f5691, type: 2}
-  - {fileID: 11400000, guid: bef8851cbbd65cd41a3499a696b3963b, type: 2}
-  - {fileID: 11400000, guid: 096ae7824bf01b74895fa31f84bd4976, type: 2}
-  - {fileID: 11400000, guid: 22405873ce1e9e94db316abcb5c07fc4, type: 2}
-  - {fileID: 11400000, guid: 27c873bc795d7c64491187e48bfd4525, type: 2}
+  - {fileID: 11400000, guid: b9024b77c26ed6842ae6603fa129d3ae, type: 2}
+  randomFillRooms: []
   fillEmptySpaceWithRandomRooms: 0
+  fillBranchesOffChainWithRooms: 0
+  overwriteFilledSpaces: 1

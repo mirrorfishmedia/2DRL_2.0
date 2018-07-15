@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Strata
 {
+    [System.Serializable]
     public class GridPosition
     {
         public int x;

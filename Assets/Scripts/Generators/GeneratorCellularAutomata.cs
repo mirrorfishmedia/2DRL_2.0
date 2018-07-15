@@ -15,10 +15,14 @@ namespace Strata
     public class GeneratorCellularAutomata : Generator
     {
 
+       
         //Character used for positive, filled space, corresponds to charId in BoardLibrary
         public char charForFill = 'w';
+
+        bool useLibraryDefaultEmptyCharForEmptySpace = true;
         //Character used for negative space
-        public char charForEmpty = '\0';
+        public char emptySpaceChar = '\0';
+
         //Whether to use a random seed or not
         public bool useRandomSeed;
         //Should this overwrite generators earlier than it in the sequence, by default this generator tends to do this so it should be early in the list
@@ -31,6 +35,10 @@ namespace Strata
         //This is the function that will be called by BoardGenerator to kick off the generation process
         public override void Generate(BoardGenerator boardGenerator)
         {
+            if (useLibraryDefaultEmptyCharForEmptySpace)
+            {
+                emptySpaceChar = boardGenerator.profile.boardLibrary.GetDefaultEmptyChar();
+            }
             GenerateMap(boardGenerator);
         }
 
@@ -51,7 +59,7 @@ namespace Strata
             {
                 for (int y = 0; y < boardGenerator.profile.boardVerticalSize; y++)
                 {
-                    boardGenerator.WriteToBoardGrid(x, y, (Random.Range(0,100) < randomFillPercent) ? charForFill : charForEmpty, overwriteFilledSpaces);
+                    boardGenerator.WriteToBoardGrid(x, y, (Random.Range(0,100) < randomFillPercent) ? charForFill : emptySpaceChar, overwriteFilledSpaces);
                 }
             }
         }
@@ -67,7 +75,7 @@ namespace Strata
                     if (neighbourWallTiles > 4)
                         boardGenerator.WriteToBoardGrid(x,y,charForFill,overwriteFilledSpaces);
                     else if (neighbourWallTiles < 4)
-                        boardGenerator.WriteToBoardGrid(x, y, charForEmpty, overwriteFilledSpaces);
+                        boardGenerator.WriteToBoardGrid(x, y, emptySpaceChar, overwriteFilledSpaces);
 
                 }
             }

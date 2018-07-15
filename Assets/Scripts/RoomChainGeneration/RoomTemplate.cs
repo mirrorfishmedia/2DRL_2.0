@@ -12,10 +12,19 @@ namespace Strata
 
         public char[] roomChars = new char[100];
 
-        public bool hasNorthExit;
-        public bool hasEastExit;
-        public bool hasSouthExit;
-        public bool hasWestExit;
+        public bool opensToNorth;
+        public bool opensToEast;
+        public bool opensToSouth;
+        public bool opensToWest;
+
+        void OnValidate()
+        {
+            if (roomChars.Length != roomSizeX * roomSizeY)
+            {
+                char[] newSizedArray = new char[roomSizeX * roomSizeY];
+                roomChars = newSizedArray;
+            }
+        }
 
         public RoomAndDirection ChooseNextRoom(BoardGenerator boardGenerator, Vector2 currentLocation, List<Vector2> usedSpaces)
         {
@@ -26,54 +35,57 @@ namespace Strata
                 results.Clear();
                 RoomAndDirection result = new RoomAndDirection();
 
-                int direction = Random.Range(0, 4);
-                if (direction == 0 && hasNorthExit)
+                if (opensToNorth)
                 {
-                    result.selectedChainRoom = boardGenerator.profile.boardLibrary.movingNorthRoomTemplateList.roomList[Random.Range(0, boardGenerator.profile.boardLibrary.movingNorthRoomTemplateList.roomList.Count)];
+                    result.selectedChainRoom = boardGenerator.profile.boardLibrary.canBeEnteredFromNorthList.roomList[Random.Range(0, boardGenerator.profile.boardLibrary.canBeEnteredFromNorthList.roomList.Count)];
                     Vector2 northDir = new Vector2(0, result.selectedChainRoom.roomSizeY);
 
                     if (SpaceValid(currentLocation + northDir, usedSpaces, boardGenerator))
                     {
                         result.selectedDirection = northDir;
+                        result.offSetFromRoomLocation = currentLocation + result.selectedDirection;
                         results.Add(result);
                     }
                 }
 
-                if (direction == 2 && hasEastExit)
+                if (opensToEast)
                 {
-                    result.selectedChainRoom = boardGenerator.profile.boardLibrary.movingEastRoomTemplateList.roomList[Random.Range(0, boardGenerator.profile.boardLibrary.movingEastRoomTemplateList.roomList.Count)];
+                    result.selectedChainRoom = boardGenerator.profile.boardLibrary.canBeEnteredFromEastList.roomList[Random.Range(0, boardGenerator.profile.boardLibrary.canBeEnteredFromEastList.roomList.Count)];
 
                     Vector2 eastDir = new Vector2(result.selectedChainRoom.roomSizeX, 0);
 
                     if (SpaceValid(currentLocation + eastDir, usedSpaces, boardGenerator))
                     {
                         result.selectedDirection = eastDir;
+                        result.offSetFromRoomLocation = currentLocation + result.selectedDirection;
                         results.Add(result);
                     }
                 }
 
-                if (direction == 1 && hasSouthExit)
+                if (opensToSouth)
                 {
-                    result.selectedChainRoom = boardGenerator.profile.boardLibrary.movingSouthRoomTemplateList.roomList[Random.Range(0, boardGenerator.profile.boardLibrary.movingSouthRoomTemplateList.roomList.Count)];
+                    result.selectedChainRoom = boardGenerator.profile.boardLibrary.canBeEnteredFromSouthList.roomList[Random.Range(0, boardGenerator.profile.boardLibrary.canBeEnteredFromSouthList.roomList.Count)];
 
                     Vector2 southDir = new Vector2(0, -result.selectedChainRoom.roomSizeY);
 
                     if (SpaceValid(currentLocation + southDir, usedSpaces, boardGenerator))
                     {
                         result.selectedDirection = southDir;
+                        result.offSetFromRoomLocation = currentLocation + result.selectedDirection;
                         results.Add(result);
                     }
                 }
 
-                if (direction == 3 && hasWestExit)
+                if (opensToWest)
                 {
-                    result.selectedChainRoom = boardGenerator.profile.boardLibrary.movingWestRoomTemplateList.roomList[Random.Range(0, boardGenerator.profile.boardLibrary.movingWestRoomTemplateList.roomList.Count)];
+                    result.selectedChainRoom = boardGenerator.profile.boardLibrary.canBeEnteredFromWestList.roomList[Random.Range(0, boardGenerator.profile.boardLibrary.canBeEnteredFromWestList.roomList.Count)];
 
                     Vector2 westDir = new Vector2(-result.selectedChainRoom.roomSizeX, 0);
 
                     if (SpaceValid(currentLocation + westDir, usedSpaces, boardGenerator))
                     {
                         result.selectedDirection = westDir;
+                        result.offSetFromRoomLocation = currentLocation + result.selectedDirection;
                         results.Add(result);
                     }
                 }
@@ -81,6 +93,23 @@ namespace Strata
                 if (results.Count != 0)
                 {
                     RoomAndDirection selectedResult = results[Random.Range(0, results.Count)];
+                    
+                    results.Remove(selectedResult);
+                    //Debug.Log("Remaining results count " + results.Count);
+                    if (results.Count != 0)
+                    {
+                        for (int i = 0; i < results.Count; i++)
+                        {       
+                            boardGenerator.branchDirections.Add(results[i]);
+                        }
+                    }
+
+                    //Debug.Log("selected result roomchain: " + selectedResult.selectedChainRoom);
+
+                    for (int j = 0; j < boardGenerator.branchDirections.Count; j++)
+                    {
+                        //Debug.Log("branchDirections " + boardGenerator.branchDirections[j].selectedChainRoom + " dir " + boardGenerator.branchDirections[j].selectedDirection);
+                    }
                     return selectedResult;
                 }
             }

@@ -11,12 +11,11 @@ namespace Strata
     {
 
         public BoardInstantiationTechnique instantiationTechnique;
-        public char emptySpaceCharDefault = '0';
         [Header("Room chain lists of by exit direction")]
-        public ChainRoomList movingNorthRoomTemplateList;
-        public ChainRoomList movingEastRoomTemplateList;
-        public ChainRoomList movingSouthRoomTemplateList;
-        public ChainRoomList movingWestRoomTemplateList;
+        public RoomList canBeEnteredFromSouthList;
+        public RoomList canBeEnteredFromWestList;
+        public RoomList canBeEnteredFromNorthList;
+        public RoomList canBeEnteredFromEastList;
 
         //public BoardLibraryEntry[] boardLibraryEntries;
         public List<BoardLibraryEntry> boardLibraryEntryList = new List<BoardLibraryEntry>();
@@ -32,12 +31,7 @@ namespace Strata
                 boardLibraryEntryList[i].chanceBoardLibraryEntry.BuildChanceCharListProbabilities();
             }
         }
-
-        void OnValidate()
-        {
-            CleanManuallyEnteredCharIdsFromAutoGenerationCharList();
-        }
-
+        
         public char GetDefaultEmptyChar()
         {
             return GetDefaultEntry().characterId;
@@ -155,7 +149,7 @@ namespace Strata
             string stringWithRemovedChars = "no characters removed yet";
             for (int i = startingCharIdPoolForAutogeneration.Length - 1; i > 0; i--)
             {
-                if (startingCharIdPoolForAutogeneration[i] == emptySpaceCharDefault)
+                if (startingCharIdPoolForAutogeneration[i] == GetDefaultEmptyChar())
                 {
                     startingCharIdPoolForAutogeneration.Remove(i, 1);
                 }

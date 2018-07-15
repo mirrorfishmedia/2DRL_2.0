@@ -38,22 +38,22 @@ namespace Strata
                 LoadTileMapFromRoomTemplate();
             }
 
-            if (GUILayout.Button("Add To North Exiting Rooms List"))
+            if (GUILayout.Button("Add To Enter From North List"))
             {
                 FlagWithNorthAndAddToList();
             }
 
-            if (GUILayout.Button("Add To East Exiting Rooms List"))
+            if (GUILayout.Button("Add To Enter From East List"))
             {
                 FlagWithEastAndAddToList();
             }
 
-            if (GUILayout.Button("Add To South Exiting Rooms List"))
+            if (GUILayout.Button("Add To Enter From South List"))
             {
                 FlagWithSouthAndAddToList();
             }
 
-            if (GUILayout.Button("Add To West Exiting Rooms List"))
+            if (GUILayout.Button("Add To Enter From West List"))
             {
                 FlagWithWestAndAddToList();
             }
@@ -86,10 +86,10 @@ namespace Strata
         public void CreateNewBoardLibraryAsset()
         {
             boardLibrary = CreateAsset<BoardLibrary>("Library") as BoardLibrary;
-            boardLibrary.movingNorthRoomTemplateList = CreateAsset<ChainRoomList>(boardLibrary.name + " Moving North") as ChainRoomList;
-            boardLibrary.movingEastRoomTemplateList = CreateAsset<ChainRoomList>(boardLibrary.name + " Moving East") as ChainRoomList;
-            boardLibrary.movingSouthRoomTemplateList = CreateAsset<ChainRoomList>(boardLibrary.name + " Moving South") as ChainRoomList;
-            boardLibrary.movingWestRoomTemplateList = CreateAsset<ChainRoomList>(boardLibrary.name + " Moving West") as ChainRoomList;
+            boardLibrary.canBeEnteredFromNorthList = CreateAsset<RoomList>(boardLibrary.name + " Moving North") as RoomList;
+            boardLibrary.canBeEnteredFromWestList = CreateAsset<RoomList>(boardLibrary.name + " Moving East") as RoomList;
+            boardLibrary.canBeEnteredFromSouthList = CreateAsset<RoomList>(boardLibrary.name + " Moving South") as RoomList;
+            boardLibrary.canBeEnteredFromEastList = CreateAsset<RoomList>(boardLibrary.name + " Moving West") as RoomList;
         }
 
         public void CreateNewRoomTemplateAsset()
@@ -141,7 +141,7 @@ namespace Strata
                     if (foundTile == null)
                     {
                         //If tilemap is blank inside grid, write in default empty space character defined in board library, usually 0
-                        roomTemplate.roomChars[charIndex] = boardLibrary.emptySpaceCharDefault;
+                        roomTemplate.roomChars[charIndex] = boardLibrary.GetDefaultEmptyChar();
                         charIndex++;
                     }
                     else
@@ -168,26 +168,26 @@ namespace Strata
 
         public void FlagWithNorthAndAddToList()
         {
-            roomTemplate.hasNorthExit = true;
-            boardLibrary.movingNorthRoomTemplateList.roomList.Add(roomTemplate);
+            roomTemplate.opensToNorth = true;
+            boardLibrary.canBeEnteredFromSouthList.RemoveEmptyEntriesThenAdd(roomTemplate);
         }
 
         public void FlagWithEastAndAddToList()
         {
-            roomTemplate.hasEastExit = true;
-            boardLibrary.movingEastRoomTemplateList.roomList.Add(roomTemplate);
+            roomTemplate.opensToEast = true;
+            boardLibrary.canBeEnteredFromWestList.RemoveEmptyEntriesThenAdd(roomTemplate);
         }
 
         public void FlagWithSouthAndAddToList()
         {
-            roomTemplate.hasSouthExit = true;
-            boardLibrary.movingSouthRoomTemplateList.roomList.Add(roomTemplate);
+            roomTemplate.opensToSouth = true;
+            boardLibrary.canBeEnteredFromNorthList.RemoveEmptyEntriesThenAdd(roomTemplate);
         }
 
         public void FlagWithWestAndAddToList()
         {
-            roomTemplate.hasWestExit = true;
-            boardLibrary.movingWestRoomTemplateList.roomList.Add(roomTemplate);
+            roomTemplate.opensToWest = true;
+            boardLibrary.canBeEnteredFromEastList.RemoveEmptyEntriesThenAdd(roomTemplate);
         }
 
         public void LoadTileMapFromRoomTemplate()

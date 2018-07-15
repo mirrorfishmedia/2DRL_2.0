@@ -21,6 +21,17 @@ namespace Strata
 
         [HideInInspector]
         public List<Vector2> roomChainRoomLocationsFilled = new List<Vector2>();
+        public List<RoomAndDirection> branchDirections = new List<RoomAndDirection>();
+        public List<Vector2> roomChainPathBranchLocations = new List<Vector2>();
+
+        //public List<List<GridPosition>> emptySpaceListsFromGenerators = new List<List<GridPosition>>();
+        //public List<GridPosition>[] emptySpacesGeneratedLists;
+
+        public List<GridPositionList> emptySpaceLists = new List<GridPositionList>();
+
+
+        public int currentGeneratorIndexIdForEmptySpaceTracking = 0;
+
         [HideInInspector]
         public Vector2 currentLocation;
         [HideInInspector]
@@ -61,9 +72,14 @@ namespace Strata
         }
 
         void BuildLevel()
-        {
-            InitializeLibraryDictionary();
+        {            
             profile.boardLibrary.Initialize();
+            InitializeLibraryDictionary();
+
+            if (tilemap != null)
+            {
+                tilemap.ClearAllTiles();
+            }
             SetupEmptyGrid();
             RunGenerators();
             InstantiateGeneratedLevelData();
@@ -75,22 +91,27 @@ namespace Strata
         private void Update()
         {
             //Check for the 0 key
-            if (Input.GetKeyUp(KeyCode.Alpha0))
+            if (Input.GetKeyUp(KeyCode.Keypad0))
             {
                 //And empty all collections and data, then rebuild the level.
-                ClearAndRegenerate();
+                ClearLevel();
+                BuildLevel();
             }
         }
 #endif
         //Clear out all local variables and regenerate the level, useful for testing your algorithms quickly, enter play mode and press 0 repeatedly
         //Worth noting that this does allocate significant memory so you probably don't want to be repeatedly generating levels during performance critical gameplay.
-        void ClearAndRegenerate()
+        void ClearLevel()
         {
             tilemap.ClearAllTiles();
             roomChainRoomLocationsFilled.Clear();
             currentLocation = Vector2.zero;
             roomsOnPathCreated = 0;
             currentChainRoom = null;
+            emptySpaceLists.Clear();
+            currentGeneratorIndexIdForEmptySpaceTracking = 0;
+            branchDirections.Clear();
+            roomChainPathBranchLocations.Clear();
             for (int x = 0; x < profile.boardHorizontalSize; x++)
             {
                 for (int y = 0; y < profile.boardVerticalSize; y++)
@@ -98,7 +119,13 @@ namespace Strata
                     boardGridAsCharacters[x, y] = profile.boardLibrary.GetDefaultEntry().characterId;
                 }
             }
-            BuildLevel();
+
+            for (int i = transform.childCount - 1; i > 0; i--)
+            {
+                Transform child = transform.GetChild(i);
+                Destroy(child.gameObject);
+            }
+
         }
 
 
@@ -131,11 +158,12 @@ namespace Strata
                 entry = libraryDictionary[charId];
             }
             else
-            {
+            {                
                 if (charId == '\0')
                 {
                     return profile.boardLibrary.GetDefaultEntry();
                 }
+                
             }
 
             return entry;
@@ -145,6 +173,8 @@ namespace Strata
         {
             for (int i = 0; i < profile.generators.Length; i++)
             {
+                emptySpaceLists.Add(new GridPositionList());
+                currentGeneratorIndexIdForEmptySpaceTracking = i;
                 profile.generators[i].Generate(this);
             }
         }
@@ -168,10 +198,9 @@ namespace Strata
             {
                 profile.boardLibrary.instantiationTechnique.SpawnBoardSquare(this, position, entryToSpawn);
             }
-            
         }
 
-        bool SpaceValid(Vector2 spaceToTest)
+        bool RoomChainSpaceValid(Vector2 spaceToTest)
         {
             if (roomChainRoomLocationsFilled.Contains(spaceToTest))
             {
@@ -200,11 +229,6 @@ namespace Strata
             return randomPosition;
         }
 
-        public void SpawnChanceTile()
-        {
-
-        }
-
         public void DrawTemplate(int x, int y, RoomTemplate templateToSpawn, bool overWriteFilledCharacters)
         {
             int charIndex = 0;
@@ -231,6 +255,18 @@ namespace Strata
             }
         }
 
+        public bool TestIfSpaceIsInGridAndMatchesChar(GridPosition spaceToTest, char charToTest)
+        {
+            if (TestIfInGrid(spaceToTest.x, spaceToTest.y))
+            {
+                if (boardGridAsCharacters[spaceToTest.x, spaceToTest.y] == charToTest)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         public void WriteToBoardGrid(int x, int y, char charIdToWrite, bool overwriteFilledSpaces)
         {
@@ -249,8 +285,35 @@ namespace Strata
                         boardGridAsCharacters[x, y] = nextChar;
                     }
                 }
+
+
+
+                if (boardGridAsCharacters[x, y] == profile.boardLibrary.GetDefaultEmptyChar())
+                {
+                    //Wrote an empty space to grid, let's add it to our list of lists
+                    GridPosition emptyPosition = new GridPosition(x, y);
+                    RecordEmptySpacesLeftByEachGenerator(emptyPosition);
+                }
             }
 
+        }
+
+
+        public void RecordEmptySpacesLeftByEachGenerator(GridPosition emptyPosition)
+        {
+            //Debug.Log("recording position " + emptyPosition.x + " " + emptyPosition.y + " to index " + currentGeneratorIndexIdForEmptySpaceTracking);
+
+            emptySpaceLists[currentGeneratorIndexIdForEmptySpaceTracking].gridPositionList.Add(emptyPosition);
+        }
+
+        public GridPosition GetRandomEmptyGridPositionByGeneratorIndex(int genIndex)
+        {
+            GridPosition randPosition = new GridPosition(0,0);
+
+            randPosition = emptySpaceLists[genIndex].gridPositionList[Random.Range(0, emptySpaceLists[genIndex].gridPositionList.Count)];
+            Debug.Log("returning rand position " + randPosition.x + " " + randPosition.y);
+
+            return randPosition;
         }
 
 

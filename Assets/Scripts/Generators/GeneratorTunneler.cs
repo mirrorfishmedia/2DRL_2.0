@@ -7,23 +7,77 @@ namespace Strata
     [CreateAssetMenu(menuName = "BoardGeneration/Generators/GeneratorTunneler")]
     public class GeneratorTunneler : Generator
     {
-        public char emptySpaceChar = '0';
+        
+        
         public int numTunnels = 4;
         public int tunnelWidth = 1;
         public RoomTemplate[] tunnelEndTemplates;
-        public bool overWriteFilledCharacters;
+        public bool spawnRoomsAtTunnelEnds = false;
+        public bool overWriteFilledCharacters = true;
+        public bool useRandomTunnelStartPositions = false;
+        public bool connectLastStrataLayer = true;
+
+        public bool useCustomEmptySpaceCharForTunnels = false;
+        public char customEmptySpaceChar = '0';
+
 
         public override void Generate(BoardGenerator boardGenerator)
         {
-            GridPosition startPos = boardGenerator.GetRandomGridPosition();
-            for (int i = 0; i < numTunnels; i++)
+            Debug.Log("generating tunnels");
+            GridPosition startPos = new GridPosition(0,0);
+
+            if (useRandomTunnelStartPositions)
             {
-                GridPosition randomGoalPosition = boardGenerator.GetRandomGridPosition();
-                DigTunnel(boardGenerator, startPos, randomGoalPosition);
+                startPos = boardGenerator.GetRandomGridPosition();
+                for (int i = 0; i < numTunnels; i++)
+                {
+                    GridPosition randomGoalPosition = boardGenerator.GetRandomGridPosition();
+                    DigTunnel(boardGenerator, startPos, randomGoalPosition);
+                }
             }
+
+            else if(connectLastStrataLayer)
+            {
+                List<GridPosition> goalPositions = BuildTunnelGoalList(boardGenerator);
+                
+                Debug.Log("goalPositions " + goalPositions.Count);
+
+                for (int i = 0; i < goalPositions.Count; i++)
+                {
+
+                    startPos = goalPositions[i];
+                    int loopingGoalPositionIndex = ((i + 1) % goalPositions.Count);
+                    Debug.Log("looping index " + loopingGoalPositionIndex);
+                    GridPosition targetPosition = goalPositions[loopingGoalPositionIndex];
+                    DigTunnel(boardGenerator, startPos, targetPosition);
+                }
+            }
+            
+            
         }
 
-        public GridPosition DigTunnel(BoardGenerator boardGenerator, GridPosition startPosition, GridPosition tunnelGoal)
+        private List<GridPosition> BuildTunnelGoalList(BoardGenerator boardGenerator)
+        {
+            List<GridPosition> goalPositions = new List<GridPosition>();
+
+            for (int i = 0; i <= boardGenerator.currentGeneratorIndexIdForEmptySpaceTracking; i++)
+            {
+                for (int j = 0; j < numTunnels; j++)
+                {
+                    if (boardGenerator.emptySpaceLists[i].gridPositionList.Count > 0)
+                    {
+                        int index = Random.Range(0, boardGenerator.emptySpaceLists[i].gridPositionList.Count);
+                        GridPosition emptyPosition = boardGenerator.emptySpaceLists[i].gridPositionList[index];
+                        boardGenerator.emptySpaceLists[i].gridPositionList.RemoveAt(index);
+                        goalPositions.Add(emptyPosition);
+                    }
+                }
+            }
+
+            return goalPositions;
+        }
+
+        public void DigTunnel(BoardGenerator boardGenerator, GridPosition startPosition, GridPosition tunnelGoal)
         {
             GridPosition currentDigPosition = startPosition;
 
@@ -40,14 +94,18 @@ namespace Strata
                 }
                 else
                 {
-                    SpawnRoomTemplateAtTunnelEnd(boardGenerator, currentDigPosition);
+                    if (spawnRoomsAtTunnelEnds)
+                    {
+                        SpawnRoomTemplateAtTunnelEnd(boardGenerator, currentDigPosition);
+                    }
+                    
                     break;
-
                 }
 
                 for (int j = 0; j < tunnelWidth; j++)
                 {
-                    boardGenerator.WriteToBoardGrid(currentDigPosition.x, currentDigPosition.y + j, emptySpaceChar, true);
+                    boardGenerator.WriteToBoardGrid(currentDigPosition.x, currentDigPosition.y + j, GetCharToWriteForTunnel(boardGenerator), true);
+
                 }
 
             }
@@ -70,12 +128,60 @@ namespace Strata
                 }
                 for (int s = 0; s < tunnelWidth; s++)
                 {
-                    boardGenerator.WriteToBoardGrid(currentDigPosition.x + s, currentDigPosition.y, emptySpaceChar, true);
+                    
+                    boardGenerator.WriteToBoardGrid(currentDigPosition.x + s, currentDigPosition.y, GetCharToWriteForTunnel(boardGenerator), true);
                 }
             }
 
-            return currentDigPosition;
         }
+
+        char GetCharToWriteForTunnel(BoardGenerator boardGenerator)
+        {
+            char charToWrite;
+            if (useCustomEmptySpaceCharForTunnels)
+            {
+                charToWrite = customEmptySpaceChar;
+            }
+            else
+            {
+                charToWrite = boardGenerator.profile.boardLibrary.GetDefaultEmptyChar();
+            }
+            return charToWrite;
+        }
+
+        /*
+        void BuildWallsAroundTunnels(BoardGenerator boardGenerator, GridPosition currentPosition)
+        {
+            if (buildWallsAroundTunnels)
+            {
+                GridPosition northOfPos = new GridPosition(currentPosition.x, currentPosition.y + tunnelWidth);
+                if (boardGenerator.TestIfSpaceIsInGridAndMatchesChar(northOfPos, boardGenerator.profile.boardLibrary.GetDefaultEmptyChar()))
+                {
+                    boardGenerator.WriteToBoardGrid(northOfPos.x, northOfPos.y, buildTunnelWallChar, false);
+                }
+
+                GridPosition eastOfPos = new GridPosition(currentPosition.x + tunnelWidth, currentPosition.y);
+                if (boardGenerator.TestIfSpaceIsInGridAndMatchesChar(eastOfPos, boardGenerator.profile.boardLibrary.GetDefaultEmptyChar()))
+                {
+                    boardGenerator.WriteToBoardGrid(eastOfPos.x, eastOfPos.y, buildTunnelWallChar, false);
+                }
+
+                GridPosition southOfPos = new GridPosition(currentPosition.x, currentPosition.y - tunnelWidth);
+                if (boardGenerator.TestIfSpaceIsInGridAndMatchesChar(southOfPos, boardGenerator.profile.boardLibrary.GetDefaultEmptyChar()))
+                {
+                    boardGenerator.WriteToBoardGrid(southOfPos.x, southOfPos.y, buildTunnelWallChar, false);
+                }
+
+                GridPosition westOfPos = new GridPosition(currentPosition.x - tunnelWidth, currentPosition.y);
+                if (boardGenerator.TestIfSpaceIsInGridAndMatchesChar(westOfPos, boardGenerator.profile.boardLibrary.GetDefaultEmptyChar()))
+                {
+                    boardGenerator.WriteToBoardGrid(westOfPos.x, westOfPos.y, buildTunnelWallChar, false);
+                }
+
+            }
+        }
+        */
+        
 
         void SpawnRoomTemplateAtTunnelEnd(BoardGenerator boardGenerator, GridPosition spawnPosition)
         {
