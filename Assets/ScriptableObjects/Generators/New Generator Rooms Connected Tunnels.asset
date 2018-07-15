@@ -11,8 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3dff950e16ab241996ec6aeac5c910, type: 3}
   m_Name: New Generator Rooms Connected Tunnels
   m_EditorClassIdentifier: 
+  overwriteFilledSpaces: 0
+  generatesEmptySpace: 1
   numRoomsToSpawn: 4
   roomTemplates:
   - {fileID: 11400000, guid: 49a220506c0f5b246a698698402fcd0a, type: 2}
-  overWriteFilledSpaces: 1
   tunnelTemplate: {fileID: 11400000, guid: 27f74d0eda8bb3447b3f3f4756d28eae, type: 2}

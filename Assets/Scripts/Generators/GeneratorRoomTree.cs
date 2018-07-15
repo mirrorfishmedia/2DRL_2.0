@@ -13,7 +13,6 @@ namespace Strata
         public GridPosition startingPosition = new GridPosition(0, 0);
         public List<RoomTemplate> allRooms;
 
-        bool overwriteFilledSpaces;
 
         public override void Generate(BoardGenerator boardGenerator)
         {

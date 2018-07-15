@@ -11,10 +11,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4556ca038e5f8b44a986ddd9d1a570a2, type: 3}
   m_Name: New Generator Tunneler 1
   m_EditorClassIdentifier: 
-  emptySpaceChar: 48
+  overwriteFilledSpaces: 0
+  generatesEmptySpace: 1
   numTunnels: 4
   tunnelWidth: 1
   tunnelEndTemplates:
-  - {fileID: 11400000, guid: 22405873ce1e9e94db316abcb5c07fc4, type: 2}
-  - {fileID: 11400000, guid: 27c873bc795d7c64491187e48bfd4525, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  spawnRoomsAtTunnelEnds: 0
   overWriteFilledCharacters: 0
+  useRandomTunnelStartPositions: 0
+  connectLastStrataLayer: 1
+  useCustomEmptySpaceCharForTunnels: 0
+  customEmptySpaceChar: 48

@@ -10,7 +10,6 @@ namespace Strata
 
         public int numRoomsToSpawn;
         public RoomTemplate[] roomTemplates;
-        public bool overWriteFilledSpaces;
         public GeneratorTunneler tunnelTemplate;
 
         public override void Generate(BoardGenerator boardGenerator)
@@ -24,13 +23,13 @@ namespace Strata
             List<GridPosition> roomGridPositions = new List<GridPosition>();
 
             GridPosition firstRoomPosition = boardGenerator.GetRandomGridPosition();
-            boardGenerator.DrawTemplate(firstRoomPosition.x, firstRoomPosition.y, roomTemplates[Random.Range(0, roomTemplates.Length)], overWriteFilledSpaces);
+            boardGenerator.DrawTemplate(firstRoomPosition.x, firstRoomPosition.y, roomTemplates[Random.Range(0, roomTemplates.Length)], overwriteFilledSpaces);
 
             for (int i = 0; i < numRoomsToSpawn - 1; i++)
             {
                 GridPosition randRoomPosition = boardGenerator.GetRandomGridPosition();
                 roomGridPositions.Add(randRoomPosition);
-                boardGenerator.DrawTemplate(randRoomPosition.x, randRoomPosition.y, roomTemplates[Random.Range(0, roomTemplates.Length)], overWriteFilledSpaces);
+                boardGenerator.DrawTemplate(randRoomPosition.x, randRoomPosition.y, roomTemplates[Random.Range(0, roomTemplates.Length)], overwriteFilledSpaces);
             }
             ConnectRooms(boardGenerator, firstRoomPosition, roomGridPositions);
 

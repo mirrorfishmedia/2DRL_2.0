@@ -25,8 +25,6 @@ namespace Strata
 
         //Whether to use a random seed or not
         public bool useRandomSeed;
-        //Should this overwrite generators earlier than it in the sequence, by default this generator tends to do this so it should be early in the list
-        private bool overwriteFilledSpaces = true;
 
         //How much to fill space in the map, try values from 40-55
         [Range(0, 100)]

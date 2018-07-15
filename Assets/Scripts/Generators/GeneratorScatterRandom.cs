@@ -10,7 +10,6 @@ namespace Strata
 
         public char charIdToScatter = 'g';
         public int howManyToScatter = 100;
-        public bool overwriteFilledCharacters;
 
         public override void Generate(BoardGenerator boardGenerator)
         {
@@ -23,7 +22,7 @@ namespace Strata
             {
                 int randX = Random.Range(0, boardGenerator.profile.boardHorizontalSize);
                 int randY = Random.Range(0, boardGenerator.profile.boardVerticalSize);
-                boardGenerator.WriteToBoardGrid(randX, randY, charIdToScatter, overwriteFilledCharacters);
+                boardGenerator.WriteToBoardGrid(randX, randY, charIdToScatter, base.overwriteFilledSpaces);
             }
         }
     }

@@ -11,4 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcaf6a7a02540c14898118f2dfdabf2c, type: 3}
   m_Name: AllChainRooms
   m_EditorClassIdentifier: 
-  roomList: []
+  roomList:
+  - {fileID: 11400000, guid: ef820a556e010d24d9c819307d06b26e, type: 2}
+  - {fileID: 11400000, guid: 652bd76f2277296409d29280dd45ba9c, type: 2}
+  - {fileID: 11400000, guid: 6ce0130f07e435e4a865cf484139cbda, type: 2}
+  - {fileID: 11400000, guid: b9024b77c26ed6842ae6603fa129d3ae, type: 2}
+  - {fileID: 11400000, guid: 3113eb6b26dd41947b020c351309c423, type: 2}
+  - {fileID: 11400000, guid: 57867cf11b319414eba4da554de3047a, type: 2}
+  - {fileID: 11400000, guid: 9a4598cfb7a66cf4999890f5d4d1d59d, type: 2}

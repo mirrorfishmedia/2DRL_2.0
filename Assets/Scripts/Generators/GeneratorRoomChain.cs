@@ -15,7 +15,6 @@ namespace Strata
         public RoomTemplate[] randomFillRooms;
         public bool fillEmptySpaceWithRandomRooms;
         public bool fillBranchesOffChainWithRooms;
-        public bool overwriteFilledSpaces = true;
 
 
         public override void Generate(BoardGenerator boardGenerator)
@@ -53,11 +52,13 @@ namespace Strata
                 if (!ChooseDirectionAndAddRoom(boardGenerator))
                 {
                     //Ran out of space to create additional rooms, chain blocked.
+                    Debug.Log("out of space ");
                     break;
                 }
                 if (boardGenerator.roomsOnPathCreated >= roomsOnPathDesired)
                 {
                     //Created the requested number of rooms
+                    Debug.Log("created requested rooms");
                     break;
                 }
 

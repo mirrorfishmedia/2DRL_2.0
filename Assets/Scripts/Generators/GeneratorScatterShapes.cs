@@ -11,9 +11,7 @@ namespace Strata
         public int howManyToScatter = 5;
 
         public RoomTemplate[] roomTemplates;
-
-        public bool overWriteFilledCharacters;
-
+        
         public override void Generate(BoardGenerator boardGenerator)
         {
             SpawnShapes(boardGenerator);
@@ -26,7 +24,7 @@ namespace Strata
                 RoomTemplate templateToSpawn = roomTemplates[Random.Range(0, roomTemplates.Length)];
                 int randX = Random.Range(0, boardGenerator.profile.boardHorizontalSize);
                 int randY = Random.Range(0, boardGenerator.profile.boardVerticalSize);
-                boardGenerator.DrawTemplate(randX, randY, templateToSpawn, overWriteFilledCharacters);
+                boardGenerator.DrawTemplate(randX, randY, templateToSpawn, overwriteFilledSpaces);
             }
         }
 

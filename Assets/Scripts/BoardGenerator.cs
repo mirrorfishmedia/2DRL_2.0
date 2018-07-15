@@ -18,6 +18,7 @@ namespace Strata
         [HideInInspector]
         public List<Vector2> exitLocations;
 
+        public Vector2 lastChainDirectionMoved;
 
         [HideInInspector]
         public List<Vector2> roomChainRoomLocationsFilled = new List<Vector2>();
@@ -174,7 +175,11 @@ namespace Strata
             for (int i = 0; i < profile.generators.Length; i++)
             {
                 emptySpaceLists.Add(new GridPositionList());
-                currentGeneratorIndexIdForEmptySpaceTracking = i;
+                if (profile.generators[i].generatesEmptySpace)
+                {
+                    currentGeneratorIndexIdForEmptySpaceTracking = i;
+                }
+                
                 profile.generators[i].Generate(this);
             }
         }
@@ -294,10 +299,14 @@ namespace Strata
                     GridPosition emptyPosition = new GridPosition(x, y);
                     RecordEmptySpacesLeftByEachGenerator(emptyPosition);
                 }
+                else
+                {
+                    GridPosition filledPosition = new GridPosition(x, y);
+                    RemoveFilledSpaceFromEmptyLists(filledPosition);
+                }
             }
 
         }
-
 
         public void RecordEmptySpacesLeftByEachGenerator(GridPosition emptyPosition)
         {
@@ -305,6 +314,25 @@ namespace Strata
 
             emptySpaceLists[currentGeneratorIndexIdForEmptySpaceTracking].gridPositionList.Add(emptyPosition);
         }
+
+        public void RemoveFilledSpaceFromEmptyLists(GridPosition filledPosition)
+        {
+            for (int i = 0; i < emptySpaceLists.Count; i++)
+            {
+                for (int j = emptySpaceLists[i].gridPositionList.Count - 1; j > -1; j--)
+                {
+                    if (emptySpaceLists[i].gridPositionList[j].x == filledPosition.x && emptySpaceLists[i].gridPositionList[j].y == filledPosition.y)
+                    {
+                        emptySpaceLists[i].gridPositionList.RemoveAt(j);
+                        //Debug.Log("removing filled space at " + emptySpaceLists[i].gridPositionList[j].x + " " + emptySpaceLists[i].gridPositionList[j].y);
+                    }
+
+                }
+            }
+
+        }
+
+
 
         public GridPosition GetRandomEmptyGridPositionByGeneratorIndex(int genIndex)
         {

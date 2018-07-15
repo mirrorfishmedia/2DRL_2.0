@@ -17,7 +17,6 @@ namespace Strata
         public RoomList canBeEnteredFromNorthList;
         public RoomList canBeEnteredFromEastList;
 
-        public RoomList allChainRooms;
 
         //public BoardLibraryEntry[] boardLibraryEntries;
         public List<BoardLibraryEntry> boardLibraryEntryList = new List<BoardLibraryEntry>();

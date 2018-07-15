@@ -23,7 +23,6 @@ namespace Strata
 
         public override void Generate(BoardGenerator boardGenerator)
         {
-            Debug.Log("generating tunnels");
             GridPosition startPos = new GridPosition(0,0);
 
             if (useRandomTunnelStartPositions)
@@ -40,14 +39,12 @@ namespace Strata
             {
                 List<GridPosition> goalPositions = BuildTunnelGoalList(boardGenerator);
                 
-                Debug.Log("goalPositions " + goalPositions.Count);
 
                 for (int i = 0; i < goalPositions.Count; i++)
                 {
 
                     startPos = goalPositions[i];
                     int loopingGoalPositionIndex = ((i + 1) % goalPositions.Count);
-                    Debug.Log("looping index " + loopingGoalPositionIndex);
                     GridPosition targetPosition = goalPositions[loopingGoalPositionIndex];
                     DigTunnel(boardGenerator, startPos, targetPosition);
                 }
