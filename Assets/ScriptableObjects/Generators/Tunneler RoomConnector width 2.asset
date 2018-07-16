@@ -11,6 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4556ca038e5f8b44a986ddd9d1a570a2, type: 3}
   m_Name: Tunneler RoomConnector width 2
   m_EditorClassIdentifier: 
+  overwriteFilledSpaces: 1
+  generatesEmptySpace: 1
   numTunnels: 4
   tunnelWidth: 2
   tunnelEndTemplates: []
