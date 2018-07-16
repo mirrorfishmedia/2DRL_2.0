@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fb54412e0f82da4caf22151b67a0b98, type: 3}
+  m_Name: Profile Tilemap Profile 2D
+  m_EditorClassIdentifier: 
+  seedValue: 01
+  boardHorizontalSize: 60
+  boardVerticalSize: 60
+  boardLibrary: {fileID: 11400000, guid: 88757bdb0ee58eb41ae4582a1af9d09c, type: 2}
+  generators:
+  - {fileID: 11400000, guid: 26b1c1cee3c43e14eb19c7891a6f54a0, type: 2}
+  - {fileID: 11400000, guid: 949cfef19b932734d8851ee4e4c98f91, type: 2}
+  - {fileID: 11400000, guid: 78b0d0caefdb3fe499addb4890df0675, type: 2}
+  - {fileID: 11400000, guid: 77c5e21bc3c6e8f4280d5e6472735aa0, type: 2}
+  - {fileID: 11400000, guid: d572ada0623c60b4ea6fafabeeaf8fe5, type: 2}
+  - {fileID: 11400000, guid: e39cc77f78167f54882e0ebead5fda4d, type: 2}
+  - {fileID: 11400000, guid: 37888274b1b728c4197e22cec5b08f39, type: 2}

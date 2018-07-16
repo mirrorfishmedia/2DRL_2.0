@@ -75,7 +75,8 @@ namespace Strata
                 for (int j = boardGenerator.branchDirections.Count - 1; j > -1; j--)
                 {
                     Debug.Log("boardGenerator.branchDirections[j].offSetFromRoomLocation  " + boardGenerator.branchDirections[j].offSetFromRoomLocation);
-                    GameObject placeHolder = new GameObject("holder " + j + " " + boardGenerator.branchDirections[j].selectedChainRoom.name);
+                    GameObject placeHolder = GenerateRoomPlaceHolderGameObject(boardGenerator, boardGenerator.branchDirections[j].offSetFromRoomLocation, boardGenerator.branchDirections[j].selectedChainRoom, 99, false, j + "OpenDoorRoom");
+                    
                     placeHolder.transform.position = boardGenerator.branchDirections[j].offSetFromRoomLocation;
                     if (boardGenerator.branchDirections[j].offSetFromRoomLocation == boardGenerator.roomChainRoomLocationsFilled[i])
                     {
@@ -104,7 +105,7 @@ namespace Strata
                 Vector2 nextLocation = nextResult.selectedDirection + boardGenerator.currentLocation;
                 RoomTemplate nextRoom = nextResult.selectedChainRoom;
                 boardGenerator.roomChainRoomLocationsFilled.Add(nextLocation);
-                WriteChainRoomToGrid(nextLocation, nextRoom, boardGenerator.roomsOnPathCreated, true, boardGenerator);
+                WriteChainRoomToGrid(boardGenerator, nextLocation, nextRoom, boardGenerator.roomsOnPathCreated, true);
                 boardGenerator.roomsOnPathCreated++;
                 boardGenerator.currentChainRoom = nextRoom;
                 boardGenerator.currentLocation = nextLocation;
@@ -126,22 +127,47 @@ namespace Strata
                 for (int y = 0; y < verticalRoomsToFill; y++)
                 {
                     Vector2 roomPos = new Vector2(x * roomSize, y * roomSize);
-                    WriteChainRoomToGrid(roomPos, randomFillRooms[Random.Range(0, randomFillRooms.Length)], 0, false, boardGenerator);
+                    if (!boardGenerator.roomChainRoomLocationsFilled.Contains(roomPos))
+                    {
+                        WriteChainRoomToGrid(boardGenerator, roomPos, randomFillRooms[Random.Range(0, randomFillRooms.Length)], -1, false);
+                    }
+                    
                 }
             }
         }
 
-        public void WriteChainRoomToGrid(Vector2 roomOrigin, RoomTemplate roomTemplate, int chainNumber, bool isOnPath, BoardGenerator boardGenerator)
+#if UNITY_EDITOR
+
+        GameObject GenerateRoomPlaceHolderGameObject(BoardGenerator boardGenerator, Vector2 roomOrigin, RoomTemplate roomTemplate, int chainNumber, bool isOnPath, string namePrefix)
+        {
+            GameObject roomMarker;
+            if (isOnPath)
+            {
+                roomMarker = new GameObject(namePrefix + "Path Room " + chainNumber + " " + roomTemplate.name);
+            }
+            else
+            {
+                roomMarker = new GameObject(namePrefix + "Random fill Room " + roomTemplate.name);
+            }
+
+            roomMarker.transform.position = roomOrigin;
+            roomMarker.transform.SetParent(boardGenerator.transform);
+
+            return roomMarker;
+        }
+
+#endif
+
+
+
+        public void WriteChainRoomToGrid(BoardGenerator boardGenerator, Vector2 roomOrigin, RoomTemplate roomTemplate, int chainNumber, bool isOnPath)
         {
 #if UNITY_EDITOR
             //This generates GameObjects for each room in a room chain, it's useful in editor to be able to record the generation path and see if room generation is working correctly.
             //This does not run during the build of your game and can be safely removed if desired.
-            if (isOnPath)
-            {
-                GameObject roomMarker = new GameObject("Path Room " + chainNumber + " " + roomTemplate.name);
-                roomMarker.transform.position = roomOrigin;
-                roomMarker.transform.SetParent(boardGenerator.transform);
-            }
+
+            GenerateRoomPlaceHolderGameObject(boardGenerator, roomOrigin, roomTemplate, chainNumber, isOnPath, "Chain Room");
+
 #endif
 
             int charIndex = 0;

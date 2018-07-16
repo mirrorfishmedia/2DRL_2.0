@@ -10,7 +10,7 @@ namespace Strata
     {
 
         public bool buildOnStart;
-        public bool chooseRandomSeedOnStart;
+        public bool randomSeed;
         public bool useDailySeed;
         public Tilemap tilemap;
         public BoardGenerationProfile profile;
@@ -48,7 +48,7 @@ namespace Strata
         // Use this for initialization
         void Start()
         {
-            SetRandomStateFromStringSeed();
+           
             if (buildOnStart)
             {
                 BuildLevel();
@@ -58,7 +58,7 @@ namespace Strata
         void SetRandomStateFromStringSeed()
         {
             int seedInt = 0;
-            if (chooseRandomSeedOnStart)
+            if (randomSeed)
             {
                 seedInt = Random.Range(0, 100000);
             }
@@ -78,7 +78,8 @@ namespace Strata
         }
 
         void BuildLevel()
-        {            
+        {
+            SetRandomStateFromStringSeed();
             profile.boardLibrary.Initialize();
             InitializeLibraryDictionary();
 
@@ -100,14 +101,20 @@ namespace Strata
             if (Input.GetKeyUp(KeyCode.Keypad0))
             {
                 //And empty all collections and data, then rebuild the level.
-                ClearLevel();
-                BuildLevel();
+                ClearAndRebuild();
             }
+        }
+
+        public void ClearAndRebuild()
+        {
+            //if(boardGridAsCharacters.Length)
+            ClearLevel();
+            BuildLevel();
         }
 #endif
         //Clear out all local variables and regenerate the level, useful for testing your algorithms quickly, enter play mode and press 0 repeatedly
         //Worth noting that this does allocate significant memory so you probably don't want to be repeatedly generating levels during performance critical gameplay.
-        void ClearLevel()
+        public void ClearLevel()
         {
             tilemap.ClearAllTiles();
             roomChainRoomLocationsFilled.Clear();
@@ -118,18 +125,12 @@ namespace Strata
             currentGeneratorIndexIdForEmptySpaceTracking = 0;
             branchDirections.Clear();
             roomChainPathBranchLocations.Clear();
-            for (int x = 0; x < profile.boardHorizontalSize; x++)
-            {
-                for (int y = 0; y < profile.boardVerticalSize; y++)
-                {
-                    boardGridAsCharacters[x, y] = profile.boardLibrary.GetDefaultEntry().characterId;
-                }
-            }
+            SetupEmptyGrid();
 
-            for (int i = transform.childCount - 1; i > 0; i--)
+            for (int i = transform.childCount - 1; i >= 0; i--)
             {
-                Transform child = transform.GetChild(i);
-                Destroy(child.gameObject);
+                Transform child = transform.GetChild(0);
+                DestroyImmediate(child.gameObject);
             }
 
         }

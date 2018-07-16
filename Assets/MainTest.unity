@@ -542,7 +542,7 @@ MonoBehaviour:
   chooseRandomSeedOnStart: 0
   useDailySeed: 1
   tilemap: {fileID: 1584223752}
-  profile: {fileID: 11400000, guid: a508704f9fd1a484fac8071cca9de465, type: 2}
+  profile: {fileID: 11400000, guid: c532d243e5d5f7d4c848095a185619cc, type: 2}
   exitLocations: []
   lastChainDirectionMoved: {x: 0, y: 0}
   roomChainRoomLocationsFilled: []
