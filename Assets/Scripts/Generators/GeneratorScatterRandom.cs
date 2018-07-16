@@ -11,9 +11,10 @@ namespace Strata
         public char charIdToScatter = 'g';
         public int howManyToScatter = 100;
 
-        public override void Generate(BoardGenerator boardGenerator)
+        public override bool Generate(BoardGenerator boardGenerator)
         {
             Scatter(boardGenerator);
+            return true;
         }
 
         void Scatter(BoardGenerator boardGenerator)

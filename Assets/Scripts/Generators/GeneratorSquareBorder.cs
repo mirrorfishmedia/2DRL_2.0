@@ -10,9 +10,10 @@ namespace Strata
     {
         public char borderChar = 'w';
 
-        public override void Generate(BoardGenerator boardGenerator)
+        public override bool Generate(BoardGenerator boardGenerator)
         {
             BuildBorder(boardGenerator);
+            return true;
         }
 
         public void BuildBorder(BoardGenerator boardGenerator)

@@ -21,7 +21,7 @@ namespace Strata
         public char customEmptySpaceChar = '0';
 
 
-        public override void Generate(BoardGenerator boardGenerator)
+        public override bool Generate(BoardGenerator boardGenerator)
         {
             GridPosition startPos = new GridPosition(0,0);
 
@@ -49,8 +49,8 @@ namespace Strata
                     DigTunnel(boardGenerator, startPos, targetPosition);
                 }
             }
-            
-            
+
+            return true;
         }
 
         private List<GridPosition> BuildTunnelGoalList(BoardGenerator boardGenerator)

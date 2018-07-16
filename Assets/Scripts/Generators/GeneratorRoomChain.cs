@@ -9,17 +9,19 @@ namespace Strata
     {
 
         public int roomSize = 10;
-        public int roomsOnPathDesired = 20;
+        public int roomsOnPathMin = 10;
+        public int roomsOnPathMax = 20;
         public Vector2[] roomSequenceStartLocations;
         public RoomTemplate[] startRoomTemplates;
         public RoomTemplate[] randomFillRooms;
         public bool fillEmptySpaceWithRandomRooms;
         public bool fillBranchesOffChainWithRooms;
+        
 
 
-        public override void Generate(BoardGenerator boardGenerator)
+        public override bool Generate(BoardGenerator boardGenerator)
         {
-            StartRoomPath(boardGenerator);
+            bool roomPathCompleted = StartRoomPath(boardGenerator);
             if (fillEmptySpaceWithRandomRooms)
             {
                 FillEmptySpaceWithRooms(boardGenerator);
@@ -29,41 +31,55 @@ namespace Strata
 
                 AddRoomsToOpenDoors(boardGenerator);
             }
+
+            Debug.Log("returning rpc : " + roomPathCompleted);
+            return roomPathCompleted;
         }
 
-        public void StartRoomPath(BoardGenerator boardGenerator)
+        public bool StartRoomPath(BoardGenerator boardGenerator)
         {
             Vector2 startLoc = roomSequenceStartLocations[Random.Range(0, roomSequenceStartLocations.Length)];
             RoomTemplate firstRoom = startRoomTemplates[Random.Range(0, startRoomTemplates.Length)];
 
-            BuildRoomPath(boardGenerator, startLoc, firstRoom, true);
+            return BuildRoomPath(boardGenerator, startLoc, firstRoom, true);
+            
         }
 
-        public void BuildRoomPath(BoardGenerator boardGenerator, Vector2 pathStartLoc, RoomTemplate startRoom, bool isEntranceExitPath)
+        public bool BuildRoomPath(BoardGenerator boardGenerator, Vector2 pathStartLoc, RoomTemplate startRoom, bool isEntranceExitPath)
         {
 
             boardGenerator.currentLocation = pathStartLoc;
             boardGenerator.currentChainRoom = startRoom;
 
-            //WriteChainRoomToGrid(boardGenerator.currentLocation, boardGenerator.currentChainRoom, 0, true, boardGenerator);
+            bool roomPathCompleted = false;
 
             for (int i = 0; i < 100; i++)
             {
                 if (!ChooseDirectionAndAddRoom(boardGenerator, isEntranceExitPath))
                 {
                     //Ran out of space to create additional rooms, chain blocked.
-                    Debug.Log("out of space ");
-                    break;
-                }
-                if (boardGenerator.roomsOnPathCreated >= roomsOnPathDesired)
-                {
-                    //Created the requested number of rooms
-                    Debug.Log("created requested rooms");
-                    break;
+                    if (boardGenerator.roomsOnPathCreated < roomsOnPathMin)
+                    {
+                        Debug.Log("out of space, retry");
+                        roomPathCompleted = false;
+                        return roomPathCompleted;
+                    }
+                    
                 }
 
+                if (boardGenerator.roomsOnPathCreated >= roomsOnPathMax)
+                {
+                    //Created the requested number of rooms
+                    roomPathCompleted = true;
+                    return roomPathCompleted;
+                }
+
+                
             }
-            //ChooseExit();
+
+            //Completed with greater than min but less than max
+            roomPathCompleted = true;
+            return roomPathCompleted;
         }
 
         public void AddRoomsToOpenDoors(BoardGenerator boardGenerator)
@@ -89,6 +105,8 @@ namespace Strata
             }
         }
 
+
+
         public bool ChooseDirectionAndAddRoom(BoardGenerator boardGenerator, bool isOnConnectedPath)
         {
             RoomAndDirection nextResult = boardGenerator.currentChainRoom.ChooseNextRoom(boardGenerator, boardGenerator.currentLocation, boardGenerator.roomChainRoomLocationsFilled);
@@ -99,7 +117,11 @@ namespace Strata
                 RoomTemplate nextRoom = nextResult.selectedChainRoom;
                 boardGenerator.roomChainRoomLocationsFilled.Add(nextLocation);
                 WriteChainRoomToGrid(boardGenerator, nextLocation, nextRoom, boardGenerator.roomsOnPathCreated, isOnConnectedPath);
-                boardGenerator.roomsOnPathCreated++;
+                if (isOnConnectedPath)
+                {
+                    boardGenerator.roomsOnPathCreated++;
+
+                }
                 boardGenerator.currentChainRoom = nextRoom;
                 boardGenerator.currentLocation = nextLocation;
                 return true;
@@ -110,6 +132,7 @@ namespace Strata
             }
 
         }
+
 
         public void FillEmptySpaceWithRooms(BoardGenerator boardGenerator)
         {

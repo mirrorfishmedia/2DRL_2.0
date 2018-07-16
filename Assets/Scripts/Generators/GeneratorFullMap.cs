@@ -10,9 +10,12 @@ namespace Strata
 
         public RoomTemplate templateToSpawn;
 
-        public override void Generate(BoardGenerator boardGenerator)
+        public override bool Generate(BoardGenerator boardGenerator)
         {
             boardGenerator.DrawTemplate(0, 0, templateToSpawn, true, false);
+
+            return true;
+
         }
 
     }

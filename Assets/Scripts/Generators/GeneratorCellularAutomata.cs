@@ -31,13 +31,15 @@ namespace Strata
         public int randomFillPercent;
 
         //This is the function that will be called by BoardGenerator to kick off the generation process
-        public override void Generate(BoardGenerator boardGenerator)
+        public override bool Generate(BoardGenerator boardGenerator)
         {
             if (useLibraryDefaultEmptyCharForEmptySpace)
             {
                 emptySpaceChar = boardGenerator.profile.boardLibrary.GetDefaultEmptyChar();
             }
             GenerateMap(boardGenerator);
+
+            return true;
         }
 
         void GenerateMap(BoardGenerator boardGenerator)

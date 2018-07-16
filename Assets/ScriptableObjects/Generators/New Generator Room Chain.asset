@@ -14,7 +14,8 @@ MonoBehaviour:
   overwriteFilledSpaces: 1
   generatesEmptySpace: 1
   roomSize: 10
-  roomsOnPathDesired: 20
+  roomsOnPathMin: 8
+  roomsOnPathMax: 20
   roomSequenceStartLocations:
   - {x: 30, y: 30}
   startRoomTemplates:

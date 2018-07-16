@@ -12,9 +12,10 @@ namespace Strata
         public RoomTemplate[] roomTemplates;
         public GeneratorTunneler tunnelTemplate;
 
-        public override void Generate(BoardGenerator boardGenerator)
+        public override bool Generate(BoardGenerator boardGenerator)
         {
             SpawnRooms(boardGenerator);
+            return true;
         }
 
         void SpawnRooms(BoardGenerator boardGenerator)

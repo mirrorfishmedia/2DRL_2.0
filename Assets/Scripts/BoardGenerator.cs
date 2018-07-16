@@ -55,6 +55,29 @@ namespace Strata
             }
         }
 
+        //Clear out all local variables and regenerate the level, useful for testing your algorithms quickly, enter play mode and press 0 repeatedly
+        //Worth noting that this does allocate significant memory so you probably don't want to be repeatedly generating levels during performance critical gameplay.
+        public void ClearLevel()
+        {
+            tilemap.ClearAllTiles();
+            roomChainRoomLocationsFilled.Clear();
+            currentLocation = Vector2.zero;
+            roomsOnPathCreated = 0;
+            currentChainRoom = null;
+            emptySpaceLists.Clear();
+            currentGeneratorIndexIdForEmptySpaceTracking = 0;
+            branchDirections.Clear();
+            roomChainPathBranchLocations.Clear();
+            SetupEmptyGrid();
+
+            for (int i = transform.childCount - 1; i >= 0; i--)
+            {
+                Transform child = transform.GetChild(0);
+                DestroyImmediate(child.gameObject);
+            }
+
+        }
+
         void SetRandomStateFromStringSeed()
         {
             int seedInt = 0;
@@ -88,10 +111,29 @@ namespace Strata
                 tilemap.ClearAllTiles();
             }
             SetupEmptyGrid();
-            RunGenerators();
+
+            bool generationSucceeded = false;
+
+            for (int i = 0; i < 20; i++)
+            {
+                generationSucceeded = RunGenerators();
+                if (generationSucceeded)
+                {
+                    break;
+                }
+            }
             InstantiateGeneratedLevelData();
+
+            Debug.Log("generationSucceeded " + generationSucceeded);
+
         }
 
+        public void ClearAndRebuild()
+        {
+            //if(boardGridAsCharacters.Length)
+            ClearLevel();
+            BuildLevel();
+        }
 
 #if UNITY_EDITOR
         //Checking to see if the 0 (zero) key is pressed during play mode, only in the Unity Editor. Remove the if/endif if you want this in your build for testing.
@@ -105,35 +147,9 @@ namespace Strata
             }
         }
 
-        public void ClearAndRebuild()
-        {
-            //if(boardGridAsCharacters.Length)
-            ClearLevel();
-            BuildLevel();
-        }
+
 #endif
-        //Clear out all local variables and regenerate the level, useful for testing your algorithms quickly, enter play mode and press 0 repeatedly
-        //Worth noting that this does allocate significant memory so you probably don't want to be repeatedly generating levels during performance critical gameplay.
-        public void ClearLevel()
-        {
-            tilemap.ClearAllTiles();
-            roomChainRoomLocationsFilled.Clear();
-            currentLocation = Vector2.zero;
-            roomsOnPathCreated = 0;
-            currentChainRoom = null;
-            emptySpaceLists.Clear();
-            currentGeneratorIndexIdForEmptySpaceTracking = 0;
-            branchDirections.Clear();
-            roomChainPathBranchLocations.Clear();
-            SetupEmptyGrid();
-
-            for (int i = transform.childCount - 1; i >= 0; i--)
-            {
-                Transform child = transform.GetChild(0);
-                DestroyImmediate(child.gameObject);
-            }
-
-        }
+       
 
 
         void SetupEmptyGrid()
@@ -176,22 +192,35 @@ namespace Strata
             return entry;
         }
 
-        void RunGenerators()
+        private bool RunGenerators()
         {
+
+            bool generationSucceeded = false;
+
             for (int i = 0; i < profile.generators.Length; i++)
             {
+                
                 emptySpaceLists.Add(new GridPositionList());
                 if (profile.generators[i].generatesEmptySpace)
                 {
                     currentGeneratorIndexIdForEmptySpaceTracking = i;
                 }
-                
-                profile.generators[i].Generate(this);
+
+                Debug.Log("running " + profile.generators[i].name);
+                generationSucceeded = profile.generators[i].Generate(this);
+                if (!generationSucceeded)
+                {
+                    return generationSucceeded;
+                }
+               
             }
+
+            return generationSucceeded;
         }
 
         void InstantiateGeneratedLevelData()
         {
+            Debug.Log("instantiating");
             for (int x = 0; x < profile.boardHorizontalSize; x++)
             {
                 for (int y = 0; y < profile.boardVerticalSize; y++)

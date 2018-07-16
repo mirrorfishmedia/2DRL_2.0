@@ -12,9 +12,10 @@ namespace Strata
 
         public RoomTemplate[] roomTemplates;
         
-        public override void Generate(BoardGenerator boardGenerator)
+        public override bool Generate(BoardGenerator boardGenerator)
         {
             SpawnShapes(boardGenerator);
+            return true;
         }
 
         void SpawnShapes(BoardGenerator boardGenerator)

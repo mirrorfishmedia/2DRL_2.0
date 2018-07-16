@@ -12,10 +12,12 @@ namespace Strata
         public char exitChar;
         public char playerChar;
 
-        public override void Generate(BoardGenerator boardGenerator)
+        public override bool Generate(BoardGenerator boardGenerator)
         {
             PlaceExit(boardGenerator);
             PlaceStartLocation(boardGenerator);
+
+            return true;
         }
 
 

@@ -374,7 +374,7 @@ MonoBehaviour:
   tilemap: {fileID: 1584223752}
   profile: {fileID: 11400000, guid: 36cf6b8ae65a8334f8b32a72e4984458, type: 2}
   exitLocations: []
-  lastChainDirectionMoved: {x: -10, y: 0}
+  lastChainDirectionMoved: {x: 0, y: 0}
   roomChainRoomLocationsFilled: []
   branchDirections: []
   roomChainPathBranchLocations: []

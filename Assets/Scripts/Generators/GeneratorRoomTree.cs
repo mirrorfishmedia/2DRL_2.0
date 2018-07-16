@@ -14,12 +14,13 @@ namespace Strata
         public List<RoomTemplate> allRooms;
 
 
-        public override void Generate(BoardGenerator boardGenerator)
+        public override bool Generate(BoardGenerator boardGenerator)
         {
             //List<GridPosition> potentialRoomLocations = new List<GridPosition>();
 
             //GeneratePotentialRoomLocations(boardGenerator, potentialRoomLocations);
             //BuildRooms(boardGenerator, potentialRoomLocations);
+            return true;
             
         }
 
