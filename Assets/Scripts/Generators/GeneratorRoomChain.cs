@@ -36,10 +36,10 @@ namespace Strata
             Vector2 startLoc = roomSequenceStartLocations[Random.Range(0, roomSequenceStartLocations.Length)];
             RoomTemplate firstRoom = startRoomTemplates[Random.Range(0, startRoomTemplates.Length)];
 
-            BuildRoomPath(boardGenerator, startLoc, firstRoom);
+            BuildRoomPath(boardGenerator, startLoc, firstRoom, true);
         }
 
-        public void BuildRoomPath(BoardGenerator boardGenerator, Vector2 pathStartLoc, RoomTemplate startRoom)
+        public void BuildRoomPath(BoardGenerator boardGenerator, Vector2 pathStartLoc, RoomTemplate startRoom, bool isEntranceExitPath)
         {
 
             boardGenerator.currentLocation = pathStartLoc;
@@ -49,7 +49,7 @@ namespace Strata
 
             for (int i = 0; i < 100; i++)
             {
-                if (!ChooseDirectionAndAddRoom(boardGenerator))
+                if (!ChooseDirectionAndAddRoom(boardGenerator, isEntranceExitPath))
                 {
                     //Ran out of space to create additional rooms, chain blocked.
                     Debug.Log("out of space ");
@@ -68,35 +68,28 @@ namespace Strata
 
         public void AddRoomsToOpenDoors(BoardGenerator boardGenerator)
         {
-            Debug.Log("locations pre removal " + boardGenerator.roomChainPathBranchLocations.Count);
             for (int i = 0; i < boardGenerator.roomChainRoomLocationsFilled.Count; i++)
             {
-                Debug.Log("filled locations " + boardGenerator.roomChainRoomLocationsFilled.Count);
                 for (int j = boardGenerator.branchDirections.Count - 1; j > -1; j--)
                 {
-                    Debug.Log("boardGenerator.branchDirections[j].offSetFromRoomLocation  " + boardGenerator.branchDirections[j].offSetFromRoomLocation);
                     GameObject placeHolder = GenerateRoomPlaceHolderGameObject(boardGenerator, boardGenerator.branchDirections[j].offSetFromRoomLocation, boardGenerator.branchDirections[j].selectedChainRoom, 99, false, j + "OpenDoorRoom");
                     
                     placeHolder.transform.position = boardGenerator.branchDirections[j].offSetFromRoomLocation;
                     if (boardGenerator.branchDirections[j].offSetFromRoomLocation == boardGenerator.roomChainRoomLocationsFilled[i])
-                    {
-                        Debug.Log("removed  " + boardGenerator.branchDirections[j].offSetFromRoomLocation);
-                        
-                        //boardGenerator.branchDirections.RemoveAt(j);
+                    {                        
+                        boardGenerator.branchDirections.RemoveAt(j);
                     }
                 }
             }
 
-            Debug.Log("pass");
             for (int i = 0; i < boardGenerator.branchDirections.Count; i++)
             {
                 RoomAndDirection roomAndDir = boardGenerator.branchDirections[i];
-                BuildRoomPath(boardGenerator, roomAndDir.offSetFromRoomLocation, roomAndDir.selectedChainRoom);
-                Debug.Log("starting new path at: " + roomAndDir.selectedChainRoom + " " + i);
+                BuildRoomPath(boardGenerator, roomAndDir.offSetFromRoomLocation, roomAndDir.selectedChainRoom, false);
             }
         }
 
-        public bool ChooseDirectionAndAddRoom(BoardGenerator boardGenerator)
+        public bool ChooseDirectionAndAddRoom(BoardGenerator boardGenerator, bool isOnConnectedPath)
         {
             RoomAndDirection nextResult = boardGenerator.currentChainRoom.ChooseNextRoom(boardGenerator, boardGenerator.currentLocation, boardGenerator.roomChainRoomLocationsFilled);
 
@@ -105,7 +98,7 @@ namespace Strata
                 Vector2 nextLocation = nextResult.selectedDirection + boardGenerator.currentLocation;
                 RoomTemplate nextRoom = nextResult.selectedChainRoom;
                 boardGenerator.roomChainRoomLocationsFilled.Add(nextLocation);
-                WriteChainRoomToGrid(boardGenerator, nextLocation, nextRoom, boardGenerator.roomsOnPathCreated, true);
+                WriteChainRoomToGrid(boardGenerator, nextLocation, nextRoom, boardGenerator.roomsOnPathCreated, isOnConnectedPath);
                 boardGenerator.roomsOnPathCreated++;
                 boardGenerator.currentChainRoom = nextRoom;
                 boardGenerator.currentLocation = nextLocation;
@@ -185,7 +178,7 @@ namespace Strata
                         int y = (int)spawnPos.y;
 
                         //boardGenerator.boardGridAsCharacters[x, y] = selectedChar;
-                        boardGenerator.WriteToBoardGrid(x, y, selectedChar, overwriteFilledSpaces);
+                        boardGenerator.WriteToBoardGrid(x, y, selectedChar, overwriteFilledSpaces, isOnPath);
                     }
 
                     charIndex++;

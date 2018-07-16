@@ -22,7 +22,7 @@ namespace Strata
             {
                 int randX = Random.Range(0, boardGenerator.profile.boardHorizontalSize);
                 int randY = Random.Range(0, boardGenerator.profile.boardVerticalSize);
-                boardGenerator.WriteToBoardGrid(randX, randY, charIdToScatter, base.overwriteFilledSpaces);
+                boardGenerator.WriteToBoardGrid(randX, randY, charIdToScatter, base.overwriteFilledSpaces, false);
             }
         }
     }

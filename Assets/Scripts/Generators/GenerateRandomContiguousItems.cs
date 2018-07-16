@@ -21,14 +21,14 @@ namespace Strata
 
         void PlaceExit(BoardGenerator boardGenerator)
         {
-            GridPosition openConnectedPosition = boardGenerator.GetRandomEmptyGridPositionByGeneratorIndex(boardGenerator.currentGeneratorIndexIdForEmptySpaceTracking - 1);
-            boardGenerator.WriteToBoardGrid(openConnectedPosition.x, openConnectedPosition.y, exitChar, true);
+            GridPosition openConnectedPosition = boardGenerator.GetRandomEmptyGridPositionFromLastEmptySpaceGeneratorInStack(boardGenerator);
+            boardGenerator.WriteToBoardGrid(openConnectedPosition.x, openConnectedPosition.y, exitChar, true, false);
         }
 
         void PlaceStartLocation(BoardGenerator boardGenerator)
         {
-            GridPosition openConnectedPosition = boardGenerator.GetRandomEmptyGridPositionByGeneratorIndex(boardGenerator.currentGeneratorIndexIdForEmptySpaceTracking - 1);
-            boardGenerator.WriteToBoardGrid(openConnectedPosition.x, openConnectedPosition.y, playerChar, true);
+            GridPosition openConnectedPosition = boardGenerator.GetRandomEmptyGridPositionFromLastEmptySpaceGeneratorInStack(boardGenerator);
+            boardGenerator.WriteToBoardGrid(openConnectedPosition.x, openConnectedPosition.y, playerChar, true, false);
         }
 
 

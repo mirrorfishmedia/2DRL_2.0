@@ -57,7 +57,7 @@ namespace Strata
             {
                 for (int y = 0; y < boardGenerator.profile.boardVerticalSize; y++)
                 {
-                    boardGenerator.WriteToBoardGrid(x, y, (Random.Range(0,100) < randomFillPercent) ? charForFill : emptySpaceChar, overwriteFilledSpaces);
+                    boardGenerator.WriteToBoardGrid(x, y, (Random.Range(0,100) < randomFillPercent) ? charForFill : emptySpaceChar, overwriteFilledSpaces, false);
                 }
             }
         }
@@ -71,9 +71,9 @@ namespace Strata
                     int neighbourWallTiles = GetSurroundingWallCount(x, y, boardGenerator);
 
                     if (neighbourWallTiles > 4)
-                        boardGenerator.WriteToBoardGrid(x,y,charForFill,overwriteFilledSpaces);
+                        boardGenerator.WriteToBoardGrid(x,y,charForFill,overwriteFilledSpaces, false);
                     else if (neighbourWallTiles < 4)
-                        boardGenerator.WriteToBoardGrid(x, y, emptySpaceChar, overwriteFilledSpaces);
+                        boardGenerator.WriteToBoardGrid(x, y, emptySpaceChar, overwriteFilledSpaces, false);
 
                 }
             }

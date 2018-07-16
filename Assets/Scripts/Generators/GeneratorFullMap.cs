@@ -12,7 +12,7 @@ namespace Strata
 
         public override void Generate(BoardGenerator boardGenerator)
         {
-            boardGenerator.DrawTemplate(0, 0, templateToSpawn, true);
+            boardGenerator.DrawTemplate(0, 0, templateToSpawn, true, false);
         }
 
     }

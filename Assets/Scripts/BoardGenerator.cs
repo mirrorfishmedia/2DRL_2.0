@@ -240,14 +240,14 @@ namespace Strata
             return randomPosition;
         }
 
-        public void DrawTemplate(int x, int y, RoomTemplate templateToSpawn, bool overWriteFilledCharacters)
+        public void DrawTemplate(int x, int y, RoomTemplate templateToSpawn, bool overWriteFilledCharacters, bool inConnectedPlayableArea)
         {
             int charIndex = 0;
             for (int i = 0; i < templateToSpawn.roomSizeX; i++)
             {
                 for (int j = 0; j < templateToSpawn.roomSizeY; j++)
                 {
-                    WriteToBoardGrid(x + i, y + j, templateToSpawn.roomChars[charIndex], overWriteFilledCharacters);
+                    WriteToBoardGrid(x + i, y + j, templateToSpawn.roomChars[charIndex], overWriteFilledCharacters, inConnectedPlayableArea);
                     charIndex++;
                 }
             }
@@ -279,7 +279,7 @@ namespace Strata
             return false;
         }
 
-        public void WriteToBoardGrid(int x, int y, char charIdToWrite, bool overwriteFilledSpaces)
+        public void WriteToBoardGrid(int x, int y, char charIdToWrite, bool overwriteFilledSpaces, bool inConnectedPlayableArea)
         {
             if (TestIfInGrid(x, y))
             {
@@ -297,7 +297,7 @@ namespace Strata
                     }
                 }
 
-                if (boardGridAsCharacters[x, y] == profile.boardLibrary.GetDefaultEmptyChar())
+                if (boardGridAsCharacters[x, y] == profile.boardLibrary.GetDefaultEmptyChar() && inConnectedPlayableArea)
                 {
                     //Wrote an empty space to grid, let's add it to our list of lists
                     GridPosition emptyPosition = new GridPosition(x, y);
@@ -335,11 +335,21 @@ namespace Strata
 
 
 
-        public GridPosition GetRandomEmptyGridPositionByGeneratorIndex(int genIndex)
-        {
-            GridPosition randPosition = new GridPosition(0,0);
 
-            randPosition = emptySpaceLists[genIndex].gridPositionList[Random.Range(0, emptySpaceLists[genIndex].gridPositionList.Count)];
+
+        public GridPosition GetRandomEmptyGridPositionFromLastEmptySpaceGeneratorInStack(BoardGenerator boardGenerator)
+        {
+            int genIndex = 0;
+
+            for (int i = 0; i < profile.generators.Length; i++)
+            {
+                if (profile.generators[i].generatesEmptySpace)
+                {
+                    genIndex = i;
+                }
+            }
+
+            GridPosition randPosition = emptySpaceLists[genIndex].gridPositionList[Random.Range(0, emptySpaceLists[genIndex].gridPositionList.Count)];
 
             return randPosition;
         }

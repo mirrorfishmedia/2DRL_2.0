@@ -23,13 +23,13 @@ namespace Strata
             List<GridPosition> roomGridPositions = new List<GridPosition>();
 
             GridPosition firstRoomPosition = boardGenerator.GetRandomGridPosition();
-            boardGenerator.DrawTemplate(firstRoomPosition.x, firstRoomPosition.y, roomTemplates[Random.Range(0, roomTemplates.Length)], overwriteFilledSpaces);
+            boardGenerator.DrawTemplate(firstRoomPosition.x, firstRoomPosition.y, roomTemplates[Random.Range(0, roomTemplates.Length)], overwriteFilledSpaces, true);
 
             for (int i = 0; i < numRoomsToSpawn - 1; i++)
             {
                 GridPosition randRoomPosition = boardGenerator.GetRandomGridPosition();
                 roomGridPositions.Add(randRoomPosition);
-                boardGenerator.DrawTemplate(randRoomPosition.x, randRoomPosition.y, roomTemplates[Random.Range(0, roomTemplates.Length)], overwriteFilledSpaces);
+                boardGenerator.DrawTemplate(randRoomPosition.x, randRoomPosition.y, roomTemplates[Random.Range(0, roomTemplates.Length)], overwriteFilledSpaces, true);
             }
             ConnectRooms(boardGenerator, firstRoomPosition, roomGridPositions);
 

@@ -101,7 +101,7 @@ namespace Strata
 
                 for (int j = 0; j < tunnelWidth; j++)
                 {
-                    boardGenerator.WriteToBoardGrid(currentDigPosition.x, currentDigPosition.y + j, GetCharToWriteForTunnel(boardGenerator), true);
+                    boardGenerator.WriteToBoardGrid(currentDigPosition.x, currentDigPosition.y + j, GetCharToWriteForTunnel(boardGenerator), true, true);
 
                 }
 
@@ -126,7 +126,7 @@ namespace Strata
                 for (int s = 0; s < tunnelWidth; s++)
                 {
                     
-                    boardGenerator.WriteToBoardGrid(currentDigPosition.x + s, currentDigPosition.y, GetCharToWriteForTunnel(boardGenerator), true);
+                    boardGenerator.WriteToBoardGrid(currentDigPosition.x + s, currentDigPosition.y, GetCharToWriteForTunnel(boardGenerator), true, true);
                 }
             }
 
@@ -185,7 +185,7 @@ namespace Strata
             if (tunnelEndTemplates.Length > 0)
             {
                 RoomTemplate templateToSpawn = tunnelEndTemplates[Random.Range(0, tunnelEndTemplates.Length)];
-                boardGenerator.DrawTemplate(spawnPosition.x, spawnPosition.y, templateToSpawn, overWriteFilledCharacters);
+                boardGenerator.DrawTemplate(spawnPosition.x, spawnPosition.y, templateToSpawn, overWriteFilledCharacters, true);
             }
         }
     }

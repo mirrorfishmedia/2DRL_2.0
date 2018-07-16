@@ -24,7 +24,7 @@ namespace Strata
                 RoomTemplate templateToSpawn = roomTemplates[Random.Range(0, roomTemplates.Length)];
                 int randX = Random.Range(0, boardGenerator.profile.boardHorizontalSize);
                 int randY = Random.Range(0, boardGenerator.profile.boardVerticalSize);
-                boardGenerator.DrawTemplate(randX, randY, templateToSpawn, overwriteFilledSpaces);
+                boardGenerator.DrawTemplate(randX, randY, templateToSpawn, overwriteFilledSpaces, false);
             }
         }
 
