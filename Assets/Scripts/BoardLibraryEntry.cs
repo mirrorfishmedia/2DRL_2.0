@@ -12,6 +12,7 @@ namespace Strata
         public bool useAsDefaultEmptySpace;
         public GameObject prefabToSpawn;
         public Tile tile;
+        public TileBase tileBase;
         public ChanceBoardLibraryEntry chanceBoardLibraryEntry;
     }
 }

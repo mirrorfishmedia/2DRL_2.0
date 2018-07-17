@@ -72,9 +72,9 @@ namespace Strata
             }
 
 
-            if (GUILayout.Button("Create New  BoardLibrary"))
+            if (GUILayout.Button("Create New Profile & Supporting Files"))
             {
-                CreateNewBoardLibraryAsset();
+                CreateNewProfile();
             }
 
             if (GUILayout.Button("Create New RoomTemplate"))
@@ -83,13 +83,42 @@ namespace Strata
             }
         }
 
-        public void CreateNewBoardLibraryAsset()
+        void OnEnable()
         {
-            boardLibrary = CreateAsset<BoardLibrary>("Library") as BoardLibrary;
-            boardLibrary.canBeEnteredFromNorthList = CreateAsset<RoomList>(boardLibrary.name + " Moving North") as RoomList;
-            boardLibrary.canBeEnteredFromWestList = CreateAsset<RoomList>(boardLibrary.name + " Moving East") as RoomList;
-            boardLibrary.canBeEnteredFromSouthList = CreateAsset<RoomList>(boardLibrary.name + " Moving South") as RoomList;
-            boardLibrary.canBeEnteredFromEastList = CreateAsset<RoomList>(boardLibrary.name + " Moving West") as RoomList;
+            SceneView.onSceneGUIDelegate += this.OnSceneGUI;
+        }
+
+        void OnDisable()
+        {
+            SceneView.onSceneGUIDelegate -= this.OnSceneGUI;
+        }
+
+        void OnSceneGUI(SceneView sceneView)
+        {
+            Handles.BeginGUI();
+            Debug.DrawLine(Vector3.zero, new Vector3(roomTemplate.roomSizeX, 0, 0), Color.red);
+            Debug.DrawLine(Vector3.zero, new Vector3(0, roomTemplate.roomSizeY, 0), Color.red);
+            Debug.DrawLine(new Vector3(roomTemplate.roomSizeX, roomTemplate.roomSizeY, 0), new Vector3(roomTemplate.roomSizeX, 0, 0), Color.red);
+            Debug.DrawLine(new Vector3(roomTemplate.roomSizeX, roomTemplate.roomSizeY, 0), new Vector3(0, roomTemplate.roomSizeY, 0), Color.red);
+
+            HandleUtility.Repaint();
+            Handles.EndGUI();
+        }
+
+
+        public void CreateNewProfile()
+        {
+            BoardGenerationProfile profile = CreateAsset<BoardGenerationProfile>("New") as BoardGenerationProfile;
+            
+            profile.boardLibrary = CreateAsset<BoardLibrary>("New") as BoardLibrary;
+            boardLibrary = profile.boardLibrary;
+
+            profile.boardLibrary.instantiationTechnique = CreateAsset<TilemapInstantiationTechnique>("TilemapInstantiator") as TilemapInstantiationTechnique;
+
+            profile.boardLibrary.canBeEnteredFromNorthList = CreateAsset<RoomList>("Exits North") as RoomList;
+            profile.boardLibrary.canBeEnteredFromWestList = CreateAsset<RoomList>("Exits East") as RoomList;
+            profile.boardLibrary.canBeEnteredFromSouthList = CreateAsset<RoomList>("Exits South") as RoomList;
+            profile.boardLibrary.canBeEnteredFromEastList = CreateAsset<RoomList>("Exits West") as RoomList;
         }
 
         public void CreateNewRoomTemplateAsset()
@@ -100,7 +129,7 @@ namespace Strata
         public static ScriptableObject CreateAsset<T>(string assetName) where T : ScriptableObject
         {
             var asset = ScriptableObject.CreateInstance<T>();
-            ProjectWindowUtil.CreateAsset(asset, "New " + assetName + " " + typeof(T).Name + ".asset");
+            ProjectWindowUtil.CreateAsset(asset, assetName + " " + typeof(T).Name + ".asset");
             return asset;
         }
 
@@ -192,20 +221,29 @@ namespace Strata
 
         public void LoadTileMapFromRoomTemplate()
         {
+            Debug.Log("load");
             libraryDictionary = boardLibrary.BuildTileKeyLibraryDictionary();
             Tilemap tilemap = SelectTilemapInScene();
 
             tilemap.ClearAllTiles();
-
+            Debug.Log("clear");
             int charIndex = 0;
             for (int x = 0; x < roomTemplate.roomSizeX; x++)
             {
                 for (int y = 0; y < roomTemplate.roomSizeY; y++)
                 {
                     Tile tileToSet = boardLibrary.GetTileFromChar(roomTemplate.roomChars[charIndex]);
+                    Debug.Log("tile to set " + tileToSet);
+                    if (tileToSet == null)
+                    {
+                        Debug.LogError("Attempting to load empty tiles, draw and save something first");
+                        
+                    }
+
                     Vector3Int pos = new Vector3Int(x, y, 0) + tilemap.origin;
                     tilemap.SetTile(pos, tileToSet);
                     charIndex++;
+
 
                 }
             }

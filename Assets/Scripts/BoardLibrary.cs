@@ -58,7 +58,16 @@ namespace Strata
             }
 
             //Otherwise return entry 0 in the list, effectively a random entry if list is auto-generated
-            return boardLibraryEntryList[0];
+            if (boardLibraryEntryList.Count > 0)
+            {
+                return boardLibraryEntryList[0];
+            }
+            else
+            {
+                Debug.LogError("Library entry list is empty, draw some tiles and save them to add them to the library.");
+                return null;
+            }
+            
         }
 
 
@@ -223,6 +232,7 @@ namespace Strata
 
         public Tile GetTileFromChar(char charToFind)
         {
+
             for (int i = 0; i < boardLibraryEntryList.Count; i++)
             {
                 if (boardLibraryEntryList[i].characterId == charToFind)
@@ -233,7 +243,7 @@ namespace Strata
 
             if (charToFind == '\0')
             {
-                return GetDefaultTile();
+                //return GetDefaultTile();
             }
             return null;
         }
