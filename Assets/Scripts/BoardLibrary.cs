@@ -38,7 +38,7 @@ namespace Strata
             return GetDefaultEntry().characterId;
         }
 
-        public Tile GetDefaultTile()
+        public TileBase GetDefaultTile()
         {
             return GetDefaultEntry().tile;
         }
@@ -71,9 +71,9 @@ namespace Strata
         }
 
 
-        public Dictionary<Tile, BoardLibraryEntry> BuildTileKeyLibraryDictionary()
+        public Dictionary<TileBase, BoardLibraryEntry> BuildTileKeyLibraryDictionary()
         {
-            Dictionary<Tile, BoardLibraryEntry> libraryDictionary = new Dictionary<Tile, BoardLibraryEntry>();
+            Dictionary<TileBase, BoardLibraryEntry> libraryDictionary = new Dictionary<TileBase, BoardLibraryEntry>();
             for (int i = 0; i < boardLibraryEntryList.Count; i++)
             {
                 libraryDictionary.Add(boardLibraryEntryList[i].tile, boardLibraryEntryList[i]);
@@ -97,7 +97,7 @@ namespace Strata
 
         }
 
-        public BoardLibraryEntry AddBoardLibraryEntryIfTileNotYetEntered(Tile tileToTest)
+        public BoardLibraryEntry AddBoardLibraryEntryIfTileNotYetEntered(TileBase tileToTest)
         {
             //Look through the BoardLibrary to see if there is already a matching tile entered
             BoardLibraryEntry entry = CheckLibraryForTile(tileToTest, BuildTileKeyLibraryDictionary());
@@ -216,7 +216,7 @@ namespace Strata
             return testedChar;
         }
 
-        public BoardLibraryEntry CheckLibraryForTile(Tile key, Dictionary<Tile, BoardLibraryEntry> boardLibraryDictionary)
+        public BoardLibraryEntry CheckLibraryForTile(TileBase key, Dictionary<TileBase, BoardLibraryEntry> boardLibraryDictionary)
         {
             if (boardLibraryDictionary.ContainsKey(key))
             {
@@ -230,7 +230,7 @@ namespace Strata
 
 
 
-        public Tile GetTileFromChar(char charToFind)
+        public TileBase GetTileFromChar(char charToFind)
         {
 
             for (int i = 0; i < boardLibraryEntryList.Count; i++)

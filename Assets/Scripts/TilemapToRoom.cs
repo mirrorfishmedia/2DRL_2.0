@@ -12,7 +12,7 @@ namespace Strata
         public RoomTemplate roomTemplate;
         public BoardLibrary boardLibrary;
 
-        private Dictionary<Tile, BoardLibraryEntry> libraryDictionary;
+        private Dictionary<TileBase, BoardLibraryEntry> libraryDictionary;
 
 
         [MenuItem("Window/Tilemap To RoomTemplate Converter")]
@@ -166,7 +166,10 @@ namespace Strata
             {
                 for (int y = 0; y < roomTemplate.roomSizeY; y++)
                 {
-                    Tile foundTile = GetTileFromGrid(x, y, tilemap);
+                    TileBase foundTile = GetTileFromGrid(x, y, tilemap) as TileBase;
+                    //RuleTile foundRuleTile = GetTileFromGrid(x, y, tilemap);
+                    
+                    //Debug.Log("foundRuleTile " + foundRuleTile);
                     if (foundTile == null)
                     {
                         //If tilemap is blank inside grid, write in default empty space character defined in board library, usually 0
@@ -232,7 +235,7 @@ namespace Strata
             {
                 for (int y = 0; y < roomTemplate.roomSizeY; y++)
                 {
-                    Tile tileToSet = boardLibrary.GetTileFromChar(roomTemplate.roomChars[charIndex]);
+                    TileBase tileToSet = boardLibrary.GetTileFromChar(roomTemplate.roomChars[charIndex]);
                     Debug.Log("tile to set " + tileToSet);
                     if (tileToSet == null)
                     {
@@ -302,11 +305,11 @@ namespace Strata
             return tilemap;
         }
 
-        Tile GetTileFromGrid(int x, int y, Tilemap tilemap)
+        TileBase GetTileFromGrid(int x, int y, Tilemap tilemap)
         {
             Vector3Int pos = new Vector3Int(x, y, 0) + tilemap.origin;
-            Tile tile = tilemap.GetTile(pos) as Tile;
-
+            TileBase tile = tilemap.GetTile(pos);
+            //Debug.Log("get tile " + tilemap.GetTile(pos));
             return tile;
         }
     }
