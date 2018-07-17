@@ -63,6 +63,12 @@ namespace Strata
                 WriteTilemapToRoomTemplate();
             }
 
+            if (GUILayout.Button("Duplicate Loaded Room"))
+            {
+                DuplicateLoadedRoomTemplateAndLoadCopy();
+            }
+
+
             if (roomTemplate != null)
             {
                 if (GUILayout.Button("Clear & Draw Empty " + roomTemplate.roomSizeX + " x " + roomTemplate.roomSizeY))
@@ -154,6 +160,14 @@ namespace Strata
                     tilemap.SetTile(tilePos, boardLibrary.GetDefaultEntry().tile);
                 }
             }
+        }
+
+        public void DuplicateLoadedRoomTemplateAndLoadCopy()
+        {
+            string pathSource = AssetDatabase.GetAssetPath(roomTemplate);
+            string pathDestination = AssetDatabase.GenerateUniqueAssetPath(pathSource);
+            //FileUtil.CopyFileOrDirectory(path, path + "1");
+            AssetDatabase.CopyAsset(pathSource, pathDestination);
         }
 
         public void WriteTilemapToRoomTemplate()
