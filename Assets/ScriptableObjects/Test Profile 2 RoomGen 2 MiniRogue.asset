@@ -16,9 +16,10 @@ MonoBehaviour:
   boardVerticalSize: 60
   boardLibrary: {fileID: 11400000, guid: 88757bdb0ee58eb41ae4582a1af9d09c, type: 2}
   generators:
-  - {fileID: 11400000, guid: 949cfef19b932734d8851ee4e4c98f91, type: 2}
+  - {fileID: 11400000, guid: e39cc77f78167f54882e0ebead5fda4d, type: 2}
   - {fileID: 11400000, guid: 949cfef19b932734d8851ee4e4c98f91, type: 2}
   - {fileID: 11400000, guid: 78b0d0caefdb3fe499addb4890df0675, type: 2}
   - {fileID: 11400000, guid: 77c5e21bc3c6e8f4280d5e6472735aa0, type: 2}
   - {fileID: 11400000, guid: 37888274b1b728c4197e22cec5b08f39, type: 2}
   - {fileID: 11400000, guid: d572ada0623c60b4ea6fafabeeaf8fe5, type: 2}
+  - {fileID: 11400000, guid: 73c4642d842d6ea43953f0f95b649578, type: 2}

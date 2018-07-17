@@ -15,7 +15,7 @@ MonoBehaviour:
   generatesEmptySpace: 1
   roomSize: 10
   roomsOnPathMin: 8
-  roomsOnPathMax: 20
+  roomsOnPathMax: 16
   roomSequenceStartLocations:
   - {x: 30, y: 30}
   startRoomTemplates:
@@ -26,4 +26,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6ce0130f07e435e4a865cf484139cbda, type: 2}
   - {fileID: 11400000, guid: b9024b77c26ed6842ae6603fa129d3ae, type: 2}
   fillEmptySpaceWithRandomRooms: 0
-  fillBranchesOffChainWithRooms: 1
+  fillBranchesOffChainWithRooms: 0

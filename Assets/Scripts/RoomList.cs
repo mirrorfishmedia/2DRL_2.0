@@ -11,13 +11,17 @@ namespace Strata
 
         public void RemoveEmptyEntriesThenAdd(RoomTemplate templateToAdd)
         {
-            for (int i = roomList.Count - 1; i >= 0; i--)
+            if (roomList.Count != 0)
             {
-                if (roomList[i] == null)
+                for (int i = roomList.Count - 1; i >= 0; i--)
                 {
-                    roomList.RemoveAt(i);
+                    if (roomList[i] == null)
+                    {
+                        roomList.RemoveAt(i);
+                    }
                 }
             }
+            
 
             roomList.Add(templateToAdd);
         }

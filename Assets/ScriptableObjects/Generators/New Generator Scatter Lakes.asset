@@ -11,7 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc35e86ca6729d2469e62aab163175e0, type: 3}
   m_Name: New Generator Scatter Lakes
   m_EditorClassIdentifier: 
-  howManyToScatter: 3
+  overwriteFilledSpaces: 0
+  generatesEmptySpace: 0
+  howManyToScatter: 1
   roomTemplates:
   - {fileID: 11400000, guid: fb27f9d95f820c14d953f991708eca7c, type: 2}
-  overWriteFilledCharacters: 0
