@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Name: Penny Test Profile
   m_EditorClassIdentifier: 
   seedValue: '@mattmirrorfish'
-  boardHorizontalSize: 100
-  boardVerticalSize: 100
+  boardHorizontalSize: 48
+  boardVerticalSize: 40
   boardLibrary: {fileID: 11400000, guid: 763d7ccc3d5bb414db00646846149e32, type: 2}
-  generators: []
+  generators:
+  - {fileID: 11400000, guid: 881bc7150ba3903459f8ec4d93f241e7, type: 2}
+  - {fileID: 11400000, guid: e39cc77f78167f54882e0ebead5fda4d, type: 2}

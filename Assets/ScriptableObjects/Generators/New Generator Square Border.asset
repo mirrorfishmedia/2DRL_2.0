@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b879f0fc8200b7429f002df0077f686, type: 3}
   m_Name: New Generator Square Border
   m_EditorClassIdentifier: 
-  overwriteFilledSpaces: 0
+  overwriteFilledSpaces: 1
   generatesEmptySpace: 0
-  borderChar: 87
+  borderChar: 83

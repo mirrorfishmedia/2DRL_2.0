@@ -13,7 +13,6 @@ namespace Strata
         public int tunnelWidth = 1;
         public RoomTemplate[] tunnelEndTemplates;
         public bool spawnRoomsAtTunnelEnds = false;
-        public bool overWriteFilledCharacters = true;
         public bool useRandomTunnelStartPositions = false;
         public bool connectLastStrataLayer = true;
 
@@ -185,7 +184,7 @@ namespace Strata
             if (tunnelEndTemplates.Length > 0)
             {
                 RoomTemplate templateToSpawn = tunnelEndTemplates[Random.Range(0, tunnelEndTemplates.Length)];
-                boardGenerator.DrawTemplate(spawnPosition.x, spawnPosition.y, templateToSpawn, overWriteFilledCharacters, true);
+                boardGenerator.DrawTemplate(spawnPosition.x, spawnPosition.y, templateToSpawn, overwriteFilledSpaces, true);
             }
         }
     }

@@ -16,8 +16,18 @@ namespace Strata
         public RoomTemplate[] randomFillRooms;
         public bool fillEmptySpaceWithRandomRooms;
         public bool fillBranchesOffChainWithRooms;
-        
 
+
+
+        private void OnEnable()
+        {
+            if (roomSequenceStartLocations.Length == 0)
+            {
+                roomSequenceStartLocations = new Vector2[1];
+                roomSequenceStartLocations[0] = new Vector2(30, 30);
+
+            }
+        }
 
         public override bool Generate(BoardGenerator boardGenerator)
         {
@@ -31,8 +41,6 @@ namespace Strata
 
                 AddRoomsToOpenDoors(boardGenerator);
             }
-
-            Debug.Log("returning rpc : " + roomPathCompleted);
             return roomPathCompleted;
         }
 
@@ -88,7 +96,7 @@ namespace Strata
             {
                 for (int j = boardGenerator.branchDirections.Count - 1; j > -1; j--)
                 {
-                    GameObject placeHolder = GenerateRoomPlaceHolderGameObject(boardGenerator, boardGenerator.branchDirections[j].offSetFromRoomLocation, boardGenerator.branchDirections[j].selectedChainRoom, 99, false, j + "OpenDoorRoom");
+                    GameObject placeHolder = boardGenerator.GenerateRoomPlaceHolderGameObject(boardGenerator, boardGenerator.branchDirections[j].offSetFromRoomLocation, boardGenerator.branchDirections[j].selectedChainRoom, 99, false, j + "OpenDoorRoom");
                     
                     placeHolder.transform.position = boardGenerator.branchDirections[j].offSetFromRoomLocation;
                     if (boardGenerator.branchDirections[j].offSetFromRoomLocation == boardGenerator.roomChainRoomLocationsFilled[i])
@@ -145,34 +153,14 @@ namespace Strata
                     Vector2 roomPos = new Vector2(x * roomSize, y * roomSize);
                     if (!boardGenerator.roomChainRoomLocationsFilled.Contains(roomPos))
                     {
-                        WriteChainRoomToGrid(boardGenerator, roomPos, randomFillRooms[Random.Range(0, randomFillRooms.Length)], -1, false);
+                        WriteChainRoomToGrid(boardGenerator, roomPos, randomFillRooms[Random.Range(0, randomFillRooms.Length)], 99, false);
                     }
                     
                 }
             }
         }
 
-#if UNITY_EDITOR
 
-        GameObject GenerateRoomPlaceHolderGameObject(BoardGenerator boardGenerator, Vector2 roomOrigin, RoomTemplate roomTemplate, int chainNumber, bool isOnPath, string namePrefix)
-        {
-            GameObject roomMarker;
-            if (isOnPath)
-            {
-                roomMarker = new GameObject(namePrefix + "Path Room " + chainNumber + " " + roomTemplate.name);
-            }
-            else
-            {
-                roomMarker = new GameObject(namePrefix + "Random fill Room " + roomTemplate.name);
-            }
-
-            roomMarker.transform.position = roomOrigin;
-            roomMarker.transform.SetParent(boardGenerator.transform);
-
-            return roomMarker;
-        }
-
-#endif
 
 
 
@@ -182,7 +170,7 @@ namespace Strata
             //This generates GameObjects for each room in a room chain, it's useful in editor to be able to record the generation path and see if room generation is working correctly.
             //This does not run during the build of your game and can be safely removed if desired.
 
-            GenerateRoomPlaceHolderGameObject(boardGenerator, roomOrigin, roomTemplate, chainNumber, isOnPath, "Chain Room");
+            boardGenerator.GenerateRoomPlaceHolderGameObject(boardGenerator, roomOrigin, roomTemplate, chainNumber, isOnPath, "Chain Room");
 
 #endif
 

@@ -125,6 +125,18 @@ namespace Strata
             profile.boardLibrary.canBeEnteredFromWestList = CreateAsset<RoomList>("Exits East") as RoomList;
             profile.boardLibrary.canBeEnteredFromSouthList = CreateAsset<RoomList>("Exits South") as RoomList;
             profile.boardLibrary.canBeEnteredFromEastList = CreateAsset<RoomList>("Exits West") as RoomList;
+
+
+            profile.boardLibrary.SetDefaultTileOnProfileCreation(LoadAndSetDefaultTile());
+
+            BoardGenerator boardGenerator;
+            boardGenerator = Selection.activeGameObject.GetComponent<BoardGenerator>();
+            if (boardGenerator != null)
+            {
+                boardGenerator.tilemap = Selection.activeGameObject.GetComponent<Tilemap>();
+                boardGenerator.profile = profile;
+            }
+
         }
 
         public void CreateNewRoomTemplateAsset()
@@ -137,6 +149,20 @@ namespace Strata
             var asset = ScriptableObject.CreateInstance<T>();
             ProjectWindowUtil.CreateAsset(asset, assetName + " " + typeof(T).Name + ".asset");
             return asset;
+        }
+
+        TileBase LoadAndSetDefaultTile()
+        {
+            string pathToDefaultTile = "Assets/Strata/Tiles/BlackEmptyNoCollisionTile.asset";
+            TileBase defaultBlackEmptyTile = AssetDatabase.LoadAssetAtPath<TileBase>(pathToDefaultTile);
+
+            if (defaultBlackEmptyTile == null)
+            {
+                Debug.LogError("During initial BoardProfile creation we failed to load default empty tile at intended path " + pathToDefaultTile + 
+                    " did the folder structure change? Please fix the path in this script or manually add a default empty tile, with the boolean flag set to true in your BoardLibrary.");
+            }
+
+            return defaultBlackEmptyTile;
         }
 
         public void ClearTilemap()
@@ -204,7 +230,6 @@ namespace Strata
                         roomTemplate.roomChars[charIndex] = entry.characterId;
                         charIndex++;
                     }
-
                 }
             }
 
@@ -238,38 +263,30 @@ namespace Strata
 
         public void LoadTileMapFromRoomTemplate()
         {
-            Debug.Log("load");
             libraryDictionary = boardLibrary.BuildTileKeyLibraryDictionary();
             Tilemap tilemap = SelectTilemapInScene();
 
             tilemap.ClearAllTiles();
-            Debug.Log("clear");
             int charIndex = 0;
             for (int x = 0; x < roomTemplate.roomSizeX; x++)
             {
                 for (int y = 0; y < roomTemplate.roomSizeY; y++)
                 {
                     TileBase tileToSet = boardLibrary.GetTileFromChar(roomTemplate.roomChars[charIndex]);
-                    Debug.Log("tile to set " + tileToSet);
                     if (tileToSet == null)
                     {
-                        Debug.LogError("Attempting to load empty tiles, draw and save something first");
-                        
+                        Debug.LogError("Attempting to load empty tiles, draw and save something first");                        
                     }
 
                     Vector3Int pos = new Vector3Int(x, y, 0) + tilemap.origin;
                     tilemap.SetTile(pos, tileToSet);
                     charIndex++;
-
-
                 }
             }
         }
 
         public Tilemap SelectTilemapInScene()
         {
-
-         
 
             if (Selection.activeGameObject == null)
             {
@@ -303,7 +320,7 @@ namespace Strata
             Selection.activeGameObject = tilemap.gameObject;
             return tilemap;
         }
-
+        
 
         Tilemap AddTilemapToScene()
         {
@@ -315,6 +332,7 @@ namespace Strata
             Selection.activeGameObject = grid;
             Tilemap tilemap = tilemapGameObject.AddComponent<Tilemap>();
             tilemapGameObject.AddComponent<TilemapRenderer>();
+            tilemapGameObject.AddComponent<BoardGenerator>();
 
             return tilemap;
         }

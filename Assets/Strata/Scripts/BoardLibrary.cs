@@ -38,6 +38,20 @@ namespace Strata
             return GetDefaultEntry().characterId;
         }
 
+        public void SetDefaultTileOnProfileCreation(TileBase defaultTileBase)
+        {
+            if (boardLibraryEntryList.Count == 0)
+            {
+                BoardLibraryEntry defaultEntry = new BoardLibraryEntry();
+                defaultEntry.tile = defaultTileBase;
+                defaultEntry.useAsDefaultEmptySpace = true;
+                defaultEntry.characterId = '0';
+                boardLibraryEntryList.Add(defaultEntry);
+                
+            }
+        }
+
+
         public TileBase GetDefaultTile()
         {
             return GetDefaultEntry().tile;
@@ -74,6 +88,7 @@ namespace Strata
         public Dictionary<TileBase, BoardLibraryEntry> BuildTileKeyLibraryDictionary()
         {
             Dictionary<TileBase, BoardLibraryEntry> libraryDictionary = new Dictionary<TileBase, BoardLibraryEntry>();
+
             for (int i = 0; i < boardLibraryEntryList.Count; i++)
             {
                 libraryDictionary.Add(boardLibraryEntryList[i].tile, boardLibraryEntryList[i]);
