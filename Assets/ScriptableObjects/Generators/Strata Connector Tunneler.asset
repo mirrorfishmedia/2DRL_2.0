@@ -18,7 +18,6 @@ MonoBehaviour:
   tunnelEndTemplates:
   - {fileID: 11400000, guid: 2cca57d974a001b428b1c4490dea095b, type: 2}
   spawnRoomsAtTunnelEnds: 1
-  overWriteFilledCharacters: 1
   useRandomTunnelStartPositions: 0
   connectLastStrataLayer: 1
   useCustomEmptySpaceCharForTunnels: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Strata
 {
-    [CreateAssetMenu(menuName = "BoardGeneration/Generators/GeneratorScatterRoomShapes")]
+    [CreateAssetMenu(menuName = "Strata/Generators/GeneratorScatterRoomShapes")]
     public class GeneratorScatterShapes : Generator
     {
 

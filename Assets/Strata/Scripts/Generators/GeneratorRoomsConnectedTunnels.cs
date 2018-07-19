@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Strata
 {
-    [CreateAssetMenu(menuName = "BoardGeneration/Generators/Generator RoomConnectedTunnels")]
+    [CreateAssetMenu(menuName = "Strata/Generators/Generator RoomConnectedTunnels")]
     public class GeneratorRoomsConnectedTunnels : Generator
     {
 

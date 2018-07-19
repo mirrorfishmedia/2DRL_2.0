@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Strata
 {
-    [CreateAssetMenu(menuName = "BoardGeneration/Generators/GenerateSavedFullMap")]
+    [CreateAssetMenu(menuName = "Strata/Generators/GenerateSavedFullMap")]
     public class GeneratorFullMap : Generator
     {
 

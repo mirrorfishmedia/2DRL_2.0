@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 namespace Strata
 {
 
-    [CreateAssetMenu(menuName = "BoardGeneration/TileMapInstantiator")]
+    [CreateAssetMenu(menuName = "Strata/TileMapInstantiator")]
     public class TilemapInstantiationTechnique : BoardInstantiationTechnique
     {
         public override void SpawnBoardSquare(BoardGenerator boardGenerator, Vector2 location, BoardLibraryEntry inputEntry)

@@ -10,7 +10,6 @@ namespace Strata
     public class ChanceBoardLibraryEntry
     {
         public ChanceChar[] chanceChars;
-        private List<char> outputChars = new List<char>();
 
         public char[] outputCharArray = new char[100];
 
@@ -34,12 +33,13 @@ namespace Strata
         public char GetChanceCharId()
         {
             char outputChar = '0';
-            if (outputChars.Count > 0)
+            if (outputCharArray.Length > 0)
             {
+                Debug.Log("pass " + outputChar);
                 //outputChar = outputChars[Random.Range(0, outputChars.Count)];
                 outputChar = outputCharArray[Random.Range(0, outputCharArray.Length)];
             }
-
+            Debug.Log("outputChar " + outputChar);
             return outputChar;
         }
     }

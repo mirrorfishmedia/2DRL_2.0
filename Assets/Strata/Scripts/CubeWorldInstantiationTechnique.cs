@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Strata
 {
 
-    [CreateAssetMenu(menuName = "BoardGeneration/CubeWorldInstantiator")]
+    [CreateAssetMenu(menuName = "Strata/CubeWorldInstantiator")]
     public class CubeWorldInstantiationTechnique : BoardInstantiationTechnique
     {
         public int mapYLayers = 3;

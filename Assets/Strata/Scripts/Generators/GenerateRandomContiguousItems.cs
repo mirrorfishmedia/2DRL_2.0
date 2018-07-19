@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Strata
 {
-    [CreateAssetMenu(menuName = "BoardGeneration/Generators/PlaceEntranceExit")]
+    [CreateAssetMenu(menuName = "Strata/Generators/PlaceEntranceExit")]
 
     public class GenerateRandomContiguousItems : Generator
     {

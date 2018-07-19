@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 namespace Strata
 {
 
-    [CreateAssetMenu(menuName = "BoardGeneration/BoardLibrary")]
+    [CreateAssetMenu(menuName = "Strata/BoardLibrary")]
     public class BoardLibrary : ScriptableObject
     {
 

@@ -101,14 +101,18 @@ namespace Strata
 
         void OnSceneGUI(SceneView sceneView)
         {
-            Handles.BeginGUI();
-            Debug.DrawLine(Vector3.zero, new Vector3(roomTemplate.roomSizeX, 0, 0), Color.red);
-            Debug.DrawLine(Vector3.zero, new Vector3(0, roomTemplate.roomSizeY, 0), Color.red);
-            Debug.DrawLine(new Vector3(roomTemplate.roomSizeX, roomTemplate.roomSizeY, 0), new Vector3(roomTemplate.roomSizeX, 0, 0), Color.red);
-            Debug.DrawLine(new Vector3(roomTemplate.roomSizeX, roomTemplate.roomSizeY, 0), new Vector3(0, roomTemplate.roomSizeY, 0), Color.red);
+            if (roomTemplate != null)
+            {
+                Handles.BeginGUI();
+                Debug.DrawLine(Vector3.zero, new Vector3(roomTemplate.roomSizeX, 0, 0), Color.red);
+                Debug.DrawLine(Vector3.zero, new Vector3(0, roomTemplate.roomSizeY, 0), Color.red);
+                Debug.DrawLine(new Vector3(roomTemplate.roomSizeX, roomTemplate.roomSizeY, 0), new Vector3(roomTemplate.roomSizeX, 0, 0), Color.red);
+                Debug.DrawLine(new Vector3(roomTemplate.roomSizeX, roomTemplate.roomSizeY, 0), new Vector3(0, roomTemplate.roomSizeY, 0), Color.red);
 
-            HandleUtility.Repaint();
-            Handles.EndGUI();
+                HandleUtility.Repaint();
+                Handles.EndGUI();
+            }
+            
         }
 
 
@@ -137,6 +141,7 @@ namespace Strata
                 boardGenerator.profile = profile;
             }
 
+            AssetDatabase.SaveAssets();
         }
 
         public void CreateNewRoomTemplateAsset()
@@ -224,7 +229,7 @@ namespace Strata
                         if (entry == null)
                         {
                             entry = boardLibrary.AddBoardLibraryEntryIfTileNotYetEntered(foundTile);
-
+                            EditorUtility.SetDirty(boardLibrary);
 
                         }
                         roomTemplate.roomChars[charIndex] = entry.characterId;
@@ -232,7 +237,8 @@ namespace Strata
                     }
                 }
             }
-
+            EditorUtility.SetDirty(roomTemplate);
+            AssetDatabase.SaveAssets();
             Debug.Log("Success. Tilemap written to RoomTemplate");
         }
 

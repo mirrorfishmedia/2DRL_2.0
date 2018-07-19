@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Strata
 {
 
-    [CreateAssetMenu(menuName = "BoardGeneration/Generators/GenerateWallBorder")]
+    [CreateAssetMenu(menuName = "Strata/Generators/GenerateWallBorder")]
     public class GeneratorSquareBorder : Generator
     {
         public char borderChar = 'w';

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Strata
 {
-    [CreateAssetMenu(menuName = "BoardGeneration/Generators/GenerateRoomChain")]
+    [CreateAssetMenu(menuName = "Strata/Generators/GenerateRoomChain")]
     public class GeneratorRoomChain : Generator
     {
 
@@ -25,7 +25,6 @@ namespace Strata
             {
                 roomSequenceStartLocations = new Vector2[1];
                 roomSequenceStartLocations[0] = new Vector2(30, 30);
-
             }
         }
 
@@ -61,7 +60,7 @@ namespace Strata
 
             bool roomPathCompleted = false;
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 20; i++)
             {
                 if (!ChooseDirectionAndAddRoom(boardGenerator, isEntranceExitPath))
                 {

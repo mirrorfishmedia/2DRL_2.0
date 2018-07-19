@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Strata
 {
-    [CreateAssetMenu(menuName = "BoardGeneration/Generators/GenerateRandomScatter")]
+    [CreateAssetMenu(menuName = "Strata/Generators/GenerateRandomScatter")]
     public class GeneratorScatterRandom : Generator
     {
 

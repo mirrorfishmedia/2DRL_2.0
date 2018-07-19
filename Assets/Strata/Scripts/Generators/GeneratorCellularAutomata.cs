@@ -11,7 +11,7 @@ using UnityEngine;
 namespace Strata
 {
     //Change the string here to change where this appears in the create menu and what it's called
-    [CreateAssetMenu(menuName = "BoardGeneration/Generators/GenerateCellularAutomata")]
+    [CreateAssetMenu(menuName = "Strata/Generators/GenerateCellularAutomata")]
     public class GeneratorCellularAutomata : Generator
     {
 

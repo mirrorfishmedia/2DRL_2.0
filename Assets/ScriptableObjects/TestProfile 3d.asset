@@ -14,7 +14,7 @@ MonoBehaviour:
   seedValue: '@mattmirrorfish'
   boardHorizontalSize: 80
   boardVerticalSize: 80
-  boardLibrary: {fileID: 11400000, guid: 88757bdb0ee58eb41ae4582a1af9d09c, type: 2}
+  boardLibrary: {fileID: 11400000, guid: c516866c962dac247830826a0b8765f0, type: 2}
   generators:
   - {fileID: 11400000, guid: 26b1c1cee3c43e14eb19c7891a6f54a0, type: 2}
   - {fileID: 11400000, guid: 949cfef19b932734d8851ee4e4c98f91, type: 2}

@@ -7,7 +7,7 @@ namespace Strata
     [CreateAssetMenu(menuName = "Strata/Collections/RoomList")]
     public class RoomList : ScriptableObject
     {
-        public List<RoomTemplate> roomList;
+        public List<RoomTemplate> roomList = new List<RoomTemplate>();
 
         public void RemoveEmptyEntriesThenAdd(RoomTemplate templateToAdd)
         {
@@ -22,7 +22,6 @@ namespace Strata
                 }
             }
             
-
             roomList.Add(templateToAdd);
         }
     }
