@@ -33,26 +33,33 @@ namespace Strata
         //This is the function that will be called by BoardGenerator to kick off the generation process
         public override bool Generate(BoardGenerator boardGenerator)
         {
+            //If we want to generate empty space as defined in BoardLibrary
             if (useLibraryDefaultEmptyCharForEmptySpace)
             {
+                //Set the emptySpaceChar to the default empty space character
                 emptySpaceChar = boardGenerator.profile.boardLibrary.GetDefaultEmptyChar();
             }
+            //Generate the level
             GenerateMap(boardGenerator);
 
             return true;
         }
 
+
+        
         void GenerateMap(BoardGenerator boardGenerator)
         {
+            //First fill the map with random data
             RandomFillMap(boardGenerator);
 
+            //Then post process that data and smooth it out into organic shapes
             for (int i = 0; i < 5; i++)
             {
                 SmoothMap(boardGenerator);
             }
         }
 
-
+        //Fill the map with random noise based on the size of the grid
         void RandomFillMap(BoardGenerator boardGenerator)
         {
             for (int x = 0; x < boardGenerator.profile.boardHorizontalSize; x++)
@@ -64,6 +71,7 @@ namespace Strata
             }
         }
 
+        //Go over the random noise created and check each spaces neighbors, flip it empty or filled based on the number of neighbors
         void SmoothMap(BoardGenerator boardGenerator)
         {
             for (int x = 0; x < boardGenerator.profile.boardHorizontalSize; x++)
@@ -81,6 +89,7 @@ namespace Strata
             }
         }
 
+        //Check how many neighbors each space has
         int GetSurroundingWallCount(int gridX, int gridY, BoardGenerator boardGenerator)
         {
             int wallCount = 0;

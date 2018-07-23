@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace Strata
 {
+
+    //This just grabs the entire loaded Tilemap and writes it into a RoomTemplate, if for example you wanted to author a large background and then
+    //generate over it. Nothing procedural here, just save/load whatever is in the current Tilemap.
+
     [CreateAssetMenu(menuName = "Strata/Generators/GenerateSavedFullMap")]
     public class GeneratorFullMap : Generator
     {

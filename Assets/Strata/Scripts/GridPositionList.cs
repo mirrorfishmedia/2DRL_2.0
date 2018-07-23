@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Strata
 {
+    //Simple helper class to store a list of GridPositions
     [System.Serializable]
     public class GridPositionList
     {

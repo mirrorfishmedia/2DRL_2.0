@@ -4,29 +4,48 @@ using UnityEngine;
 
 namespace Strata
 {
+    /// <summary>
+    /// This is one of the main generators in Strata, it starts from an initial location in the top/northern row of the grid
+    /// and then spawns RoomTemplates in sequence, randomly walking downward through the level. 
+    /// It checks the doors you've labeled in the RoomTemplate and makes sure that each room spawned is connected. This is
+    /// for generating connected vertical structures that are definitely connected and well suited to platformer games. It stops 
+    /// when it reaches the bottom of the level. Then you can optionally fill the rest of the grid with random rooms.This approach is
+    /// heavily inspired by the level generation in Derek Yu and Andy Hull's classic roguelike platformer Spelunky.
+    ///  </summary>
+
     [CreateAssetMenu(menuName = "Strata/Generators/GeneratePlatformerRoomChain")]
 
     public class GeneratorPlatformerRoomChain : Generator
     {
-        public int roomSizeX = 12;
+        //Dimensions on x and y of the RoomTemplate, this has been tested with regular, equally sized rooms, YMMV with irregular rooms.
+        public int roomSizeX = 10;
         public int roomSizeY = 10;
 
+
+        //RoomLists of all rooms organized by their exits.
         public RoomList eastWestExits;
         public RoomList northSouthExits;
         public RoomList hasSouthExit;
         public RoomList hasNorthExit;
 
-
+        //Set to true to fill the area not filled by the critical path from entrance to exit with random rooms
         public bool fillEmptySpaceWithRandomRooms = false;
+        //Add rooms to this list to fill unused grid space randomly
         public RoomList randomFillRooms;
 
+        //The RoomTemplate for the first room
         public RoomTemplate firstRoom;
+        //The RoomTemplate for the last room, note if you want your player to progress bottom to top 
+        // just swap this with firstRoom to have entrance on bottom, exit on top.
         public RoomTemplate lastRoom;
 
+        //Enumeration for directions to improve code readability
         public enum Direction {North, East, South, West, NoMove};
 
+        //This is the function called by BoardGenerator
         public override bool Generate(BoardGenerator boardGenerator)
         {
+            //The number 999 is here to have a finite number of attempts to create a usable path but avoid infinite loops
             for (int i = 0; i < 999; i++)
             {
                 if (BuildPath(boardGenerator))
@@ -37,6 +56,7 @@ namespace Strata
             return false;
         }
 
+        //This is used to see if we have a valid space to place a RoomTemplate
         bool TestIfGridIndexIsValid(int x, int y, int gridWidthX, int gridWidthY)
         {
             if (x > gridWidthX-1 || x < 0 || y > gridWidthY-1 || gridWidthY < 0 )
@@ -57,26 +77,35 @@ namespace Strata
             bool pathBuildComplete = false;
             bool lastRoomPlaced = false;
 
+            //Figure out how many rooms we will need to fill the board horizontally
             int horizontalRoomsToFill = boardGenerator.profile.boardHorizontalSize / roomSizeX;
+            //Figure out how many rooms we need vertically
             int verticalRoomsToFill = boardGenerator.profile.boardVerticalSize / roomSizeY;
 
+            //Create a two dimensional array of RoomTemplates in a grid based on the number of rooms
             RoomTemplate[,] roomTemplateGrid = new RoomTemplate[horizontalRoomsToFill,verticalRoomsToFill];
 
+            //Create a variable to store the last direction we moved, this helps to avoid doubling back on the path
             Direction lastMoveDirection = Direction.NoMove;
 
-            
+            //Pick a random space in the room grid in the top row
             int startIndex = Random.Range(0, horizontalRoomsToFill);
 
             //Place first room in random position in top row
             roomTemplateGrid[startIndex, verticalRoomsToFill - 1] = firstRoom;
 
-            Debug.Log("startIndex = " + startIndex + " " + (verticalRoomsToFill - 1));
-
+            //Did we change rows (move down) in the last loop?
             bool madeRowChange = true;
+
+            //What column of our grid are we writing to? Set initially to the random one chosen in startIndex
             int columnIndex = startIndex;
+
+            //Set our rowIndex to the top row in our grid
             int rowIndex = verticalRoomsToFill - 1;
+
+            //Store the number of rooms created
             int roomsCreated;
-            List<int> moveDirInts = new List<int>();
+            
 
             for (int i = 1; i < roomTemplateGrid.Length - 1; i++)
             {
@@ -86,14 +115,6 @@ namespace Strata
                     break;
                 }
 
-                if (madeRowChange)
-                {
-                    for (int j = 0; j < 5; j++)
-                    {
-                        moveDirInts.Add(j);
-                    }
-                    madeRowChange = false;
-                }
 
                 int randomDir = 0;
                 if (i == 1)
