@@ -15,7 +15,7 @@ namespace UnityEngine.Tilemaps
 	{
 		[SerializeField]
 		public Sprite[] m_Sprites;
-        public Tile.ColliderType m_DefaultColliderType = Tile.ColliderType.None;
+        //public Tile.ColliderType  = Tile.ColliderType.Sprite;
 
 
         public override void GetTileData(Vector3Int location, ITilemap tileMap, ref TileData tileData)
@@ -31,7 +31,7 @@ namespace UnityEngine.Tilemaps
 				hash = (hash + 0xbe9730af) ^ (hash << 11);
 				Random.InitState((int)hash);
 				tileData.sprite = m_Sprites[(int) (m_Sprites.Length * Random.value)];
-                tileData.colliderType = Tile.ColliderType.None;
+                tileData.colliderType = Tile.ColliderType.Sprite;
 			}
 		}
 

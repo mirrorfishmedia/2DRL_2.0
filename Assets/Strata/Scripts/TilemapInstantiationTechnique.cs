@@ -22,7 +22,10 @@ namespace Strata
                 }
                 else
                 {
-                    //If there is a prefab to spawn, spawn that instead of setting a tile
+                    //If there is a prefab to spawn, spawn that along with the default empty tile under it
+                    Vector3Int pos = new Vector3Int((int)location.x, (int)location.y, 0);
+                    TileBase defaultTile = boardGenerator.profile.boardLibrary.GetDefaultTile();
+                    boardGenerator.tilemap.SetTile(pos, defaultTile);
                     Instantiate(inputEntry.prefabToSpawn, location, Quaternion.identity);
                 }
 

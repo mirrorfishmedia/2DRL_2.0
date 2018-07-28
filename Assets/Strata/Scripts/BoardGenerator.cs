@@ -73,13 +73,15 @@ namespace Strata
         // Use this for initialization
         void Start()
         {
+
+            
             //If buildOnStart is true the level will be generated when the scene loads.
             if (buildOnStart)
             {
                 BuildLevel();
             }
 
-            InitializeGeneration();
+           
         }
 
         //Clear out all local variables and regenerate the level, useful for testing your algorithms quickly, enter play mode and press 0 repeatedly
@@ -115,8 +117,6 @@ namespace Strata
         //This sets the state of the random number generator to produce predictable, repeatable random generation
         void SetRandomStateFromStringSeed()
         {
-
-
             int seedInt = 0;
 
             //If you're using random seeding, just pick a random number for the seed, this *will not* produce repeating results
@@ -158,8 +158,9 @@ namespace Strata
             InitializeLibraryDictionary();
         }
 
-        public void BuildLevel()
+        public IEnumerator BuildLevel()
         {
+            InitializeGeneration();
             //Choose seeding RNG approach (see above)
             SetRandomStateFromStringSeed();
 
@@ -201,7 +202,7 @@ namespace Strata
 
             //Log to the console the state of generation, whether it has succeeded or not
             Debug.Log("generationSucceeded " + generationSucceeded);
-
+            yield return null;
         }
 
 
@@ -220,6 +221,7 @@ namespace Strata
                 {
                     //Match the current index of the Generator in the array to a list of empty spaces
                     currentGeneratorIndexIdForEmptySpaceTracking = i;
+                    Debug.Log("currentGeneratorIndexIdForEmptySpaceTracking " + currentGeneratorIndexIdForEmptySpaceTracking);
                 }
 
                 Debug.Log("running " + profile.generators[i].name);
