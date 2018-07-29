@@ -73,15 +73,11 @@ namespace Strata
         // Use this for initialization
         void Start()
         {
-
-            
             //If buildOnStart is true the level will be generated when the scene loads.
             if (buildOnStart)
             {
                 BuildLevel();
             }
-
-           
         }
 
         //Clear out all local variables and regenerate the level, useful for testing your algorithms quickly, enter play mode and press 0 repeatedly
@@ -221,7 +217,7 @@ namespace Strata
                 {
                     //Match the current index of the Generator in the array to a list of empty spaces
                     currentGeneratorIndexIdForEmptySpaceTracking = i;
-                    Debug.Log("currentGeneratorIndexIdForEmptySpaceTracking " + currentGeneratorIndexIdForEmptySpaceTracking);
+                    //Debug.Log("currentGeneratorIndexIdForEmptySpaceTracking " + currentGeneratorIndexIdForEmptySpaceTracking);
                 }
 
                 Debug.Log("running " + profile.generators[i].name);

@@ -21,8 +21,8 @@ namespace Pathfinding {
 		void OnEnable ()
         {
             gameMan = FindObjectOfType<TDR_GameMan>();
-            Debug.Log("gameman " + gameMan);
-            target = gameMan.player;
+
+           // target = gameMan.player;
 			ai = GetComponent<IAstarAI>();
 			// Update the destination right before searching for a path as well.
 			// This is enough in theory, but this script will also update the destination every

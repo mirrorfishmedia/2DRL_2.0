@@ -13,20 +13,25 @@ public class LookDecision : Decision {
 
 	private bool Look(StateController controller)
 	{
-		RaycastHit2D hit;
+		RaycastHit2D hit = Physics2D.Raycast(controller.eyes.position, controller.facingDir, controller.enemyStats.lookRange, controller.sightFilterMask);
 
-		Debug.DrawRay (controller.eyes.position, controller.eyes.forward.normalized * controller.enemyStats.lookRange, Color.green);
 
-		if (Physics2D.Raycast (controller.eyes.position, controller.dirToChaseTarget, controller.enemyStats.lookRange, out hit)
-		    && hit.collider.CompareTag ("Player")) {
-			controller.chaseTarget = hit.transform;
-			return true;
-		} else 
-		{
-			return false;
-		}
+		Debug.DrawRay (controller.eyes.position, controller.facingDir * controller.enemyStats.lookRange, Color.magenta);
+
+        if (hit.collider != null)
+        {
+
+            if (hit.collider.CompareTag("Player"))
+            {
+                controller.chaseTarget = hit.transform;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return false;
 			
 	}
-
-
 }

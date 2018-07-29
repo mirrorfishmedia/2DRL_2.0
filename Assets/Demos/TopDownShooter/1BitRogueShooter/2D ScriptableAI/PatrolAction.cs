@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [CreateAssetMenu(menuName = "PluggableAI/Actions/Patrol")]
 public class PatrolAction : Action
@@ -12,11 +13,16 @@ public class PatrolAction : Action
 
     private void Patrol(StateController controller)
     {
-        controller.aIDestinationSetter.target = controller.wayPointList[controller.nextWayPoint];
-
-        if (controller.aiLerp.reachedEndOfPath && !controller.aiLerp.pathPending)
+        //Debug.Log("nextWaypoint " + controller.nextWayPoint + "controller.wayPointList.Count " + controller.wayPointList.Count);
+        if (controller.wayPointList.Count > 0)
         {
-            controller.nextWayPoint = (controller.nextWayPoint + 1) % controller.wayPointList.Count;
+            controller.aIDestinationSetter.target = controller.wayPointList[controller.nextWayPoint];
+
+            if (controller.aiLerp.reachedEndOfPath)
+            {
+                controller.nextWayPoint = (controller.nextWayPoint + 1) % controller.wayPointList.Count;
+            }
         }
+        
     }
 }

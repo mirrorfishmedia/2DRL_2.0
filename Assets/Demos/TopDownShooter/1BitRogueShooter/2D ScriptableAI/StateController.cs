@@ -21,6 +21,9 @@ public class StateController : MonoBehaviour {
 
     public AILerp aiLerp;
     public Vector2 dirToChaseTarget;
+    public Vector2 facingDir;
+    public GameObject artHolder;
+    public LayerMask sightFilterMask;
 
 	private bool aiActive;
 
@@ -28,7 +31,7 @@ public class StateController : MonoBehaviour {
 	{
 		aIDestinationSetter = GetComponent<AIDestinationSetter> ();
         aiLerp = GetComponent<AILerp>();
-
+        aiActive = true;
     }
 
 	public void SetupAI(bool aiActivationFromTankManager, List<Transform> wayPointsFromTankManager)
@@ -56,15 +59,30 @@ public class StateController : MonoBehaviour {
         {
             dirToChaseTarget = aIDestinationSetter.target.position - transform.position;
         }
-        
-	}
+        SetFacingDir();
+
+    }
+
+    void SetFacingDir()
+    {
+        if (dirToChaseTarget.x > 0)
+        {
+            facingDir = new Vector2(1, 0);
+            artHolder.transform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            facingDir = new Vector2(-1, 0);
+            artHolder.transform.localScale = new Vector3(-1, 1, 1);
+        }
+    }
 
 	void OnDrawGizmos()
 	{
 		if (currentState != null && eyes != null) 
 		{
 			Gizmos.color = currentState.sceneGizmoColor;
-			Gizmos.DrawWireSphere (eyes.position, enemyStats.lookSphereCastRadius);
+            Debug.DrawRay(eyes.position, dirToChaseTarget);
 		}
 	}
 
