@@ -24,6 +24,7 @@ public class StateController : MonoBehaviour {
     public Vector2 facingDir;
     public GameObject artHolder;
     public LayerMask sightFilterMask;
+    public DirectionalShooter shooter;
 
 	private bool aiActive;
 

@@ -13,24 +13,42 @@ public class LookDecision : Decision {
 
 	private bool Look(StateController controller)
 	{
-		RaycastHit2D hit = Physics2D.Raycast(controller.eyes.position, controller.facingDir, controller.enemyStats.lookRange, controller.sightFilterMask);
+        Collider2D[] overlapColliders = new Collider2D[32];
+        int foundColliders = Physics2D.OverlapCircleNonAlloc(controller.transform.position, controller.enemyStats.lookRange, overlapColliders);
+        Vector2 playerPosition = Vector2.zero;
 
-
-		Debug.DrawRay (controller.eyes.position, controller.facingDir * controller.enemyStats.lookRange, Color.magenta);
-
-        if (hit.collider != null)
+        for (int i = 0; i < foundColliders; i++)
         {
-
-            if (hit.collider.CompareTag("Player"))
+            if (overlapColliders[i].CompareTag("Player"))
             {
-                controller.chaseTarget = hit.transform;
-                return true;
-            }
-            else
-            {
-                return false;
+                playerPosition = overlapColliders[i].transform.position;
             }
         }
+
+        Vector2 dirToDetectedPlayer = playerPosition - (Vector2)controller.transform.position;
+
+        if (playerPosition != Vector2.zero)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(controller.eyes.position, dirToDetectedPlayer, controller.enemyStats.lookRange, controller.sightFilterMask);
+
+            Debug.DrawRay(controller.eyes.position, dirToDetectedPlayer * controller.enemyStats.lookRange, Color.magenta);
+
+            if (hit.collider != null)
+            {
+
+                if (hit.collider.CompareTag("Player"))
+                {
+                    controller.chaseTarget = hit.transform;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+		
         return false;
 			
 	}

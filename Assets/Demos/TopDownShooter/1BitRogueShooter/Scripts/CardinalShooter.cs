@@ -8,12 +8,19 @@ public class CardinalShooter : MonoBehaviour
     public GameObject bulletPrefab;
     public float fireRate = .1f;
     public float bulletForce = 10f;
+    public SoundEffect soundEffect;
 
     float nextFireTime;
-    
-	
-	// Update is called once per frame
-	void Update ()
+
+    TDR_GameMan gameMan;
+
+    private void Awake()
+    {
+        gameMan = FindObjectOfType<TDR_GameMan>();
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
        
         Vector2 shootDir;
@@ -36,6 +43,7 @@ public class CardinalShooter : MonoBehaviour
 
     void Shoot(Vector2 shootDir)
     {
+        gameMan.soundMan.PlaySoundEffect(soundEffect);
         Vector2 spawnPos = (Vector2) transform.position + (shootDir.normalized * 1.1f);
         GameObject cloneBullet = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
         Rigidbody2D rb2d = cloneBullet.GetComponent<Rigidbody2D>();

@@ -89,9 +89,13 @@ namespace Strata
         {
             Dictionary<TileBase, BoardLibraryEntry> libraryDictionary = new Dictionary<TileBase, BoardLibraryEntry>();
 
+            
             for (int i = 0; i < boardLibraryEntryList.Count; i++)
             {
-                libraryDictionary.Add(boardLibraryEntryList[i].tile, boardLibraryEntryList[i]);
+                if (!libraryDictionary.ContainsKey(boardLibraryEntryList[i].tile))
+                {
+                    libraryDictionary.Add(boardLibraryEntryList[i].tile, boardLibraryEntryList[i]);
+                }
             }
 
             return libraryDictionary;

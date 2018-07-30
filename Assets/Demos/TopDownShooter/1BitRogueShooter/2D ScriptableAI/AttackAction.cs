@@ -12,20 +12,18 @@ public class AttackAction : Action
 
 	private void Attack(StateController controller)
 	{
-		//RaycastHit hit;
+        RaycastHit2D hit = Physics2D.Raycast(controller.eyes.position, controller.dirToChaseTarget, controller.enemyStats.lookRange, controller.sightFilterMask);
 
-		Debug.DrawRay (controller.eyes.position, controller.eyes.forward.normalized * controller.enemyStats.attackRange, Color.red);
+        Debug.DrawRay(controller.eyes.position, controller.dirToChaseTarget * controller.enemyStats.lookRange, Color.yellow);
 
-        RaycastHit2D hit = Physics2D.Raycast(controller.eyes.position, controller.dirToChaseTarget, controller.enemyStats.attackRange);
+        if (hit.collider != null)
+        {
 
+            if (hit.collider.CompareTag("Player"))
+            {
+                controller.shooter.Shoot(controller.dirToChaseTarget);
+            }
 
-        if (hit.collider.CompareTag("Player"))
-		{
-			if (controller.CheckIfCountDownElapsed (controller.enemyStats.attackRate)) 
-			{
-                //shoot here
-				//controller.tankShooting.Fire (controller.enemyStats.attackForce, controller.enemyStats.attackRate);
-			}
-		}
+        }
 	}
 }

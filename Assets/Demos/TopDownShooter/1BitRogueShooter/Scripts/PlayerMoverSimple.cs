@@ -9,6 +9,8 @@ public class PlayerMoverSimple : MonoBehaviour {
 
     Vector2 moveDir;
 
+    public GameObject artHolder;
+
 	// Use this for initialization
 	void Awake ()
     {
@@ -20,11 +22,25 @@ public class PlayerMoverSimple : MonoBehaviour {
     {
         float verticalMove = Input.GetAxis("Vertical");
         float horizontalMove = Input.GetAxis("Horizontal");
-
+        SetFacingDir(horizontalMove);
         moveDir = new Vector2(horizontalMove * moveSpeed, verticalMove * moveSpeed);
 
        
 	}
+
+    void SetFacingDir(float horizontalDir)
+    {
+        if (horizontalDir < 0)
+        {
+            //facingDir = new Vector2(1, 0);
+            artHolder.transform.localScale = new Vector3(1, 1, 1);
+        }
+        if (horizontalDir > 0)
+        {
+            //facingDir = new Vector2(-1, 0);
+            artHolder.transform.localScale = new Vector3(-1, 1, 1);
+        }
+    }
 
     private void FixedUpdate()
     {
