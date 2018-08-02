@@ -12,11 +12,11 @@ public class CardinalShooter : MonoBehaviour
 
     float nextFireTime;
 
-    TDR_GameMan gameMan;
+    GameMan gameMan;
 
     private void Awake()
     {
-        gameMan = FindObjectOfType<TDR_GameMan>();
+        gameMan = FindObjectOfType<GameMan>();
     }
 
     // Update is called once per frame

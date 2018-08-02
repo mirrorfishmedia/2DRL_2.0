@@ -7,6 +7,6 @@ public class DmgEffectSimpleDeath : DamageEffect
 {
     public override void HandleDamage(GameObject damagedObject)
     {
-        damagedObject.SetActive(false);
+        //damagedObject.SetActive(false);
     }
 }

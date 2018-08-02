@@ -16,11 +16,11 @@ namespace Pathfinding {
 		/** The object that the AI should move to */
 		public Transform target;
 		IAstarAI ai;
-        TDR_GameMan gameMan;
+        GameMan gameMan;
 
 		void OnEnable ()
         {
-            gameMan = FindObjectOfType<TDR_GameMan>();
+            gameMan = FindObjectOfType<GameMan>();
 
            // target = gameMan.player;
 			ai = GetComponent<IAstarAI>();

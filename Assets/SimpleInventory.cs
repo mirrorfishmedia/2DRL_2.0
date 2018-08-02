@@ -5,12 +5,13 @@ using UnityEngine;
 public class SimpleInventory : MonoBehaviour {
 
 
-    private Item[] items = new Item[4];
+    public Item[] items = new Item[4];
     private InventoryDisplay inventoryDisplay;
 
     private void Awake()
     {
         inventoryDisplay = GetComponentInChildren<InventoryDisplay>();
+        inventoryDisplay.DisplayItems(items); 
     }
 
     public bool AddItem(Item item)
@@ -40,8 +41,8 @@ public class SimpleInventory : MonoBehaviour {
 
     void UseItem(int itemNumber)
     {
-        items[0].gameEffect.TriggerEffect(this.gameObject);
-        items[0] = null;
+        items[itemNumber].gameEffect.TriggerEffect(this.gameObject);
+        //items[itemNumber] = null;
         UpdateInventoryDisplay();
     }
 

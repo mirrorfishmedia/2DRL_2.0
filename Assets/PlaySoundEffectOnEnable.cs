@@ -6,11 +6,11 @@ public class PlaySoundEffectOnEnable : MonoBehaviour {
 
     public SoundEffect soundEffect;
 
-    TDR_GameMan gameMan;
+    GameMan gameMan;
 
     private void Awake()
     {
-        gameMan = FindObjectOfType<TDR_GameMan>();
+        gameMan = FindObjectOfType<GameMan>();
 
     }
 
