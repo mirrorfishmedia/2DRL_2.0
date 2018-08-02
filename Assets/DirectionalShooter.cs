@@ -9,7 +9,7 @@ public class DirectionalShooter : MonoBehaviour {
     public EnemyStats enemyStats;
 
     private float nextFireTime;
-    private float colliderDelay = 1.2f;
+    private float colliderDelay = .5f;
     private StateController stateController;
     private Collider enemyCollider;
    
@@ -27,7 +27,7 @@ public class DirectionalShooter : MonoBehaviour {
             nextFireTime = Time.time + enemyStats.fireRate;
             GameObject clone = Instantiate(prefabToSpawn, transform.position, Quaternion.identity);
             Rigidbody2D rb2d = clone.GetComponent<Rigidbody2D>();
-            rb2d.AddForce(stateController.dirToChaseTarget.normalized * shootForce, ForceMode2D.Impulse);
+            rb2d.AddForce(stateController.dirToChaseTarget.normalized * enemyStats.attackForce, ForceMode2D.Impulse);
             gameObject.layer = 12;
             Invoke("SetColliderBackToEnemyLayer", colliderDelay);
         }

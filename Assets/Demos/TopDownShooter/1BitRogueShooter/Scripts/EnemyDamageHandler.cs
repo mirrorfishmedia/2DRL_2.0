@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class EnemyDamageHandler : MonoBehaviour {
 
@@ -10,11 +11,19 @@ public class EnemyDamageHandler : MonoBehaviour {
     public GameEffect[] deathEffects;
     public GameEffect damageEffect;
     private int currentHp;
+    private AILerp aiLerp;
+    bool dead;
 
-    private void Start()
+    public float damagedInterval = .25f;
+    bool inDamagedState;
+    private WaitForSeconds damagedWait;
+
+    private void Awake()
     {
+        damagedWait = new WaitForSeconds(damagedInterval);
         flashSprite = GetComponent<FlashSprite>();
         currentHp = enemyStats.hitPoints;
+        aiLerp = GetComponent<AILerp>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -27,12 +36,29 @@ public class EnemyDamageHandler : MonoBehaviour {
         }
     }
 
+    IEnumerator DamagedState()
+    {
+        if (aiLerp != null)
+        {
+            aiLerp.enabled = false;
+            //aiLerp.updatePosition = false;
+            //aiLerp.canMove = false;
+            yield return damagedWait;
+            aiLerp.enabled = true;
+            //aiLerp.updatePosition = true;
+            //aiLerp.canMove = true;
+
+        }
+    }
+
     void HandleDamage(DamageSource damageSource)
     {
         currentHp -= damageSource.damageAmount;
         flashSprite.TriggerFlash();
+
+        StartCoroutine(DamagedState());
         CheckIfDead();
-        Debug.Log("current hp " + currentHp);
+
     }
 
     void CheckIfDead()
@@ -48,11 +74,13 @@ public class EnemyDamageHandler : MonoBehaviour {
     {
         for (int i = 0; i < deathEffects.Length; i++)
         {
-            deathEffects[i].TriggerEffect(this.gameObject);
+            deathEffects[i].TriggerEffect(this.gameObject, this.gameObject);
         }
        
-        //deathPersistentObject.SetActive(true);
-        //deathPersistentObject.transform.SetParent(null);
+        deathPersistentObject.SetActive(true);
+        deathPersistentObject.transform.SetParent(null);
+
+
         this.gameObject.SetActive(false);
     }
 }

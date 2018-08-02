@@ -5,8 +5,8 @@ using UnityEngine;
 public class CollectibleObject : MonoBehaviour {
 
     public Item item;
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         SimpleInventory inventory = collision.gameObject.GetComponent<SimpleInventory>();
         if (inventory != null)
@@ -16,6 +16,6 @@ public class CollectibleObject : MonoBehaviour {
                 gameObject.SetActive(false);
             }
         }
-
     }
+
 }

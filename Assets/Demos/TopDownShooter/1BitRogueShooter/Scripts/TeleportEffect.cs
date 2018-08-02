@@ -8,7 +8,7 @@ public class TeleportEffect : GameEffect
 {
     public SoundEffect teleportSound;
 
-    public override bool TriggerEffect(GameObject triggeringObject)
+    public override void TriggerEffect(GameObject triggeringObject, GameObject triggeredObject)
     {
         BoardGenerator boardGenerator = FindObjectOfType<BoardGenerator>();
         GameMan gameMan = FindObjectOfType<GameMan>();
@@ -17,6 +17,5 @@ public class TeleportEffect : GameEffect
         GridPosition randomEmptyPosition = boardGenerator.GetRandomEmptyGridPositionFromLastEmptySpaceGeneratorInStack(boardGenerator);
         Vector2 emptySpaceToTeleportTo = randomEmptyPosition.GridPositionToVector2(randomEmptyPosition);
         triggeringObject.transform.position = emptySpaceToTeleportTo;
-        return true;
     }
 }

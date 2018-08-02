@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class GameEffect : ScriptableObject {
 
-    public abstract bool TriggerEffect(GameObject triggeringObject);
+    public abstract void TriggerEffect(GameObject triggeringObject, GameObject triggeredObject);
 }

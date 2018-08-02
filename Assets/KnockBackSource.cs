@@ -6,6 +6,7 @@ public class KnockBackSource : MonoBehaviour
 {
 
     private Rigidbody2D myRb2d;
+    public float forceMultiplier = .5f;
 
     private void Awake()
     {
@@ -17,7 +18,7 @@ public class KnockBackSource : MonoBehaviour
         Rigidbody2D hitObjRb2d = collision.gameObject.GetComponent<Rigidbody2D>();
         if (hitObjRb2d != null)
         {
-            hitObjRb2d.AddForce(myRb2d.velocity, ForceMode2D.Impulse);
+            hitObjRb2d.AddForce(myRb2d.velocity * forceMultiplier, ForceMode2D.Impulse);
         }
 
     }

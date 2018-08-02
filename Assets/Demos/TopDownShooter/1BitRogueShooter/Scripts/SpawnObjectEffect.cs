@@ -8,9 +8,8 @@ public class SpawnObjectEffect : GameEffect {
 
     public GameObject[] objectsToSpawn;
 
-    public override bool TriggerEffect(GameObject triggeringObject)
+    public override void TriggerEffect(GameObject triggeringObject, GameObject triggeredObject)
     {
         GameObject clone = Instantiate(objectsToSpawn[Random.Range(0, objectsToSpawn.Length)], triggeringObject.transform.position, Quaternion.identity);
-        return true;
     }
 }

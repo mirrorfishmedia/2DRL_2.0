@@ -1,0 +1,14 @@
+brogue potion types
+
+life: full health, cure status
+strength: permanently increase strength by 1 pt
+detect magic: soft ids inventory items and locates magic items on level
+fire immunity
+levitation
+
+incineration
+darkness
+creeping death
+
+
+maybe combine left behind enemies into harder enemies if you leave level early

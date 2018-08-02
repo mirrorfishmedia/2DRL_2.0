@@ -8,15 +8,14 @@ public class GameEffect_AddCoins : GameEffect
 {
     public int coinValue = 1;
 
-    public override bool TriggerEffect(GameObject triggeringObject)
+    public override void TriggerEffect(GameObject triggeringObject, GameObject triggeredObject)
     {
         if (triggeringObject.GetComponent<PlayerIdentifier>())
         {
+            triggeredObject.SetActive(false);
             GameMan.gm.CollectGold(coinValue);
-            return true;
-
+            
         }
 
-        return false;
     }
 }

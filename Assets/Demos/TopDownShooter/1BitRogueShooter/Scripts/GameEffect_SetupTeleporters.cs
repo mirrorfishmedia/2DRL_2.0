@@ -11,7 +11,7 @@ public class GameEffect_SetupTeleporters : GameEffect
     public GameObject teleporterExit;
     public SoundEffect setupTeleporterSound;
 
-    public override bool TriggerEffect(GameObject triggeringObject)
+    public override void TriggerEffect(GameObject triggeringObject, GameObject triggeredObject)
     {
         GameObject entrance = Instantiate(teleporterEntrance, triggeringObject.transform.position, Quaternion.identity);
         entrance.name = "entrance";
@@ -23,7 +23,6 @@ public class GameEffect_SetupTeleporters : GameEffect
         link.linkedPosition = exit.transform;
 
         SetupExit(entrance,exit, link);
-        return true;
     }
 
     public void SetupExit(GameObject entrance, GameObject exit, LinkedTeleporter linkBack)

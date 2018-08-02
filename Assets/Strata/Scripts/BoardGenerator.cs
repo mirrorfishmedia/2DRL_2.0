@@ -103,7 +103,7 @@ namespace Strata
             for (int i = transform.childCount - 1; i >= 0; i--)
             {
                 Transform child = transform.GetChild(0);
-                DestroyImmediate(child.gameObject);
+                Destroy(child.gameObject);
             }
 #endif
             //It's probably a good idea to manually trigger garbage collection here before your game starts (optional)
@@ -240,6 +240,7 @@ namespace Strata
         //This is used primarily during the design process to allow rapid regeneration of the level at runtime, see immediate below
         public void ClearAndRebuild()
         {
+            Debug.Log("clear and rebuild");
             ClearLevel();
             BuildLevel();
         }
