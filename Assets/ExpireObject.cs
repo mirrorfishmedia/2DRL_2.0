@@ -13,13 +13,13 @@ public class ExpireObject : MonoBehaviour {
     private void Awake()
     {
         flashSprite = GetComponent<FlashSprite>();
-        expireWait = new WaitForSeconds(expireTime);
+        
         
     }
 
     private void DisableEffect()
     {
-        if (disableEffect != null)
+        if (disableEffect != null && gameObject.activeSelf == true)
         {
             disableEffect.TriggerEffect(this.gameObject, this.gameObject);
         }
@@ -40,6 +40,7 @@ public class ExpireObject : MonoBehaviour {
     // Use this for initialization
     void OnEnable ()
     {
+        expireWait = new WaitForSeconds(expireTime);
         StartCoroutine(Expire());	
 	}
 	

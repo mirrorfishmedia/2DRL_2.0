@@ -10,7 +10,10 @@ public class SpawnObjectEffect : GameEffect {
 
     public override void TriggerEffect(GameObject triggeringObject, GameObject triggeredObject)
     {
-        Debug.Log("spawn object effect");
-        GameObject clone = Instantiate(objectsToSpawn[Random.Range(0, objectsToSpawn.Length)], triggeringObject.transform.position, Quaternion.identity);
+        //Debug.Log("spawn object effect, triggering " + triggeringObject.name);
+        GameObject randomObject = objectsToSpawn[Random.Range(0, objectsToSpawn.Length)];
+        GameObject clone = Instantiate(randomObject, triggeringObject.transform.position, Quaternion.identity);
+        //Debug.Log("<color=yellow> chose and spawned randomObject</color> " + clone.name);
+
     }
 }

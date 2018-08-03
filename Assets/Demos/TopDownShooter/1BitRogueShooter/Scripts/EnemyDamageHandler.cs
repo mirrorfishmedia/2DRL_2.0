@@ -53,13 +53,14 @@ public class EnemyDamageHandler : MonoBehaviour {
 
     public void HandleDamage(DamageSource damageSource)
     {
-        Debug.Log("handle damage dmgSource " + damageSource.gameObject.name);
+        Debug.Log(this.gameObject + " took damage from " + damageSource.gameObject.name);
         currentHp -= damageSource.damageAmount;
-        flashSprite.TriggerFlash();
-
-        StartCoroutine(DamagedState());
-        CheckIfDead();
-
+        if (gameObject.activeSelf == true)
+        {
+            flashSprite.TriggerFlash();
+            StartCoroutine(DamagedState());
+            CheckIfDead();
+        }
     }
 
     void CheckIfDead()
@@ -76,15 +77,22 @@ public class EnemyDamageHandler : MonoBehaviour {
     void Die()
     {
         
-        for (int i = 0; i < deathEffects.Length; i++)
+        if (deathEffects.Length > 0)
         {
-            Debug.Log("<color=blue>death effect </color> " + deathEffects[i]);
-            deathEffects[i].TriggerEffect(this.gameObject, this.gameObject);
+            for (int i = 0; i < deathEffects.Length; i++)
+            {
+                Debug.Log("<color=blue>death effect </color> " + deathEffects[i]);
+                deathEffects[i].TriggerEffect(this.gameObject, null);
+            }
         }
-       
-        deathPersistentObject.SetActive(true);
-        deathPersistentObject.transform.SetParent(null);
 
+        if (deathPersistentObject != null)
+        {
+            deathPersistentObject.SetActive(true);
+            deathPersistentObject.transform.SetParent(null);
+        }
+
+        
 
         this.gameObject.SetActive(false);
     }

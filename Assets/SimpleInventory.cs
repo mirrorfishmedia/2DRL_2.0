@@ -50,7 +50,7 @@ public class SimpleInventory : MonoBehaviour {
         if (items[itemNumber] != null)
         {
             items[itemNumber].gameEffect.TriggerEffect(this.gameObject, this.gameObject);
-            items[itemNumber] = null;
+            //items[itemNumber] = null;
             UpdateInventoryDisplay();
         }
         
