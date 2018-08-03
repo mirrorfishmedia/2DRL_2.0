@@ -51,7 +51,7 @@ public class EnemyDamageHandler : MonoBehaviour {
         }
     }
 
-    void HandleDamage(DamageSource damageSource)
+    public void HandleDamage(DamageSource damageSource)
     {
         currentHp -= damageSource.damageAmount;
         flashSprite.TriggerFlash();

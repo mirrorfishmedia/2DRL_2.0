@@ -9,6 +9,11 @@ public class DamageSource : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        this.gameObject.SetActive(false);
+        DamageSource source = collision.gameObject.GetComponent<DamageSource>();
+        if (source == null)
+        {
+            this.gameObject.SetActive(false);
+        }
+        
     }
 }

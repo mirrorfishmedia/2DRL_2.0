@@ -14,7 +14,6 @@ public class FlashSprite : MonoBehaviour
 
     private WaitForSeconds flashWait = new WaitForSeconds(.125f);
 
-    public bool countdownFromEnable = false;
 
 
 
@@ -38,15 +37,9 @@ public class FlashSprite : MonoBehaviour
         
         while (count <= numFlashes)
         {
-            Debug.Log("count " + count);
-            Debug.Log("clear time.time " + Time.time);
 
-            Debug.Log("sprite renderer false " + spriteRenderer.enabled);
             yield return flashWait;
-            Debug.Log("original time.time " + Time.time);
             spriteRenderer.enabled = !spriteRenderer.enabled;
-
-            Debug.Log("sprite renderer true" + spriteRenderer.enabled);
             count++;
         }
        
@@ -54,7 +47,6 @@ public class FlashSprite : MonoBehaviour
 
     public IEnumerator Flash()
     {
-        Debug.Log("flash");
         spriteRenderer.material = flashSpriteMat;
         yield return flashWait;
         spriteRenderer.material = originalMat;

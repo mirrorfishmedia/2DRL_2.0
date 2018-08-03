@@ -19,7 +19,11 @@ public class ExpireObject : MonoBehaviour {
     IEnumerator Expire()
     {
         yield return expireWait;
-        yield return flashSprite.FlashBeforeExpire();
+        if (flashSprite != null)
+        {
+            yield return flashSprite.FlashBeforeExpire();
+
+        }
         Debug.Log("deactivating time.time " + Time.time);
         gameObject.SetActive(false);
     }

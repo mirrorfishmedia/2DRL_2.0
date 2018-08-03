@@ -42,7 +42,7 @@ public class SimpleInventory : MonoBehaviour {
     void UseItem(int itemNumber)
     {
         items[itemNumber].gameEffect.TriggerEffect(this.gameObject, this.gameObject);
-        //items[itemNumber] = null;
+        items[itemNumber] = null;
         UpdateInventoryDisplay();
     }
 
