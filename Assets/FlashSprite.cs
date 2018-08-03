@@ -15,8 +15,10 @@ public class FlashSprite : MonoBehaviour
     private WaitForSeconds flashWait = new WaitForSeconds(.125f);
 
 
+    public void FlashOnce()
+    {
 
-
+    }
 
     public void TriggerFlash()
     {
@@ -25,14 +27,11 @@ public class FlashSprite : MonoBehaviour
 
     public void TriggerFlashExpire()
     {
-        Debug.Log("tfe");
         StartCoroutine(FlashBeforeExpire());
     }
 
     public IEnumerator FlashBeforeExpire()
     {
-        Debug.Log("fbe");
-
         int count = 0;
         
         while (count <= numFlashes)
@@ -42,7 +41,7 @@ public class FlashSprite : MonoBehaviour
             spriteRenderer.enabled = !spriteRenderer.enabled;
             count++;
         }
-       
+        //spriteRenderer.enabled = true;
     }
 
     public IEnumerator Flash()

@@ -28,15 +28,15 @@ public class DirectionalShooter : MonoBehaviour {
             GameObject clone = Instantiate(prefabToSpawn, transform.position, Quaternion.identity);
             Rigidbody2D rb2d = clone.GetComponent<Rigidbody2D>();
             rb2d.AddForce(stateController.dirToChaseTarget.normalized * enemyStats.attackForce, ForceMode2D.Impulse);
-            gameObject.layer = 12;
-            Invoke("SetColliderBackToEnemyLayer", colliderDelay);
+            //gameObject.layer = 12;
+            //Invoke("SetColliderBackToEnemyLayer", colliderDelay);
         }
         
     }
 
     void SetColliderBackToEnemyLayer()
     {
-        gameObject.layer = 11;
+        //gameObject.layer = 11;
     }
 
 	

@@ -22,9 +22,10 @@ public class StateController : MonoBehaviour {
     public AILerp aiLerp;
     public Vector2 dirToChaseTarget;
     public Vector2 facingDir;
-    public GameObject artHolder;
+    public GameObject[] artHolders;
     public LayerMask sightFilterMask;
     public DirectionalShooter shooter;
+    public MeleeAttack meleeAttack;
 
 	private bool aiActive;
 
@@ -69,12 +70,20 @@ public class StateController : MonoBehaviour {
         if (dirToChaseTarget.x > 0)
         {
             facingDir = new Vector2(1, 0);
-            artHolder.transform.localScale = new Vector3(1, 1, 1);
+            for (int i = 0; i < artHolders.Length; i++)
+            {
+                artHolders[i].transform.localScale = new Vector3(1, 1, 1);
+
+            }
         }
         else
         {
             facingDir = new Vector2(-1, 0);
-            artHolder.transform.localScale = new Vector3(-1, 1, 1);
+            for (int i = 0; i < artHolders.Length; i++)
+            {
+                artHolders[i].transform.localScale = new Vector3(-1, 1, 1);
+
+            }
         }
     }
 

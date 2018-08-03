@@ -25,6 +25,9 @@ public class GameMan : MonoBehaviour
 
     public int levelNumber = 0;
 
+    public GameObject gameOverText;
+    
+
     private void Awake()
     {
         if (gm == null)
@@ -81,5 +84,15 @@ public class GameMan : MonoBehaviour
         goldTotal += amount;
         uiController.UpdateCoinText(goldTotal);
         soundMan.PlaySoundEffect(goldCollectSound);
+    }
+
+    public void DisplayHealth(int totalHealth)
+    {
+        uiController.UpdateHealthText(totalHealth);
+    }
+
+    public void EndGame()
+    {
+        gameOverText.SetActive(true);
     }
 }

@@ -6,14 +6,21 @@ public class DamageSource : MonoBehaviour
 {
 
     public int damageAmount = 1;
+    public bool disableOnCollision = true;
+    public bool damageOnCollision = true;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        DamageSource source = collision.gameObject.GetComponent<DamageSource>();
-        if (source == null)
+        if (damageOnCollision)
         {
-            this.gameObject.SetActive(false);
+            DamageSource source = collision.gameObject.GetComponent<DamageSource>();
+            if (disableOnCollision)
+            {
+                gameObject.SetActive(false);
+
+
+            }
         }
-        
+
     }
 }

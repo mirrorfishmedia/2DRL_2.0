@@ -8,21 +8,25 @@ public class ExplodePosition : MonoBehaviour {
 
     public Vector2 offset;
     public Vector2 size = Vector2.one;
-    Collider2D[] foundColliders = new Collider2D[32];
+    Collider2D[] foundColliders = new Collider2D[16];
     private DamageSource damageSource;
+
+    private void Awake()
+    {
+        damageSource = GetComponent<DamageSource>();
+    }
 
     private void OnEnable()
     {
-        damageSource = GetComponent<DamageSource>();
+        Debug.Log("<color=red>Explode</color>");
         int numColliders = Physics2D.OverlapBoxNonAlloc((Vector2)transform.position + offset, size, 0, foundColliders);
+        Debug.Log("numColliders " + numColliders);
         for (int i = 0; i < numColliders; i++)
         {
 
-            //DamageEnemies(i);
+            DamageEnemies(i);
             DamageWalls(i);
         }
-
-
     }
 
     void DamageWalls(int index)
@@ -42,7 +46,6 @@ public class ExplodePosition : MonoBehaviour {
 
             roundedGrid.x = Mathf.Clamp(roundedGrid.x, 0, boardGenerator.profile.boardHorizontalSize);
             roundedGrid.y = Mathf.Clamp(roundedGrid.y, 0, boardGenerator.profile.boardVerticalSize);
-            Debug.Log("roundedGrid" + roundedGrid.x + " " + roundedGrid.y);
             char emptyChar = boardGenerator.profile.boardLibrary.GetDefaultEmptyChar();
             boardGenerator.WriteToBoardGrid(roundedGrid.x, roundedGrid.y, emptyChar, true, true);
             boardGenerator.CreateMapEntryFromGrid(boardGenerator.boardGridAsCharacters[roundedGrid.x, roundedGrid.y], roundedGrid.GridPositionToVector2(roundedGrid));
@@ -52,14 +55,17 @@ public class ExplodePosition : MonoBehaviour {
 
     void DamageEnemies(int index)
     {
-
-        Debug.Log("damaging enemies");
+        Debug.Log("damage enmies found collider index " + foundColliders[index]);
+       
         EnemyDamageHandler handle = foundColliders[index].GetComponent<EnemyDamageHandler>();
+
+        
         if (handle != null)
         {
+            Debug.Log("<color=green> pass </color>");
             handle.HandleDamage(damageSource);
         }
-
+        
 
     }
 }

@@ -35,15 +35,25 @@ public class SimpleInventory : MonoBehaviour {
         if (Input.GetButtonDown("Fire1"))
         {
             UseItem(0);
+      
+        }
 
+        if (Input.GetButtonDown("Fire2"))
+        {
+            UseItem(1);
+            Debug.Log("Fire 2 pressed");
         }
     }
 
     void UseItem(int itemNumber)
     {
-        items[itemNumber].gameEffect.TriggerEffect(this.gameObject, this.gameObject);
-        items[itemNumber] = null;
-        UpdateInventoryDisplay();
+        if (items[itemNumber] != null)
+        {
+            items[itemNumber].gameEffect.TriggerEffect(this.gameObject, this.gameObject);
+            items[itemNumber] = null;
+            UpdateInventoryDisplay();
+        }
+        
     }
 
     void UpdateInventoryDisplay()

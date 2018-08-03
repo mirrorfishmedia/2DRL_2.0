@@ -12,7 +12,7 @@ public class AttackAction : Action
 
 	private void Attack(StateController controller)
 	{
-        RaycastHit2D hit = Physics2D.Raycast(controller.eyes.position, controller.dirToChaseTarget, controller.enemyStats.lookRange, controller.sightFilterMask);
+        RaycastHit2D hit = Physics2D.Raycast(controller.eyes.position, controller.dirToChaseTarget, controller.enemyStats.attackRange, controller.sightFilterMask);
 
         Debug.DrawRay(controller.eyes.position, controller.dirToChaseTarget * controller.enemyStats.lookRange, Color.yellow);
 
@@ -21,7 +21,16 @@ public class AttackAction : Action
 
             if (hit.collider.CompareTag("Player"))
             {
-                controller.shooter.Shoot(controller.dirToChaseTarget);
+                if (controller.shooter != null)
+                {
+                    controller.shooter.Shoot(controller.dirToChaseTarget);
+                }
+
+                if (controller.meleeAttack != null)
+                {
+                    controller.meleeAttack.TriggerAttack();
+                }
+                
             }
 
         }

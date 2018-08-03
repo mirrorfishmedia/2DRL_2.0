@@ -53,6 +53,7 @@ public class EnemyDamageHandler : MonoBehaviour {
 
     public void HandleDamage(DamageSource damageSource)
     {
+        Debug.Log("handle damage dmgSource " + damageSource.gameObject.name);
         currentHp -= damageSource.damageAmount;
         flashSprite.TriggerFlash();
 
@@ -63,8 +64,10 @@ public class EnemyDamageHandler : MonoBehaviour {
 
     void CheckIfDead()
     {
+        
         if (currentHp <= 0)
         {
+            
             currentHp = 0;
             Die();
         }
@@ -72,8 +75,10 @@ public class EnemyDamageHandler : MonoBehaviour {
 
     void Die()
     {
+        
         for (int i = 0; i < deathEffects.Length; i++)
         {
+            Debug.Log("<color=blue>death effect </color> " + deathEffects[i]);
             deathEffects[i].TriggerEffect(this.gameObject, this.gameObject);
         }
        
