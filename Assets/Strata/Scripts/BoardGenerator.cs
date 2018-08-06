@@ -76,7 +76,7 @@ namespace Strata
             //If buildOnStart is true the level will be generated when the scene loads.
             if (buildOnStart)
             {
-                BuildLevel();
+                StartCoroutine(BuildLevel());
             }
         }
 

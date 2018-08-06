@@ -53,7 +53,7 @@ public class EnemyDamageHandler : MonoBehaviour {
 
     public void HandleDamage(DamageSource damageSource)
     {
-        Debug.Log(this.gameObject + " took damage from " + damageSource.gameObject.name);
+//        Debug.Log(this.gameObject + " took damage from " + damageSource.gameObject.name);
         currentHp -= damageSource.damageAmount;
         if (gameObject.activeSelf == true)
         {
@@ -81,7 +81,7 @@ public class EnemyDamageHandler : MonoBehaviour {
         {
             for (int i = 0; i < deathEffects.Length; i++)
             {
-                Debug.Log("<color=blue>death effect </color> " + deathEffects[i]);
+//                Debug.Log("<color=blue>death effect </color> " + deathEffects[i]);
                 deathEffects[i].TriggerEffect(this.gameObject, null);
             }
         }
